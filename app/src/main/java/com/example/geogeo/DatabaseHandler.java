@@ -70,9 +70,7 @@ public class DatabaseHandler {
         return result;
     }
 
-    public int getRandomTextQuestion(ArrayList<Integer> blacklist, String type) {
-        return 1;
-    }
+
 
     public Bitmap getPic(int questionId) {
         Bitmap.Config conf = Bitmap.Config.ARGB_8888;
