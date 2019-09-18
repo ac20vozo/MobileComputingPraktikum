@@ -10,12 +10,16 @@ public class DatabaseHandler {
 
     DatabaseHandler() {
         db = SQLiteDatabase.openOrCreateDatabase("/data/data/com.example.geogeo/databases/db.db", null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS Answer(Id INTEGER, Answer TEXT, X Numeric, Y Numeric)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS Game(Id INTEGER, Amount INTEGER, Points INTEGER)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS GameQuestions(GameId INTEGER, QuestionId INTEGER, Points INTEGER, " +
-                "AnswerX NUMERIC, AnswerY NUMERIC)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS PicQuestions(Id INTEGER, Pic BLOB, AnswerId INTEGER)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS Statistics(Id INTEGER, Games INTEGER, AverageScore INTEGER, TotalPoints INTEGER)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS Answer(Id INTEGER PRIMARY KEY AUTOINCREMENT, Answer TEXT, X Numeric, Y Numeric)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS Game(Id INTEGER PRIMARY KEY AUTOINCREMENT, Amount INTEGER, Points INTEGER)");
+
+        // Can't add Foreign Key to QuestionId because there exist two tables with questions.
+        db.execSQL("CREATE TABLE IF NOT EXISTS Round(Id INTEGER PRIMARY KEY AUTOINCREMENT, GameId INTEGER, QuestionId INTEGER, IsPicQuestion Integer, Points INTEGER," +
+                "AnswerX NUMERIC, AnswerY NUMERIC,  FOREIGN KEY (GameId) REFERENCES Game(Id))");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS TextQuestions(Id INTEGER PRIMARY KEY AUTOINCREMENT, Text TEXT, Type TEXT, AnswerId INTEGER, FOREIGN KEY (AnswerId) REFERENCES Answer(id))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS PicQuestions(Id INTEGER PRIMARY KEY AUTOINCREMENT, PicPath TEXT, AnswerId INTEGER, FOREIGN KEY (AnswerId) REFERENCES Answer(id))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS Statistics(Id INTEGER PRIMARY KEY AUTOINCREMENT, Games INTEGER, AverageScore REAL, TotalPoints INTEGER)");
     }
 
 
