@@ -71,11 +71,13 @@ public class DatabaseHandler {
     }
 
 
-
-    public Bitmap getPic(int questionId) {
-        Bitmap.Config conf = Bitmap.Config.ARGB_8888;
-        Bitmap b = Bitmap.createBitmap(0, 0, conf);
-        return b;
+    // returns picture path of a question given the questionId
+    public String getPic(int questionId) {
+        Cursor c = db.rawQuery("SELECT PicPath FROM PicQuestions WHERE Id =" + questionId, null);
+        c.moveToFirst();
+        String PicPath = c.getString(0);
+        c.close();
+        return PicPath;
     }
 
     public int getRandomTextQuestion(ArrayList<Integer> blacklist, String type){
@@ -156,9 +158,24 @@ public class DatabaseHandler {
         db.execSQL("INSERT INTO Category (Country, Continent) VALUES ('" +
                 country +"', '" + continent + "')");
     }
+    // returns distance to of given answer to correct location
+    public double checkDistanceToAnswer(int gameId, int answerId, double xGuess, double yGuess) {
+        Double[] Cords = new Double[2];
+        Cords = getAnswerCords(answerId);
 
-    public int answerQuestion(int gameId, int questionId) {
-        int points = 0;
-        return points;
+        return coordDistance(Cords[0],Cords[1], xGuess, yGuess);
+    }
+    // calculates distance between to coordinates in km
+    public double coordDistance(double lon1,double lat1,double lon2, double lat2){
+        double xDifference = degreeToRadians(lon1) - degreeToRadians(lon2);
+        double yDifference = degreeToRadians(lat1) - degreeToRadians(lat2);
+        double angle = (Math.pow(Math.sin(xDifference/2), 2) + Math.cos(yDifference)*Math.cos(xDifference)*(Math.pow(Math.sin(yDifference/2), 2)));
+        double c = 2 * Math.atan2(Math.sqrt(angle), Math.sqrt(1-angle));
+        double distance = 6378 * c;
+        return distance;
+    }
+    // convert degree to radians
+    public double degreeToRadians(double degree){
+        return degree*Math.PI/180;
     }
 }
