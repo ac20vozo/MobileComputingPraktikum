@@ -1,4 +1,5 @@
 package com.example.geogeo;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 
@@ -53,8 +54,39 @@ public class DatabaseHandler {
         return id;
     }
 
-    public void addQuestionToGame(int gameId, boolean isPicQuestion){
-        return;
+    public void addRoundToGame(int gameId, int isPicQuestion, int questionId){
+        db.execSQL("INSERT INTO Round (GameId, QuestionId, isPicQuestion, Points, AnswerX, AnswerY) " +
+                "VALUES ("+ Integer.toString(gameId) + ", " + Integer.toString(questionId) + ", " +
+                Integer.toString(isPicQuestion) + ", null, null, null)");
+    }
+
+    // Not allowed to use dotts in PicPath
+    public void addQuestion(int isPicQuestion, String PicPath, int categoryId, int answerId, String text,
+                                String type){
+        if (isPicQuestion == 1){
+            db.execSQL("INSERT INTO PicQuestions (PicPath, AnswerId, CategoryId) VALUES('" +
+                    PicPath + "', " + Integer.toString(answerId) + ", " + Integer.toString(categoryId) + ")");
+        }
+        else{
+            db.execSQL("INSERT INTO TextQuestions (Text, Type, AnswerId, CategoryId) VALUES ('" +
+                    text + "', '" + type + "', " + Integer.toString(answerId) + ", " + Integer.toString(categoryId) +
+                    ")");
+        }
+    }
+
+    public int addAnswer(String Answer, float x, float y){
+        db.execSQL("INSERT INTO Answer (Answer, X, Y) VALUES ('" + Answer + "', " + Float.toString(x) +
+                ", " + Float.toString(y) + ")");
+        Cursor c = db.rawQuery("SELECT MAX(Id) FROM Answer", null);
+        c.moveToFirst();
+        String id = c.getString(0);
+        c.close();
+        return Integer.valueOf(id);
+    }
+
+    public void addCategory(String country, String continent){
+        db.execSQL("INSERT INTO Category (Country, Continent) VALUES ('" +
+                country +"', '" + continent + "')");
     }
 
     public int answerQuestion(int gameId, int questionId){
