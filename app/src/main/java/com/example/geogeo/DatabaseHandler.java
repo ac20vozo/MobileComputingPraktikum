@@ -41,7 +41,33 @@ public class DatabaseHandler {
     }
 
     public String getText(int questionId){
-        return "Test";
+        Cursor c = db.rawQuery("SELECT Text FROM TextQuestions WHERE Id =" + questionId, null);
+        c.moveToFirst();
+        String Text = c.getString(0);
+        c.close();
+        return Text;
+    }
+
+    public String getAnswerName(int answerId){
+        Cursor c = db.rawQuery("SELECT Answer FROM Answer WHERE Id =" + answerId, null);
+        c.moveToFirst();
+        String Answer = c.getString(0);
+        c.close();
+        return Answer;
+    }
+
+    public Double[] getAnswerCords(int answerId){
+        Double[] Cords = new Double[2];
+        Cursor c = db.rawQuery("SELECT Answer FROM Answer WHERE Id =" + answerId, null);
+        c.moveToFirst();
+        Double x = c.getDouble(0);
+        Double y = c.getDouble(1);
+        Cords[0] = x;
+        Cords[1] = y;
+        c.close();
+        return Cords;
+
+
     }
 
     public String[] getAnswer(int questionId){
