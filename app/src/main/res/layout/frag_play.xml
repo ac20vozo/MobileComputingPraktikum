@@ -9,9 +9,11 @@
         android:id="@+id/button2"
         android:layout_width="250dp"
         android:layout_height="122dp"
-        android:text="Button"
+        android:text="@string/play_classic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.361" />
 </androidx.constraintlayout.widget.ConstraintLayout>

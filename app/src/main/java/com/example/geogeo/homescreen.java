@@ -36,6 +36,27 @@ public class homescreen extends AppCompatActivity implements BottomNavigationVie
         loadFragment(new frag_play());
     }
 
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem Item) {
+        Fragment fragment = null;
+        switch (Item.getItemId()){
+            case R.id.navigation_home:
+                fragment = new frag_play();
+                break;
+        }
+        switch (Item.getItemId()){
+            case R.id.navigation_dashboard:
+                fragment = new frag_profil();
+                break;
+        }
+        switch (Item.getItemId()){
+            case R.id.navigation_notifications:
+                fragment = new frag_options();
+                break;
+        }
+        return loadFragment(fragment);
+    }
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null){
             getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, fragment).commit();
@@ -43,26 +64,5 @@ public class homescreen extends AppCompatActivity implements BottomNavigationVie
         }
 
         return false;
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem Item) {
-        Fragment fragment = null;
-        switch (Item.getItemId()){
-            case R.id.navbar_play:
-                fragment = new frag_play();
-                break;
-        }
-        switch (Item.getItemId()){
-            case R.id.navbar_profil:
-                fragment = new frag_profil();
-                break;
-        }
-        switch (Item.getItemId()){
-            case R.id.navbar_options:
-                fragment = new frag_options();
-                break;
-        }
-        return loadFragment(fragment);
     }
 }

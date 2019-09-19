@@ -1,11 +1,15 @@
 <resources>
     <string name="app_name">GeoGeo!</string>
-    <string name="title_activity_homescreen">homescreen</string>
+    <string name="title_activity_homescreen">GeoGeo!</string>
     <string name="bar_play">Play</string>
     <string name="bar_profil">Profil</string>
     <string name="bar_options">Options</string>
-    <string name="profil_txt">Username</string>
+    <string name="profil_txt">Username:</string>
     <string name="profil_username">Tim</string>
-    <string name="profil_input">New username</string>
+    <string name="profil_input">New username:</string>
     <string name="profil_submit">Submit</string>
+    <string name="play_classic">Classic</string>
+    <string name="profil_playedGames">Played Games:</string>
+    <string name="profil_average">Average distance to target:</string>
+
 </resources>
