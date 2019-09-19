@@ -15,7 +15,7 @@ public class DatabaseHandler {
         db = SQLiteDatabase.openOrCreateDatabase("/data/data/com.example.geogeo/databases/db.db", null);
 
         db.execSQL("DROP TABLE IF EXISTS Answer");
-        db.execSQL("CREATE TABLE IF NOT EXISTS Answer(Id INTEGER PRIMARY KEY AUTOINCREMENT, Answer TEXT, X Numeric, Y Numeric)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS Answer (Id INTEGER PRIMARY KEY AUTOINCREMENT, Answer TEXT, X Numeric, Y Numeric)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS Game(Id INTEGER PRIMARY KEY AUTOINCREMENT, Amount INTEGER, Points INTEGER)");
 
@@ -26,18 +26,18 @@ public class DatabaseHandler {
         db.execSQL("DROP TABLE IF EXISTS Category");
         db.execSQL("CREATE TABLE IF NOT EXISTS Category (Id INTEGER PRIMARY KEY AUTOINCREMENT, Country TEXT, Continent TEXT)");
 
-        db.execSQL("DROP TABLE IF EXISTS TextQuestions");
-        db.execSQL("CREATE TABLE IF NOT EXISTS TextQuestions(Id INTEGER PRIMARY KEY AUTOINCREMENT, Text TEXT, Type TEXT, AnswerId INTEGER, CategoryId INTEGER, FOREIGN KEY (AnswerId) REFERENCES Answer(id), FOREIGN KEY (CategoryId) REFERENCES Category(Id))");
+        db.execSQL("DROP TABLE IF EXISTS TextQuestion");
+        db.execSQL("CREATE TABLE IF NOT EXISTS TextQuestion (Id INTEGER PRIMARY KEY AUTOINCREMENT, Text TEXT, Type TEXT, AnswerId INTEGER, CategoryId INTEGER, FOREIGN KEY (AnswerId) REFERENCES Answer(id), FOREIGN KEY (CategoryId) REFERENCES Category(Id))");
 
-        db.execSQL("DROP TABLE IF EXISTS PicQuestions");
-        db.execSQL("CREATE TABLE IF NOT EXISTS PicQuestions(Id INTEGER PRIMARY KEY AUTOINCREMENT, PicPath TEXT, AnswerId INTEGER, CategoryId INTEGER, FOREIGN KEY (AnswerId) REFERENCES Answer(id), FOREIGN KEY (CategoryId) REFERENCES Category(Id))");
+        db.execSQL("DROP TABLE IF EXISTS PicQuestion");
+        db.execSQL("CREATE TABLE IF NOT EXISTS PicQuestion (Id INTEGER PRIMARY KEY AUTOINCREMENT, PicPath TEXT, AnswerId INTEGER, CategoryId INTEGER, FOREIGN KEY (AnswerId) REFERENCES Answer(id), FOREIGN KEY (CategoryId) REFERENCES Category(Id))");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS Statistics(Id INTEGER PRIMARY KEY AUTOINCREMENT, Games INTEGER, AverageScore REAL, TotalPoints INTEGER)");
 
-        db.execSQL("INSERT INTO Answers (Answer, X, Y) VALUES ('Belin', 0, 0)");
+        db.execSQL("INSERT INTO Answer (Answer, X, Y) VALUES ('Belin', 0, 0)");
         db.execSQL("INSERT INTO Category (Country, Continent) VALUES ('Germany', 'Europe')");
-        db.execSQL("INSERT INTO PicQuestions (PicPath, AnswerId, CategoryId) VALUES ('berlin.png', 1, 1)");
-        db.execSQL("INSERT INTO TextQuestions (Text, Type, AnswerId, CategoryId) VALUES ('What is the Capital of Germany', 'Quiz', 1, 1)");
+        db.execSQL("INSERT INTO PicQuestion (PicPath, AnswerId, CategoryId) VALUES ('berlin.png', 1, 1)");
+        db.execSQL("INSERT INTO TextQuestion (Text, Type, AnswerId, CategoryId) VALUES ('What is the Capital of Germany', 'Quiz', 1, 1)");
 
         System.out.println(getRandomPicQuestion());
         System.out.println(getRandomTextQuestion("All"));
@@ -46,7 +46,7 @@ public class DatabaseHandler {
 
     public int getRandomPicQuestion() {
         Random rand = new Random();
-        Cursor cur = SQLiteDatabase.openDatabase("/data/data/com.example.geogeo/databases/db.db", null, 0).rawQuery("SELECT * FROM PicQuestions", null);
+        Cursor cur = SQLiteDatabase.openDatabase("/data/data/com.example.geogeo/databases/db.db", null, 0).rawQuery("SELECT * FROM PicQuestion", null);
         int result = rand.nextInt(cur.getCount()) + 1;
         cur.close();
         return result;
@@ -61,31 +61,30 @@ public class DatabaseHandler {
         SQLiteDatabase db_temp = SQLiteDatabase.openDatabase("/data/data/com.example.geogeo/databases/db.db", null, 0);
         Cursor cur;
         if (type.equals("All")) {
-            cur = db_temp.rawQuery("SELECT * FROM TextQuestions", null);
+            cur = db_temp.rawQuery("SELECT * FROM TextQuestion", null);
         } else {
-            cur = db_temp.rawQuery("SELECT * FROM TextQuestions WHERE Type " + type, null);
+            cur = db_temp.rawQuery("SELECT * FROM TextQuestion WHERE Type " + type, null);
         }
         int result = rand.nextInt(cur.getCount()) + 1;
         cur.close();
         return result;
     }
 
+    public int getRandomTextQuestion(ArrayList<Integer> blacklist, String type){
+        return 1;
+    }
 
     // returns picture path of a question given the questionId
     public String getPic(int questionId) {
-        Cursor c = db.rawQuery("SELECT PicPath FROM PicQuestions WHERE Id =" + questionId, null);
+        Cursor c = db.rawQuery("SELECT PicPath FROM PicQuestion WHERE Id =" + questionId, null);
         c.moveToFirst();
         String PicPath = c.getString(0);
         c.close();
         return PicPath;
     }
 
-    public int getRandomTextQuestion(ArrayList<Integer> blacklist, String type){
-        return 1;
-    }
-
     public String getText(int questionId){
-        Cursor c = db.rawQuery("SELECT Text FROM TextQuestions WHERE Id =" + questionId, null);
+        Cursor c = db.rawQuery("SELECT Text FROM TextQuestion WHERE Id =" + questionId, null);
         c.moveToFirst();
         String Text = c.getString(0);
         c.close();
@@ -110,8 +109,6 @@ public class DatabaseHandler {
         Cords[1] = y;
         c.close();
         return Cords;
-
-
     }
 
     public String[] getAnswer(int questionId) {
@@ -134,11 +131,11 @@ public class DatabaseHandler {
     public void addQuestion(int isPicQuestion, String PicPath, int categoryId, int answerId, String text,
                                 String type){
         if (isPicQuestion == 1){
-            db.execSQL("INSERT INTO PicQuestions (PicPath, AnswerId, CategoryId) VALUES('" +
+            db.execSQL("INSERT INTO PicQuestion (PicPath, AnswerId, CategoryId) VALUES('" +
                     PicPath + "', " + Integer.toString(answerId) + ", " + Integer.toString(categoryId) + ")");
         }
         else{
-            db.execSQL("INSERT INTO TextQuestions (Text, Type, AnswerId, CategoryId) VALUES ('" +
+            db.execSQL("INSERT INTO TextQuestion (Text, Type, AnswerId, CategoryId) VALUES ('" +
                     text + "', '" + type + "', " + Integer.toString(answerId) + ", " + Integer.toString(categoryId) +
                     ")");
         }
