@@ -3,6 +3,7 @@ package com.example.geogeo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,7 +12,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
+    }
+
+    public void onc(View view){
         DatabaseHandler dba = DatabaseHandler.getInstance(getApplicationContext());
         dba.open();
+        //System.out.println(dba.getRandomPicQuestion());
+        System.out.println(dba.getRandomTextQuestion("All"));
+        System.out.println();
+        dba.close();
     }
 }

@@ -17,9 +17,6 @@ public class DatabaseHandler {
     private DatabaseHandler(Context context) {
         this.openHelper = new DBHelper(context);
 
-        System.out.println(getRandomPicQuestion());
-        System.out.println(getRandomTextQuestion("All"));
-        System.out.println();
     }
 
     public static DatabaseHandler getInstance(Context context) {
@@ -53,12 +50,12 @@ public class DatabaseHandler {
 
     public int getRandomTextQuestion(String type) {
         Random rand = new Random();
-        SQLiteDatabase db_temp = SQLiteDatabase.openDatabase("/data/data/com.example.geogeo/databases/db.db", null, 0);
+        //Cursor c = db.rawQuery("SELECT Text FROM TextQuestion WHERE Id =" + questionId, null);
         Cursor cur;
         if (type.equals("All")) {
-            cur = db_temp.rawQuery("SELECT * FROM TextQuestion", null);
+            cur = db.rawQuery("SELECT * FROM TextQuestion", null);
         } else {
-            cur = db_temp.rawQuery("SELECT * FROM TextQuestion WHERE Type " + type, null);
+            cur = db.rawQuery("SELECT * FROM TextQuestion WHERE Type " + type, null);
         }
         int result = rand.nextInt(cur.getCount()) + 1;
         cur.close();
