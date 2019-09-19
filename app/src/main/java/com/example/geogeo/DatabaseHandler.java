@@ -36,11 +36,11 @@ public class DatabaseHandler {
 
     public int getRandomPicQuestion() {
         Random rand = new Random();
-        int i =5;
+        int i =1;
         return i;
     }
 
-    public int getRandomPicQuestion(ArrayList<Integer> blacklist) {
+    public int getRandomPicQuestion(ArrayList<Integer[]> blacklist) {
         return 1;
     }
 
@@ -57,7 +57,7 @@ public class DatabaseHandler {
         return result;
     }
 
-    public int getRandomTextQuestion(ArrayList<Integer> blacklist, String type) {
+    public int getRandomTextQuestion(ArrayList<Integer[]> blacklist, String type) {
         return 1;
     }
 
@@ -120,8 +120,12 @@ public class DatabaseHandler {
     }
 
     public int createGame(int amount) {
-        int id = 0;
-        return id;
+        db.execSQL("INSERT INTO Game (Amount, Points) VALUES (" + Integer.valueOf(amount) + ", 0)");
+        Cursor c = db.rawQuery("SELECT MAX(Id) FROM Game", null);
+        c.moveToFirst();
+        String id = c.getString(0);
+        c.close();
+        return Integer.valueOf(id);
     }
 
     public void addRoundToGame(int gameId, int isPicQuestion, int questionId) {
