@@ -159,7 +159,7 @@ public class DatabaseHandler {
                 country +"', '" + continent + "')");
     }
     // returns distance to of given answer to correct location
-    public double checkDistanceToAnswer(int gameId, int answerId, double xGuess, double yGuess) {
+    public double checkDistanceToAnswer(int answerId, double xGuess, double yGuess) {
         Double[] Cords = new Double[2];
         Cords = getAnswerCords(answerId);
 
@@ -177,5 +177,14 @@ public class DatabaseHandler {
     // convert degree to radians
     public double degreeToRadians(double degree){
         return degree*Math.PI/180;
+    }
+
+    public int answerQuestion(int gameId, int answerId, double xGuess, double yGuess) {
+        int points = 1;
+        double distance = checkDistanceToAnswer(answerId, xGuess, yGuess);
+        // add a more sensible point calculation here
+        points = (int) Math.ceil(points/distance);
+        return points;
+
     }
 }
