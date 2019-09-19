@@ -2,9 +2,11 @@ package com.example.geogeo;
 
 import android.content.Context;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -58,6 +60,7 @@ public class Controller {
     }
 
     // kind can be random, text or pic
+    // TODO: make sure that the amount is less or equal to the amount of questions
     public boolean createGame(int amount, String kind, String type) {
         // blacklist ist Array von Array von ints (Mit 1. 0 oder 1 2. id von question)
         db.open();

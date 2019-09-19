@@ -43,7 +43,19 @@ public class DatabaseHandler {
     }
 
     public int getRandomPicQuestion(ArrayList<Integer[]> blacklist) {
-        return 1;
+        String sql = "SELECT * FROM PicQuestion WHERE ";
+        for (Integer[] v : blacklist) {
+            if (v[0] == 1) {
+                sql += "id <> AND " + v[1];
+            }
+        }
+        sql = sql.substring(0, sql.length() - 4);
+        System.out.println(sql);
+        Random rand = new Random();
+        Cursor cur = db.rawQuery(sql, null);
+        int result = rand.nextInt(cur.getCount()) + 1;
+        cur.close();
+        return result;
     }
 
     public int getRandomTextQuestion(String type) {
@@ -52,7 +64,7 @@ public class DatabaseHandler {
         if (type.equals("all")) {
             cur = db.rawQuery("SELECT * FROM TextQuestion", null);
         } else {
-            cur = db.rawQuery("SELECT * FROM TextQuestion WHERE Type " + type, null);
+            cur = db.rawQuery("SELECT * FROM TextQuestion WHERE Type = " + type, null);
         }
         int result = rand.nextInt(cur.getCount()) + 1;
         cur.close();
@@ -60,17 +72,33 @@ public class DatabaseHandler {
     }
 
     public int getRandomTextQuestion(ArrayList<Integer[]> blacklist, String type) {
-        return 1;
+        String sql = "SELECT * FROM TextQuestion WHERE ";
+        if (!type.equals("all")) {
+            sql += "Type = " + type + " AND ";
+        }
+        for (Integer[] v : blacklist) {
+            if (v[0] == 0) {
+                sql += "id <> AND " + v[1];
+            }
+        }
+        sql = sql.substring(0, sql.length() - 4);
+        System.out.println(sql);
+        Random rand = new Random();
+        Cursor cur = db.rawQuery(sql, null);
+        int result = rand.nextInt(cur.getCount()) + 1;
+        cur.close();
+        return result;
     }
 
     // returns picture path of a question given the questionId
     public byte[] getPicQuestion(int questionId) {
         Cursor c = db.rawQuery("SELECT Pic FROM PicQuestion WHERE Id =" + questionId, null);
         c.moveToFirst();
-        byte [] result = c.getBlob(0);
+        byte[] result = c.getBlob(0);
         c.close();
         return result;
     }
+
     public String getTextQuestion(int questionId) {
         Cursor c = db.rawQuery("SELECT Text FROM TextQuestion WHERE Id =" + questionId, null);
         c.moveToFirst();
@@ -162,11 +190,11 @@ public class DatabaseHandler {
                 country + "', '" + continent + "')");
     }
 
-    public void addGameToStatistics(int userId, int gameId){
+    public void addGameToStatistics(int userId, int gameId) {
         Cursor c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
                 " WHERE Id = " + Integer.toString(userId), null);
         System.out.println(c.getCount());
-        if (c.getCount() == 0){
+        if (c.getCount() == 0) {
             db.execSQL("INSERT INTO Statistics (Games, AverageScore, TotalPoints) VALUES " +
                     "(0, 0, 0)");
             c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
@@ -218,7 +246,7 @@ public class DatabaseHandler {
         int points = 1;
         double distance = checkDistanceToAnswer(answerId, xGuess, yGuess);
         // add a more sensible point calculation here
-        points = (int) Math.ceil(points/distance);
+        points = (int) Math.ceil(points / distance);
         return points;
 
     }
