@@ -36,8 +36,10 @@ public class DatabaseHandler {
 
     public int getRandomPicQuestion() {
         Random rand = new Random();
-        int i =1;
-        return i;
+        Cursor cur = db.rawQuery("SELECT * FROM PicQuestion", null);
+        int result = rand.nextInt(cur.getCount()) + 1;
+        cur.close();
+        return result;
     }
 
     public int getRandomPicQuestion(ArrayList<Integer[]> blacklist) {
