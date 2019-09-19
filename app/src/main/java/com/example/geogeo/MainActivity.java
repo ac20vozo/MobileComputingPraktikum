@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatabaseHandler db = new DatabaseHandler();
+        DatabaseHandler dba = DatabaseHandler.getInstance(getApplicationContext());
+        dba.open();
     }
 }
