@@ -13,8 +13,10 @@ public class MainActivity extends AppCompatActivity {
 
         db = DatabaseHandler.getInstance(getApplicationContext());
         db.open();
+        Controller con = new Controller(this);
+        con.test02();
 
-        test01();
+
     }
 
     public void test01() {

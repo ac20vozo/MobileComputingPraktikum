@@ -4,10 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -16,7 +13,7 @@ public class DatabaseHandler {
     private SQLiteDatabase db;
     private static DatabaseHandler instance;
 
-    private DatabaseHandler(Context context) {
+    public DatabaseHandler(Context context) {
         this.openHelper = new DBHelper(context);
     }
 
