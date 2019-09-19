@@ -8,6 +8,7 @@ import java.util.Random;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
@@ -93,6 +94,16 @@ public class Controller {
         } else {
             return false;
         }
+    }
+
+    public int[] getNextQuestion(int gameId) {
+        SQLiteOpenHelper sqLiteOpenHelper = new DBHelper(this.context);
+        SQLiteDatabase sqldb = sqLiteOpenHelper.getWritableDatabase();
+        Cursor cur = sqldb.rawQuery("SELECT * FROM Round WHERE Points = -1;", null);
+        int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
+        int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
+        cur.close();
+        return new int[] {isPic, qId};
     }
 
     public void endGame(int gameId) {
