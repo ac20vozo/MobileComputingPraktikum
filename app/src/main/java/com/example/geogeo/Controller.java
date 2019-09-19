@@ -30,7 +30,6 @@ public class Controller {
     public boolean createGame(int amount, String kind, String type){
         // blacklist ist Array von Array von ints (Mit 1. 0 oder 1 2. id von question)
         db.open();
-        System.out.println("test");
         int gameId = db.createGame(amount);
 
         int id = 0;
@@ -55,7 +54,6 @@ public class Controller {
             }
             db.addRoundToGame(gameId, blacklist.get(i)[0], blacklist.get(i)[1]);
         }
-        db.close();
         if (blacklist.size() == amount){
             return true;
         }else{
@@ -63,7 +61,9 @@ public class Controller {
         }
     }
 
-    public int endGame(int gameId){
-        return 1;
+    public void endGame(int gameId){
+        // Because for now we have only one user
+        int id = 1;
+        db.addGameToStatistics(id, gameId);
     }
 }

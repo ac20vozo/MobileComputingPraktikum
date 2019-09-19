@@ -162,6 +162,35 @@ public class DatabaseHandler {
                 country + "', '" + continent + "')");
     }
 
+    public void addGameToStatistics(int userId, int gameId){
+        Cursor c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
+                " WHERE Id = " + Integer.toString(userId), null);
+        System.out.println(c.getCount());
+        if (c.getCount() == 0){
+            db.execSQL("INSERT INTO Statistics (Games, AverageScore, TotalPoints) VALUES " +
+                    "(0, 0, 0)");
+            c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
+                    " WHERE Id = " + Integer.toString(userId), null);
+        }
+        c.moveToFirst();
+        int newGames = 0;
+        float newAverage = 0;
+        int newTotal = 0;
+
+        Cursor d = db.rawQuery("SELECT Points FROM Game WHERE Id =" + Integer.toString(gameId), null);
+        d.moveToFirst();
+        int gamePoints = d.getInt(0);
+
+        newGames = c.getInt(0) + 1;
+        newTotal = c.getInt(2) + gamePoints;
+        newAverage = newTotal / newGames;
+
+        db.execSQL("UPDATE Statistics SET Games =" + Integer.toString(newGames) +
+                ", AverageScore =" + newAverage + ", TotalPoints =" + Integer.toString(newTotal) +
+                " WHERE Id =" + Integer.toString(userId));
+        db.close();
+    }
+
     // returns distance to of given answer to correct location
     public double checkDistanceToAnswer(int answerId, double xGuess, double yGuess) {
         Double[] Cords = new Double[2];
