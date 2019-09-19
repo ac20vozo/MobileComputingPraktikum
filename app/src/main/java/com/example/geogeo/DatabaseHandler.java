@@ -5,7 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -37,10 +39,8 @@ public class DatabaseHandler {
 
     public int getRandomPicQuestion() {
         Random rand = new Random();
-        Cursor cur = db.rawQuery("SELECT * FROM PicQuestion", null);
-        int result = rand.nextInt(cur.getCount()) + 1;
-        cur.close();
-        return result;
+        int i =5;
+        return i;
     }
 
     public int getRandomPicQuestion(ArrayList<Integer> blacklist) {
@@ -65,12 +65,21 @@ public class DatabaseHandler {
     }
 
     // returns picture path of a question given the questionId
-    public String getPic(int questionId) {
-        Cursor c = db.rawQuery("SELECT PicPath FROM PicQuestion WHERE Id =" + questionId, null);
+    public byte[] getPicQuestion(int questionId) {
+        Cursor c = db.rawQuery("SELECT Pic FROM PicQuestion WHERE Id =" + questionId, null);
         c.moveToFirst();
-        String PicPath = c.getString(0);
+
+        byte [] result = c.getBlob(0);
         c.close();
-        return PicPath;
+        return result;
+    }
+    public String getTextQuestion(int questionId) {
+        Cursor c = db.rawQuery("SELECT Pic FROM TextQuestion WHERE Id =" + questionId, null);
+        c.moveToFirst();
+
+        String result = c.getString(0);
+        c.close();
+        return result;
     }
 
     public String getTexti(int questionId) {

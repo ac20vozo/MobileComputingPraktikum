@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         test01();
     }
 
-    private void test01() {
+    public void test01() {
         System.out.println("Random Pic Question: " + db.getRandomPicQuestion());
     }
 }
