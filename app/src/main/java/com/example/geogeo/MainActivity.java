@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         db = DatabaseHandler.getInstance(getApplicationContext());
         db.open();
         Controller con = new Controller(this);
-        con.test02();
+        con.bloßeintest02();
 
 
     }
