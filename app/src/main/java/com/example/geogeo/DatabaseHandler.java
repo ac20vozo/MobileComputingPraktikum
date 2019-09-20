@@ -141,10 +141,28 @@ public class DatabaseHandler {
         c.close();
         return Cords;
     }
-
-    public String[] getAnswer(int questionId) {
-        String[] answer = {"0.0", "0.0", "New York"};
-        return answer;
+    // returns answerId of given question
+    public int getAnswer(int isPicQuestion, int questionId) {
+        int AnswerId;
+        if ( isPicQuestion != 0){
+            Cursor c = db.rawQuery("SELECT AnswerId FROM PicQuestion WHERE ID =" + questionId, null);
+            c.moveToFirst();
+            AnswerId = c.getInt(0);
+        }
+        else{
+            Cursor c = db.rawQuery("SELECT AnswerId FROM TextQuestion WHERE ID =" + questionId, null);
+            c.moveToFirst();
+            AnswerId = c.getInt(0);
+        }
+        return AnswerId;
+    }
+    // moved from Controller, not checked
+    public int[] getNextQuestion(int gameId) {
+        Cursor cur = db.rawQuery("SELECT * FROM Round WHERE Points = -1 AND GameId =" + gameId +" ;", null);
+        int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
+        int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
+        cur.close();
+        return new int[] {isPic, qId};
     }
 
     public int createGame(int amount) {
