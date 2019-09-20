@@ -113,8 +113,11 @@ public class Controller {
     // check stringConversion
     public int answerToRound(double x, double y, int gameId) {
         int[] QuestionInfo = db.getNextQuestion(gameId);
+        int questionId = QuestionInfo[1];
         int answerId = db.getAnswer(QuestionInfo[0], QuestionInfo[1]);
         int points = answerQuestion(gameId, answerId, x, y);
+        //untested part
+        db.updateRound(gameId, QuestionInfo[1], x, y, points);
         return points;
     }
 
@@ -149,5 +152,7 @@ public class Controller {
         return points;
 
     }
+
+
 }
 

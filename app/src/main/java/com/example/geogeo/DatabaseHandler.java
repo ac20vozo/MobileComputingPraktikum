@@ -240,6 +240,12 @@ public class DatabaseHandler {
                 " WHERE Id =" + Integer.toString(userId));
         db.close();
     }
-
+    // not tested yet
+    public void updateRound(int gameId, int questionId, double x, double y, int points){
+        db.execSQL("UPDATE Round " +
+                "SET AnswerX = " + x + ", AnswerY = " + y + ", Points = " + points +
+                " WHERE GameId =" + gameId + " AND questionId =" + questionId + ";");
+        db.close();
+    }
 
 }
