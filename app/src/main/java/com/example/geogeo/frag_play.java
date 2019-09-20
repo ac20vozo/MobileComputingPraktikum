@@ -29,7 +29,7 @@ public class frag_play extends Fragment {
         {
             public void onClick(View v)
             {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
+                Intent intent = new Intent(getActivity(), map.class);
                 startActivity(intent);
 
             }
