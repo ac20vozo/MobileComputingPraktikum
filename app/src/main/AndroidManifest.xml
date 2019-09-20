@@ -23,7 +23,12 @@
         tools:replace="android:allowBackup"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Startseite"></activity>
+        <activity android:name=".Startseite">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>        </activity>
         <activity android:name=".GameStatistics"></activity>
         <activity
             android:name=".homescreen"
