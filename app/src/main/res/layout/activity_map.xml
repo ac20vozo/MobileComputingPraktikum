@@ -40,15 +40,5 @@
         android:layout_gravity="bottom|right"
         />
 
-    <TextView
-        android:id="@+id/cross"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="✛"
-        android:textColor="@color/colorAccent"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
 
 </FrameLayout>
