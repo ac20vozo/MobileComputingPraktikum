@@ -28,19 +28,18 @@ public class Controller {
     }
 
     public void bloßeintest02() {
-        DatabaseHandler db;
-        db = DatabaseHandler.getInstance(context);
+        //DatabaseHandler db;
+        //db = DatabaseHandler.getInstance(context);
         db.open();
         System.out.println("Random Pic Question: " + db.getRandomPicQuestion());
     }
 
-    public void showPic(byte[] bits, ImageView image, int questionId) {
-        DatabaseHandler db;
-        db = DatabaseHandler.getInstance(context);
+    public void showPic(ImageView image, int questionId) {
         db.open();
-        bits = db.getbytes(questionId);
+        byte [] bits = db.getbytes(questionId);
         Bitmap b = BitmapFactory.decodeByteArray(bits, 0, bits.length);
-        image.setImageBitmap(Bitmap.createScaledBitmap(b, 120, 120, false));
+        //image.setImageBitmap(Bitmap.createScaledBitmap(b, 150, 150, false));
+        image.setImageBitmap(b);
         db.close();
 
     }

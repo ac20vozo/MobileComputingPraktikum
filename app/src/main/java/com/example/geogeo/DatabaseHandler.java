@@ -117,7 +117,7 @@ public class DatabaseHandler {
 
 
 
-    public String getAnswerName(int answerId) {
+    public String getAnswerAnswer(int answerId) {
         Cursor c = db.rawQuery("SELECT Answer FROM Answer WHERE Id =" + answerId, null);
         c.moveToFirst();
         String Answer = c.getString(0);
@@ -127,11 +127,15 @@ public class DatabaseHandler {
 
     public Double[] getAnswerCords(int answerId) {
         Double[] Cords = new Double[2];
-        Cursor c = db.rawQuery("SELECT Answer FROM Answer WHERE Id =" + answerId, null);
+        Cursor c = db.rawQuery("SELECT X FROM Answer WHERE Id =" + answerId, null);
         c.moveToFirst();
         Double x = c.getDouble(0);
-        Double y = c.getDouble(1);
         Cords[0] = x;
+        c.close();
+
+        c = db.rawQuery("SELECT Y FROM Answer WHERE Id =" + answerId, null);
+        c.moveToFirst();
+        Double y = c.getDouble(0);
         Cords[1] = y;
         c.close();
         return Cords;
