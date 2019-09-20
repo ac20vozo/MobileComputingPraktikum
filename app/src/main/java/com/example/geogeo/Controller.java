@@ -65,6 +65,13 @@ public class Controller {
     public boolean createGame(int amount, String kind, String type) {
         // blacklist ist Array von Array von ints (Mit 1. 0 oder 1 2. id von question)
         db.open();
+        if (kind.equals("random")) {
+            if (!db.checkAmount(amount, "pic") || !db.checkAmount(amount, "text")) {
+                return false;
+            }
+        } else if (!db.checkAmount(amount, kind)) {
+            return false;
+        }
         int gameId = db.createGame(amount);
 
         int id = 0;
@@ -102,8 +109,9 @@ public class Controller {
         int id = 1;
         db.addGameToStatistics(id, gameId);
     }
+
     // check stringConversion
-    public int answerToRound(double x, double y, int gameId){
+    public int answerToRound(double x, double y, int gameId) {
         int[] QuestionInfo = db.getNextQuestion(gameId);
         int answerId = db.getAnswer(QuestionInfo[0], QuestionInfo[1]);
         int points = answerQuestion(gameId, answerId, x, y);
