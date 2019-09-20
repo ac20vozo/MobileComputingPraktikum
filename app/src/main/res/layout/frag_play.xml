@@ -6,14 +6,27 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/play_classicGame"
         android:layout_width="250dp"
         android:layout_height="122dp"
-        android:text="@string/play_classic"
+        android:text="@string/play_classicGame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/play_title"
         app:layout_constraintVertical_bias="0.361" />
+
+    <TextView
+        android:id="@+id/play_title"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:gravity="center"
+        android:text="@string/play_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.156" />
 </androidx.constraintlayout.widget.ConstraintLayout>
