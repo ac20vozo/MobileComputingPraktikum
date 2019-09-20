@@ -107,12 +107,12 @@ public class DatabaseHandler {
         return result;
     }
 
-    public String getTextAnswer(int questionId) {
-        Cursor c = db.rawQuery("SELECT Answer FROM TextQuestion WHERE Id =" + questionId, null);
+    public String getTextType(int questionId) {
+        Cursor c = db.rawQuery("SELECT Type FROM TextQuestion WHERE Id =" + questionId, null);
         c.moveToFirst();
-        String Text = c.getString(0);
+        String Type = c.getString(0);
         c.close();
-        return Text;
+        return Type;
     }
 
 
