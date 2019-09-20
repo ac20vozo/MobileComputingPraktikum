@@ -141,28 +141,29 @@ public class DatabaseHandler {
         c.close();
         return Cords;
     }
+
     // returns answerId of given question
     public int getAnswer(int isPicQuestion, int questionId) {
         int AnswerId;
-        if ( isPicQuestion != 0){
+        if (isPicQuestion != 0) {
             Cursor c = db.rawQuery("SELECT AnswerId FROM PicQuestion WHERE ID =" + questionId, null);
             c.moveToFirst();
             AnswerId = c.getInt(0);
-        }
-        else{
+        } else {
             Cursor c = db.rawQuery("SELECT AnswerId FROM TextQuestion WHERE ID =" + questionId, null);
             c.moveToFirst();
             AnswerId = c.getInt(0);
         }
         return AnswerId;
     }
+
     // moved from Controller, not checked
     public int[] getNextQuestion(int gameId) {
-        Cursor cur = db.rawQuery("SELECT * FROM Round WHERE Points = -1 AND GameId =" + gameId +" ;", null);
+        Cursor cur = db.rawQuery("SELECT * FROM Round WHERE Points = -1 AND GameId =" + gameId + " ;", null);
         int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
         int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
         cur.close();
-        return new int[] {isPic, qId};
+        return new int[]{isPic, qId};
     }
 
     public int createGame(int amount) {
@@ -172,6 +173,14 @@ public class DatabaseHandler {
         String id = c.getString(0);
         c.close();
         return Integer.valueOf(id);
+    }
+
+    public boolean checkAmount(int amount, String type) {
+        if (type.equals("pic")) {
+            return amount <= db.rawQuery("SELECT * FROM PicQuestions", null).getCount();
+        } else {
+            return amount <= db.rawQuery("SELECT * FROM TextQuestions", null).getCount();
+        }
     }
 
     public void addRoundToGame(int gameId, int isPicQuestion, int questionId) {
