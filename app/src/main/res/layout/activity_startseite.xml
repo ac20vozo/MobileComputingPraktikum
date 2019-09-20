@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Startseite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/Background_Startpage"/>
+
+    <TextView
+        android:id="@+id/txtGeo"
+        android:layout_width="254dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/architects_daughter"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textSize="52sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnSpielen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.456" />
+
+    <Button
+        android:id="@+id/btnSpielen"
+        style="@android:style/Widget.Holo.Light.Button.Inset"
+        android:layout_width="165dp"
+        android:layout_height="50dp"
+        android:background="@drawable/runde_button"
+        android:text="@string/Play"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.485" />
+
+    <Button
+        android:id="@+id/btnOption"
+        style="@android:style/Widget.Holo.Light.Button.Inset"
+        android:layout_width="165dp"
+        android:layout_height="50dp"
+        android:background="@drawable/runde_button"
+        android:text="@string/Options"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSpielen"
+        app:layout_constraintVertical_bias="0.093" />
+
+    <Button
+        android:id="@+id/btnBeenden"
+        style="@android:style/Widget.Holo.Light.Button.Inset"
+        android:layout_width="165dp"
+        android:layout_height="50dp"
+        android:background="@drawable/runde_button"
+        android:text="@string/Quit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.479"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnOption"
+        app:layout_constraintVertical_bias="0.152" />
+
+    <TextView
+        android:id="@+id/txtWillkommen"
+        android:layout_width="259dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/amarante"
+        android:gravity="center"
+        android:text="@string/WelcomeTo"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtGeo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.105" />
+</androidx.constraintlayout.widget.ConstraintLayout>
