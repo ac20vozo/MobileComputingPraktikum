@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,12 +13,8 @@ public class DatabaseHandler {
     private SQLiteDatabase db;
     private static DatabaseHandler instance;
 
-    private DatabaseHandler(Context context) {
+    public DatabaseHandler(Context context) {
         this.openHelper = new DBHelper(context);
-
-        System.out.println(getRandomPicQuestion());
-        System.out.println(getRandomTextQuestion("All"));
-        System.out.println();
     }
 
     public static DatabaseHandler getInstance(Context context) {
@@ -41,41 +36,75 @@ public class DatabaseHandler {
 
     public int getRandomPicQuestion() {
         Random rand = new Random();
-        Cursor cur = SQLiteDatabase.openDatabase("/data/data/com.example.geogeo/databases/db.db", null, 0).rawQuery("SELECT * FROM PicQuestion", null);
+        Cursor cur = db.rawQuery("SELECT * FROM PicQuestion", null);
         int result = rand.nextInt(cur.getCount()) + 1;
         cur.close();
         return result;
     }
 
-    public int getRandomPicQuestion(ArrayList<Integer> blacklist) {
-        return 1;
+    public int getRandomPicQuestion(ArrayList<Integer[]> blacklist) {
+        String sql = "SELECT * FROM PicQuestion WHERE ";
+        for (Integer[] v : blacklist) {
+            if (v[0] == 1) {
+                sql += "id <> AND " + v[1];
+            }
+        }
+        sql = sql.substring(0, sql.length() - 4);
+        System.out.println(sql);
+        Random rand = new Random();
+        Cursor cur = db.rawQuery(sql, null);
+        int result = rand.nextInt(cur.getCount()) + 1;
+        cur.close();
+        return result;
     }
 
     public int getRandomTextQuestion(String type) {
         Random rand = new Random();
-        SQLiteDatabase db_temp = SQLiteDatabase.openDatabase("/data/data/com.example.geogeo/databases/db.db", null, 0);
         Cursor cur;
-        if (type.equals("All")) {
-            cur = db_temp.rawQuery("SELECT * FROM TextQuestion", null);
+        if (type.equals("all")) {
+            cur = db.rawQuery("SELECT * FROM TextQuestion", null);
         } else {
-            cur = db_temp.rawQuery("SELECT * FROM TextQuestion WHERE Type " + type, null);
+            cur = db.rawQuery("SELECT * FROM TextQuestion WHERE Type = " + type, null);
         }
         int result = rand.nextInt(cur.getCount()) + 1;
         cur.close();
         return result;
     }
 
-    public int getRandomTextQuestion(ArrayList<Integer> blacklist, String type) {
-        return 1;
+    public int getRandomTextQuestion(ArrayList<Integer[]> blacklist, String type) {
+        String sql = "SELECT * FROM TextQuestion WHERE ";
+        if (!type.equals("all")) {
+            sql += "Type = " + type + " AND ";
+        }
+        for (Integer[] v : blacklist) {
+            if (v[0] == 0) {
+                sql += "id <> AND " + v[1];
+            }
+        }
+        sql = sql.substring(0, sql.length() - 4);
+        System.out.println(sql);
+        Random rand = new Random();
+        Cursor cur = db.rawQuery(sql, null);
+        int result = rand.nextInt(cur.getCount()) + 1;
+        cur.close();
+        return result;
     }
 
     // returns picture path of a question given the questionId
-    public String getPic(int questionId) {
-        Cursor c = db.rawQuery("SELECT PicPath FROM PicQuestion WHERE Id =" + questionId, null);
+    public byte[] getPicQuestion(int questionId) {
+        Cursor c = db.rawQuery("SELECT Pic FROM PicQuestion WHERE Id =" + questionId, null);
         c.moveToFirst();
-        String PicPath = c.getString(0);
+        byte[] result = c.getBlob(0);
         c.close();
-        return PicPath;
+        return result;
+    }
+
+    public String getTextQuestion(int questionId) {
+        Cursor c = db.rawQuery("SELECT Text FROM TextQuestion WHERE Id =" + questionId, null);
+        c.moveToFirst();
+        String result = c.getString(0);
+        c.close();
+        return result;
     }
 
     public String getTexti(int questionId) {
@@ -119,8 +148,12 @@ public class DatabaseHandler {
     }
 
     public int createGame(int amount) {
-        int id = 0;
-        return id;
+        db.execSQL("INSERT INTO Game (Amount, Points) VALUES (" + Integer.valueOf(amount) + ", 0)");
+        Cursor c = db.rawQuery("SELECT MAX(Id) FROM Game", null);
+        c.moveToFirst();
+        String id = c.getString(0);
+        c.close();
+        return Integer.valueOf(id);
     }
 
     public void addRoundToGame(int gameId, int isPicQuestion, int questionId) {
@@ -157,8 +190,37 @@ public class DatabaseHandler {
                 country + "', '" + continent + "')");
     }
 
+    public void addGameToStatistics(int userId, int gameId) {
+        Cursor c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
+                " WHERE Id = " + Integer.toString(userId), null);
+        System.out.println(c.getCount());
+        if (c.getCount() == 0) {
+            db.execSQL("INSERT INTO Statistics (Games, AverageScore, TotalPoints) VALUES " +
+                    "(0, 0, 0)");
+            c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
+                    " WHERE Id = " + Integer.toString(userId), null);
+        }
+        c.moveToFirst();
+        int newGames = 0;
+        float newAverage = 0;
+        int newTotal = 0;
+
+        Cursor d = db.rawQuery("SELECT Points FROM Game WHERE Id =" + Integer.toString(gameId), null);
+        d.moveToFirst();
+        int gamePoints = d.getInt(0);
+
+        newGames = c.getInt(0) + 1;
+        newTotal = c.getInt(2) + gamePoints;
+        newAverage = newTotal / newGames;
+
+        db.execSQL("UPDATE Statistics SET Games =" + Integer.toString(newGames) +
+                ", AverageScore =" + newAverage + ", TotalPoints =" + Integer.toString(newTotal) +
+                " WHERE Id =" + Integer.toString(userId));
+        db.close();
+    }
+
     // returns distance to of given answer to correct location
-    public double checkDistanceToAnswer(int gameId, int answerId, double xGuess, double yGuess) {
+    public double checkDistanceToAnswer(int answerId, double xGuess, double yGuess) {
         Double[] Cords = new Double[2];
         Cords = getAnswerCords(answerId);
 
@@ -178,5 +240,14 @@ public class DatabaseHandler {
     // convert degree to radians
     public double degreeToRadians(double degree) {
         return degree * Math.PI / 180;
+    }
+
+    public int answerQuestion(int gameId, int answerId, double xGuess, double yGuess) {
+        int points = 1;
+        double distance = checkDistanceToAnswer(answerId, xGuess, yGuess);
+        // add a more sensible point calculation here
+        points = (int) Math.ceil(points / distance);
+        return points;
+
     }
 }
