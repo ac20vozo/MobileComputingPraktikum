@@ -11,7 +11,7 @@
     <string name="play_classicGame">Classic Game</string>
     <string name="stats_playedGames">Played Games:</string>
     <string name="stats_average">Average distance to target:</string>
-    <string name="stats_highscore">Highscore:</string>
+    <string name="stats_highscore">Points:</string>
     <string name="stats_playedGamesDisplay"></string>
     <string name="stats_averageDisplay"></string>
     <string name="stats_highscoreDisplay"></string>

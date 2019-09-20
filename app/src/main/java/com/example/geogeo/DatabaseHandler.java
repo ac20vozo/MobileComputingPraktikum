@@ -216,7 +216,6 @@ public class DatabaseHandler {
         db.execSQL("UPDATE Statistics SET Games =" + Integer.toString(newGames) +
                 ", AverageScore =" + newAverage + ", TotalPoints =" + Integer.toString(newTotal) +
                 " WHERE Id =" + Integer.toString(userId));
-        db.close();
     }
 
     // returns distance to of given answer to correct location
@@ -249,5 +248,18 @@ public class DatabaseHandler {
         points = (int) Math.ceil(points / distance);
         return points;
 
+    }
+
+    public String[] getStats(int userId){
+        Cursor c = db.rawQuery("SELECT Games, AverageScore, TotalPoints FROM Statistics WHERE Id = " + userId, null);
+        if (c.getCount() == 0){
+            db.execSQL("INSERT INTO Statistics (Games, AverageScore, TotalPoints) VALUES " +
+                    "(0, 0, 0)");
+            c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
+                    " WHERE Id = " + Integer.toString(userId), null);
+        }
+        c.moveToFirst();
+        String[] stats = {Integer.toString(c.getInt(0)), Integer.toString(c.getInt(1)), Integer.toString(c.getInt(2))};
+        return stats;
     }
 }

@@ -24,6 +24,7 @@ public class Controller {
     public Controller(Context context) {
         this.context = context;
         db = DatabaseHandler.getInstance(context);
+        db.open();
     }
 
     public void bloßeintest02() {
@@ -110,5 +111,8 @@ public class Controller {
         // Because for now we have only one user
         int id = 1;
         db.addGameToStatistics(id, gameId);
+    }
+    public String[] getStats(int userId){
+        return db.getStats(userId);
     }
 }
