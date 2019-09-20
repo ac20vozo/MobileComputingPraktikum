@@ -2,6 +2,7 @@ package com.example.geogeo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 
 
@@ -23,7 +25,7 @@ import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow;
 
 
-public class map extends AppCompatActivity {
+public class map extends Activity {
 
     MapView map = null;
     TextView question;
@@ -37,9 +39,10 @@ public class map extends AppCompatActivity {
 
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_map);
 
         map = (MapView) findViewById(R.id.map);
+
         question = (TextView) findViewById(R.id.question);
         question.setText("Insert Pic/text");
 
