@@ -107,15 +107,15 @@ public class DatabaseHandler {
         return result;
     }
 
-    public String getTexti(int questionId) {
-        Cursor c = db.rawQuery("SELECT Text FROM TextQuestion WHERE Id =" + questionId, null);
+    public String getTextAnswer(int questionId) {
+        Cursor c = db.rawQuery("SELECT Answer FROM TextQuestion WHERE Id =" + questionId, null);
         c.moveToFirst();
         String Text = c.getString(0);
         c.close();
         return Text;
     }
 
-    public byte[] getblop(int id) {
+    public byte[] getbytes(int id) {
         Cursor c = db.rawQuery("SELECT PicPath FROM PicQuestion WHERE ID =" + id, null);
         c.moveToFirst();
         byte[] result = c.getBlob(0);
