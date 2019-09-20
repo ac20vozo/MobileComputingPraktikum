@@ -9,10 +9,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 public class homescreen extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -47,7 +43,7 @@ public class homescreen extends AppCompatActivity implements BottomNavigationVie
         }
         switch (Item.getItemId()){
             case R.id.navigation_dashboard:
-                fragment = new frag_profil();
+                fragment = new frag_stats();
                 break;
         }
         switch (Item.getItemId()){

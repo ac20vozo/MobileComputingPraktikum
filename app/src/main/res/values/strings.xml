@@ -2,14 +2,22 @@
     <string name="app_name">GeoGeo!</string>
     <string name="title_activity_homescreen">GeoGeo!</string>
     <string name="bar_play">Play</string>
-    <string name="bar_profil">Profil</string>
+    <string name="bar_profil">Stats</string>
     <string name="bar_options">Options</string>
-    <string name="profil_txt">Username:</string>
-    <string name="profil_username">Tim</string>
-    <string name="profil_input">New username:</string>
-    <string name="profil_submit">Submit</string>
-    <string name="play_classic">Classic</string>
-    <string name="profil_playedGames">Played Games:</string>
-    <string name="profil_average">Average distance to target:</string>
+    <string name="stats_txt">Username:</string>
+    <string name="stats_username">Tim</string>
+    <string name="options_input">New username:</string>
+    <string name="options_submit">Submit</string>
+    <string name="play_classicGame">Classic Game</string>
+    <string name="stats_playedGames">Played Games:</string>
+    <string name="stats_average">Average distance to target:</string>
+    <string name="stats_highscore">Highscore:</string>
+    <string name="stats_playedGamesDisplay"></string>
+    <string name="stats_averageDisplay"></string>
+    <string name="stats_highscoreDisplay"></string>
+    <string name="stats_title">Your Stats</string>
+    <string name="play_title">Gamemodi</string>
+    <string name="options_title">Change Usernme</string>
+
 
 </resources>
