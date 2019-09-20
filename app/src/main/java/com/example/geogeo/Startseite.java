@@ -3,7 +3,9 @@ package com.example.geogeo;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -29,8 +31,12 @@ public class Startseite extends AppCompatActivity {
 
 
 
-    /*private void spielenClick(View view){
-        Intent spielenIntent = new Intent(this,--neuerIntent--);
+    public void spielenClick(View view){
+        Intent spielenIntent = new Intent(this,homescreen.class);
         startActivity(spielenIntent);
-    }*/
+    }
+
+    public void quitClick(View view){
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
 }

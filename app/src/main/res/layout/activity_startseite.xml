@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/Background_Startpage"/>
+        android:background="@drawable/background_startseite"/>
 
     <TextView
         android:id="@+id/txtGeo"
@@ -66,6 +66,7 @@
         android:layout_height="50dp"
         android:background="@drawable/runde_button"
         android:fontFamily="@font/amarante"
+        android:onClick="quitClick"
         android:text="@string/Quit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
