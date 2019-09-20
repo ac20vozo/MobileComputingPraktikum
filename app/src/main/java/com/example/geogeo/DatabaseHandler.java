@@ -91,7 +91,7 @@ public class DatabaseHandler {
     }
 
     // returns picture path of a question given the questionId
-    public byte[] getPicQuestion(int questionId) {
+    public byte[] getbytes(int questionId) {
         Cursor c = db.rawQuery("SELECT Pic FROM PicQuestion WHERE Id =" + questionId, null);
         c.moveToFirst();
         byte[] result = c.getBlob(0);
@@ -115,12 +115,7 @@ public class DatabaseHandler {
         return Text;
     }
 
-    public byte[] getbytes(int id) {
-        Cursor c = db.rawQuery("SELECT PicPath FROM PicQuestion WHERE ID =" + id, null);
-        c.moveToFirst();
-        byte[] result = c.getBlob(0);
-        return result;
-    }
+
 
     public String getAnswerName(int answerId) {
         Cursor c = db.rawQuery("SELECT Answer FROM Answer WHERE Id =" + answerId, null);
