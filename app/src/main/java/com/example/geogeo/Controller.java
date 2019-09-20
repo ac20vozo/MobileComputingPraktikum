@@ -122,7 +122,6 @@ public class Controller {
     public String[] getStats(int userId){
         return db.getStats(userId);
     }
-}
 
     // check stringConversion
     public int answerToRound(double x, double y, int gameId) {
