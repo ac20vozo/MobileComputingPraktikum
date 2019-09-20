@@ -24,6 +24,7 @@ public class Controller {
     public Controller(Context context) {
         this.context = context;
         db = DatabaseHandler.getInstance(context);
+        db.open();
     }
 
     public void bloßeintest02() {
@@ -37,7 +38,7 @@ public class Controller {
         DatabaseHandler db;
         db = DatabaseHandler.getInstance(context);
         db.open();
-        bits = db.getPicQuestion(questionId);
+        bits = db.getbytes(questionId);
         Bitmap b = BitmapFactory.decodeByteArray(bits, 0, bits.length);
         image.setImageBitmap(Bitmap.createScaledBitmap(b, 120, 120, false));
         db.close();
@@ -103,11 +104,23 @@ public class Controller {
         }
     }
 
+    public int[] getNextQuestion(int gameId) {
+        SQLiteOpenHelper sqLiteOpenHelper = new DBHelper(this.context);
+        SQLiteDatabase sqldb = sqLiteOpenHelper.getWritableDatabase();
+        Cursor cur = sqldb.rawQuery("SELECT * FROM Round WHERE Points = -1;", null);
+        int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
+        int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
+        cur.close();
+        return new int[] {isPic, qId};
+    }
 
     public void endGame(int gameId) {
         // Because for now we have only one user
         int id = 1;
         db.addGameToStatistics(id, gameId);
+    }
+    public String[] getStats(int userId){
+        return db.getStats(userId);
     }
 
     // check stringConversion
