@@ -91,7 +91,7 @@ public class DatabaseHandler {
     }
 
     // returns picture path of a question given the questionId
-    public byte[] getPicQuestion(int questionId) {
+    public byte[] getbytes(int questionId) {
         Cursor c = db.rawQuery("SELECT Pic FROM PicQuestion WHERE Id =" + questionId, null);
         c.moveToFirst();
         byte[] result = c.getBlob(0);
@@ -107,20 +107,15 @@ public class DatabaseHandler {
         return result;
     }
 
-    public String getTexti(int questionId) {
-        Cursor c = db.rawQuery("SELECT Text FROM TextQuestion WHERE Id =" + questionId, null);
+    public String getTextType(int questionId) {
+        Cursor c = db.rawQuery("SELECT Type FROM TextQuestion WHERE Id =" + questionId, null);
         c.moveToFirst();
-        String Text = c.getString(0);
+        String Type = c.getString(0);
         c.close();
-        return Text;
+        return Type;
     }
 
-    public byte[] getblop(int id) {
-        Cursor c = db.rawQuery("SELECT PicPath FROM PicQuestion WHERE ID =" + id, null);
-        c.moveToFirst();
-        byte[] result = c.getBlob(0);
-        return result;
-    }
+
 
     public String getAnswerName(int answerId) {
         Cursor c = db.rawQuery("SELECT Answer FROM Answer WHERE Id =" + answerId, null);
@@ -142,9 +137,28 @@ public class DatabaseHandler {
         return Cords;
     }
 
-    public String[] getAnswer(int questionId) {
-        String[] answer = {"0.0", "0.0", "New York"};
-        return answer;
+    // returns answerId of given question
+    public int getAnswer(int isPicQuestion, int questionId) {
+        int AnswerId;
+        if (isPicQuestion != 0) {
+            Cursor c = db.rawQuery("SELECT AnswerId FROM PicQuestion WHERE ID =" + questionId, null);
+            c.moveToFirst();
+            AnswerId = c.getInt(0);
+        } else {
+            Cursor c = db.rawQuery("SELECT AnswerId FROM TextQuestion WHERE ID =" + questionId, null);
+            c.moveToFirst();
+            AnswerId = c.getInt(0);
+        }
+        return AnswerId;
+    }
+
+    // moved from Controller, not checked
+    public int[] getNextQuestion(int gameId) {
+        Cursor cur = db.rawQuery("SELECT * FROM Round WHERE Points = -1 AND GameId =" + gameId + " ;", null);
+        int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
+        int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
+        cur.close();
+        return new int[]{isPic, qId};
     }
 
     public int createGame(int amount) {
@@ -154,6 +168,14 @@ public class DatabaseHandler {
         String id = c.getString(0);
         c.close();
         return Integer.valueOf(id);
+    }
+
+    public boolean checkAmount(int amount, String type) {
+        if (type.equals("pic")) {
+            return amount <= db.rawQuery("SELECT * FROM PicQuestions", null).getCount();
+        } else {
+            return amount <= db.rawQuery("SELECT * FROM TextQuestions", null).getCount();
+        }
     }
 
     public void addRoundToGame(int gameId, int isPicQuestion, int questionId) {

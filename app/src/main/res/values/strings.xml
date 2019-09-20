@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">GeoGeo!</string>
+    <string name="WelcomeTo">Welcome to</string>
+    <string name="Play">Play</string>
+    <string name="Options">Options</string>
+    <string name="Quit">Quit</string>
+    <string name="YourResult">Your Result:</string>
+    <string name="Distance">Distance</string>
+    <string name="Score">Score</string>
+    <string name="Question1">Question 1:</string>
+    <string name="Question2">Question 2:</string>
+    <string name="Question3">Question 3:</string>
+    <string name="Question4">Question 4:</string>
+    <string name="Question5">Question 5:</string>
+    <string name="TotalScore">Total Score:</string>
     <string name="title_activity_homescreen">GeoGeo!</string>
     <string name="bar_play">Play</string>
     <string name="bar_profil">Stats</string>
