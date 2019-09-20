@@ -24,6 +24,7 @@ public class Controller {
     public Controller(Context context) {
         this.context = context;
         db = DatabaseHandler.getInstance(context);
+        db.open();
     }
 
     public void bloßeintest02() {
@@ -103,18 +104,33 @@ public class Controller {
         }
     }
 
+    public int[] getNextQuestion(int gameId) {
+        SQLiteOpenHelper sqLiteOpenHelper = new DBHelper(this.context);
+        SQLiteDatabase sqldb = sqLiteOpenHelper.getWritableDatabase();
+        Cursor cur = sqldb.rawQuery("SELECT * FROM Round WHERE Points = -1;", null);
+        int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
+        int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
+        cur.close();
+        return new int[] {isPic, qId};
+    }
 
     public void endGame(int gameId) {
         // Because for now we have only one user
         int id = 1;
         db.addGameToStatistics(id, gameId);
     }
+    public String[] getStats(int userId){
+        return db.getStats(userId);
+    }
 
     // check stringConversion
     public int answerToRound(double x, double y, int gameId) {
         int[] QuestionInfo = db.getNextQuestion(gameId);
+        int questionId = QuestionInfo[1];
         int answerId = db.getAnswer(QuestionInfo[0], QuestionInfo[1]);
         int points = answerQuestion(gameId, answerId, x, y);
+        //untested part
+        db.updateRound(gameId, QuestionInfo[1], x, y, points);
         return points;
     }
 
@@ -149,5 +165,7 @@ public class Controller {
         return points;
 
     }
+
+
 }
 

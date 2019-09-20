@@ -240,6 +240,25 @@ public class DatabaseHandler {
                 " WHERE Id =" + Integer.toString(userId));
         db.close();
     }
+    // not tested yet
+    public void updateRound(int gameId, int questionId, double x, double y, int points){
+        db.execSQL("UPDATE Round " +
+                "SET AnswerX = " + x + ", AnswerY = " + y + ", Points = " + points +
+                " WHERE GameId =" + gameId + " AND questionId =" + questionId + ";");
+        db.close();
+    }
 
+    public String[] getStats(int userId){
+        Cursor c = db.rawQuery("SELECT Games, AverageScore, TotalPoints FROM Statistics WHERE Id = " + userId, null);
+        if (c.getCount() == 0){
+            db.execSQL("INSERT INTO Statistics (Games, AverageScore, TotalPoints) VALUES " +
+                    "(0, 0, 0)");
+            c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
+                    " WHERE Id = " + Integer.toString(userId), null);
+        }
+        c.moveToFirst();
+        String[] stats = {Integer.toString(c.getInt(0)), Integer.toString(c.getInt(1)), Integer.toString(c.getInt(2))};
+        return stats;
+    }
 
 }
