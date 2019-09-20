@@ -248,4 +248,17 @@ public class DatabaseHandler {
         db.close();
     }
 
+    public String[] getStats(int userId){
+        Cursor c = db.rawQuery("SELECT Games, AverageScore, TotalPoints FROM Statistics WHERE Id = " + userId, null);
+        if (c.getCount() == 0){
+            db.execSQL("INSERT INTO Statistics (Games, AverageScore, TotalPoints) VALUES " +
+                    "(0, 0, 0)");
+            c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
+                    " WHERE Id = " + Integer.toString(userId), null);
+        }
+        c.moveToFirst();
+        String[] stats = {Integer.toString(c.getInt(0)), Integer.toString(c.getInt(1)), Integer.toString(c.getInt(2))};
+        return stats;
+    }
+
 }
