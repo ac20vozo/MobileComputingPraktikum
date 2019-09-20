@@ -2,8 +2,10 @@ package com.example.geogeo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class GameStatistics extends AppCompatActivity {
@@ -58,5 +60,10 @@ public class GameStatistics extends AppCompatActivity {
         txtScore5 = findViewById(R.id.txtScore5);
         txtGesamt = findViewById(R.id.txtGesamt);
         txtTotalScore = findViewById(R.id.txtTotalScore);
+    }
+
+    public void onScreenClick(View view){
+        Intent screenIntent = new Intent(this, homescreen.class);
+        startActivity(screenIntent);
     }
 }
