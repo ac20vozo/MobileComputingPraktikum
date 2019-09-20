@@ -16,7 +16,7 @@
         android:layout_width="254dp"
         android:layout_height="73dp"
         android:layout_marginTop="56dp"
-        android:fontFamily="@font/architects_daughter"
+        android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="@string/app_name"
         android:textSize="52sp"

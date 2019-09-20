@@ -38,7 +38,7 @@ public class Controller {
         DatabaseHandler db;
         db = DatabaseHandler.getInstance(context);
         db.open();
-        bits = db.getPicQuestion(questionId);
+        bits = db.getbytes(questionId);
         Bitmap b = BitmapFactory.decodeByteArray(bits, 0, bits.length);
         image.setImageBitmap(Bitmap.createScaledBitmap(b, 120, 120, false));
         db.close();
