@@ -24,6 +24,7 @@ public class Controller {
     public Controller(Context context) {
         this.context = context;
         db = DatabaseHandler.getInstance(context);
+        db.open();
     }
 
     public void bloßeintest02() {
@@ -37,7 +38,7 @@ public class Controller {
         DatabaseHandler db;
         db = DatabaseHandler.getInstance(context);
         db.open();
-        bits = db.getPicQuestion(questionId);
+        bits = db.getbytes(questionId);
         Bitmap b = BitmapFactory.decodeByteArray(bits, 0, bits.length);
         image.setImageBitmap(Bitmap.createScaledBitmap(b, 120, 120, false));
         db.close();
@@ -65,6 +66,13 @@ public class Controller {
     public boolean createGame(int amount, String kind, String type) {
         // blacklist ist Array von Array von ints (Mit 1. 0 oder 1 2. id von question)
         db.open();
+        if (kind.equals("random")) {
+            if (!db.checkAmount(amount, "pic") || !db.checkAmount(amount, "text")) {
+                return false;
+            }
+        } else if (!db.checkAmount(amount, kind)) {
+            return false;
+        }
         int gameId = db.createGame(amount);
 
         int id = 0;
@@ -111,4 +119,53 @@ public class Controller {
         int id = 1;
         db.addGameToStatistics(id, gameId);
     }
+    public String[] getStats(int userId){
+        return db.getStats(userId);
+    }
+
+    // check stringConversion
+    public int answerToRound(double x, double y, int gameId) {
+        int[] QuestionInfo = db.getNextQuestion(gameId);
+        int questionId = QuestionInfo[1];
+        int answerId = db.getAnswer(QuestionInfo[0], QuestionInfo[1]);
+        int points = answerQuestion(gameId, answerId, x, y);
+        //untested part
+        db.updateRound(gameId, QuestionInfo[1], x, y, points);
+        return points;
+    }
+
+    // returns distance to of given answer to correct location
+    public double checkDistanceToAnswer(int answerId, double xGuess, double yGuess) {
+        Double[] Cords = new Double[2];
+        Cords = db.getAnswerCords(answerId);
+
+        return coordDistance(Cords[0], Cords[1], xGuess, yGuess);
+    }
+
+    // calculates distance between to coordinates in km
+    public double coordDistance(double lon1, double lat1, double lon2, double lat2) {
+        double xDifference = degreeToRadians(lon1) - degreeToRadians(lon2);
+        double yDifference = degreeToRadians(lat1) - degreeToRadians(lat2);
+        double angle = (Math.pow(Math.sin(xDifference / 2), 2) + Math.cos(yDifference) * Math.cos(xDifference) * (Math.pow(Math.sin(yDifference / 2), 2)));
+        double c = 2 * Math.atan2(Math.sqrt(angle), Math.sqrt(1 - angle));
+        double distance = 6378 * c;
+        return distance;
+    }
+
+    // convert degree to radians
+    public double degreeToRadians(double degree) {
+        return degree * Math.PI / 180;
+    }
+
+    public int answerQuestion(int gameId, int answerId, double xGuess, double yGuess) {
+        int points = 1;
+        double distance = checkDistanceToAnswer(answerId, xGuess, yGuess);
+        // add a more sensible point calculation here
+        points = (int) Math.ceil(points / distance);
+        return points;
+
+    }
+
+
 }
+
