@@ -36,6 +36,7 @@ public class Startseite extends AppCompatActivity {
         startActivity(spielenIntent);
     }
 
+
     public void quitClick(View view){
         android.os.Process.killProcess(android.os.Process.myPid());
     }

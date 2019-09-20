@@ -34,6 +34,7 @@
         android:layout_height="50dp"
         android:background="@drawable/runde_button"
         android:fontFamily="sans-serif"
+        android:onClick="spielenClick"
         android:text="@string/Play"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
