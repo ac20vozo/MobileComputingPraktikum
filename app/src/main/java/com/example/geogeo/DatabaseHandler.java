@@ -246,35 +246,5 @@ public class DatabaseHandler {
         db.close();
     }
 
-    // returns distance to of given answer to correct location
-    public double checkDistanceToAnswer(int answerId, double xGuess, double yGuess) {
-        Double[] Cords = new Double[2];
-        Cords = getAnswerCords(answerId);
 
-        return coordDistance(Cords[0], Cords[1], xGuess, yGuess);
-    }
-
-    // calculates distance between to coordinates in km
-    public double coordDistance(double lon1, double lat1, double lon2, double lat2) {
-        double xDifference = degreeToRadians(lon1) - degreeToRadians(lon2);
-        double yDifference = degreeToRadians(lat1) - degreeToRadians(lat2);
-        double angle = (Math.pow(Math.sin(xDifference / 2), 2) + Math.cos(yDifference) * Math.cos(xDifference) * (Math.pow(Math.sin(yDifference / 2), 2)));
-        double c = 2 * Math.atan2(Math.sqrt(angle), Math.sqrt(1 - angle));
-        double distance = 6378 * c;
-        return distance;
-    }
-
-    // convert degree to radians
-    public double degreeToRadians(double degree) {
-        return degree * Math.PI / 180;
-    }
-
-    public int answerQuestion(int gameId, int answerId, double xGuess, double yGuess) {
-        int points = 1;
-        double distance = checkDistanceToAnswer(answerId, xGuess, yGuess);
-        // add a more sensible point calculation here
-        points = (int) Math.ceil(points / distance);
-        return points;
-
-    }
 }
