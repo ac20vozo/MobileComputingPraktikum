@@ -55,7 +55,7 @@ public class DatabaseHandler {
         String sql = "SELECT * FROM PicQuestion WHERE ";
         for (Integer[] v : blacklist) {
             if (v[0] == 1) {
-                sql += "id <> AND " + v[1];
+                sql += "id <> " + v[1] + " AND" ;
             }
         }
         sql = sql.substring(0, sql.length() - 4);
@@ -87,7 +87,7 @@ public class DatabaseHandler {
         }
         for (Integer[] v : blacklist) {
             if (v[0] == 0) {
-                sql += "id <> AND " + v[1];
+                sql += "id <> " + v[1] + " AND" ;
             }
         }
         sql = sql.substring(0, sql.length() - 4);

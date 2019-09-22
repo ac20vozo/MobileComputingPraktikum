@@ -32,7 +32,7 @@ public class frag_play extends Fragment {
         {
             public void onClick(View v)
             {
-                gameId = con.createGame(amount, "random", null);
+                gameId = con.createGame(amount, "random", "all");
                 if (gameId != 0){
                     Intent intent = new Intent(getActivity(), map.class);
                     intent.putExtra("gameId", gameId);
