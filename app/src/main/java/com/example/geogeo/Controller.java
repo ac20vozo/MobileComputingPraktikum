@@ -116,6 +116,7 @@ public class Controller {
         db.addGameToStatistics(id, gameId);
 
     }
+
     public String[] getStats(int userId){
         db.open();
         String[] result = db.getStats(userId);
