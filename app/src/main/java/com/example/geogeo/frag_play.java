@@ -33,13 +33,19 @@ public class frag_play extends Fragment {
             public void onClick(View v)
             {
                 gameId = con.createGame(amount, "random", "all");
-                //int [] NextQuestionInfo = con.getNextQuestionInfo(gameId);
+                int [] nextQuestionInfo = con.getNextQuestionInfo(gameId);
                 if (gameId != 0){
-                    Intent intent = new Intent(getActivity(), map.class);
-                    intent.putExtra("gameId", gameId);
-                    //intent.putExtra("questionId", NextQuestionInfo[0]);
-                    //intent.putExtra("isPicQuestion", NextQuestionInfo[1]);
-                    startActivity(intent);
+                    if (nextQuestionInfo[1] == -1) {
+                        if (con.isGameOver(gameId)) {
+                            con.endGame(gameId);
+                        }
+                    } else {
+                        Intent intent = new Intent(getActivity(), map.class);
+                        intent.putExtra("gameId", gameId);
+                        intent.putExtra("questionId", nextQuestionInfo[0]);
+                        intent.putExtra("isPicQuestion", nextQuestionInfo[1]);
+                        startActivity(intent);
+                    }
                 }
 
             }

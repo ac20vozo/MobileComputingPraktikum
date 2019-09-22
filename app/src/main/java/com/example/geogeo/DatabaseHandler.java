@@ -57,7 +57,7 @@ public class DatabaseHandler {
         String sql = "SELECT * FROM PicQuestion WHERE ";
         for (Integer[] v : blacklist) {
             if (v[0] == 1) {
-                sql += "id <> " + v[1] + " AND" ;
+                sql += "id <> " + v[1] + " AND";
             }
         }
         sql = sql.substring(0, sql.length() - 4);
@@ -89,7 +89,7 @@ public class DatabaseHandler {
         }
         for (Integer[] v : blacklist) {
             if (v[0] == 0) {
-                sql += "id <> " + v[1] + " AND" ;
+                sql += "id <> " + v[1] + " AND";
             }
         }
         sql = sql.substring(0, sql.length() - 4);
@@ -173,7 +173,7 @@ public class DatabaseHandler {
         Cursor cur = db.rawQuery("SELECT IsPicQuestion, QuestionId FROM Round WHERE Points IS NULL AND GameId =" + gameId + " ;", null);
         cur.moveToFirst();
         if (cur.getCount() == 0) {
-            return new int[] {0, 0};
+            return new int[]{-1, -1};
         }
         int isPic = cur.getInt(0);
         int qId = cur.getInt(1);
@@ -234,30 +234,27 @@ public class DatabaseHandler {
 
     public void addGameToStatistics(int userId, int gameId) {
         Cursor c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
-                " WHERE Id = " + Integer.toString(userId), null);
+                " WHERE Id = " + userId, null);
         System.out.println(c.getCount());
         if (c.getCount() == 0) {
             db.execSQL("INSERT INTO Statistics (Games, AverageScore, TotalPoints) VALUES " +
                     "(0, 0, 0)");
             c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
-                    " WHERE Id = " + Integer.toString(userId), null);
+                    " WHERE Id = " + userId, null);
         }
         c.moveToFirst();
-        int newGames = 0;
-        float newAverage = 0;
-        int newTotal = 0;
 
-        Cursor d = db.rawQuery("SELECT Points FROM Game WHERE Id =" + Integer.toString(gameId), null);
+        Cursor d = db.rawQuery("SELECT Points FROM Game WHERE Id =" + gameId, null);
         d.moveToFirst();
         int gamePoints = d.getInt(0);
 
-        newGames = c.getInt(0) + 1;
-        newTotal = c.getInt(2) + gamePoints;
-        newAverage = newTotal / newGames;
+        int newGames = c.getInt(0) + 1;
+        int newTotal = c.getInt(2) + gamePoints;
+        float newAverage = newTotal / newGames;
 
-        db.execSQL("UPDATE Statistics SET Games =" + Integer.toString(newGames) +
-                ", AverageScore =" + newAverage + ", TotalPoints =" + Integer.toString(newTotal) +
-                " WHERE Id =" + Integer.toString(userId));
+        db.execSQL("UPDATE Statistics SET Games =" + newGames +
+                ", AverageScore =" + newAverage + ", TotalPoints =" + newTotal +
+                " WHERE Id =" + userId);
         db.close();
     }
 
@@ -283,10 +280,10 @@ public class DatabaseHandler {
         return stats;
     }
 
-    public boolean isGameOver(int gameId){
+    public boolean isGameOver(int gameId) {
         Cursor c = db.rawQuery("SELECT AnswerX FROM Round " +
                 "WHERE GameId = " + gameId + " AND AnswerX IS NUll", null);
-        if(c.getCount() == 0){
+        if (c.getCount() == 0) {
             return true;
         }
         return false;
