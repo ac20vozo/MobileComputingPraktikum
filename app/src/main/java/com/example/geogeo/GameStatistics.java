@@ -11,6 +11,10 @@ import android.widget.TextView;
 public class GameStatistics extends AppCompatActivity {
 
     int gameId;
+    View[] questions = new View[5];
+    TextView[] score = new TextView[5];
+    String[] pointsPerRound;
+    int totalScore = 0;
 
     TextView txtStatistics;
     TextView txtDist0;
@@ -33,6 +37,7 @@ public class GameStatistics extends AppCompatActivity {
     TextView txtScore5;
     TextView txtGesamt;
     TextView txtTotalScore;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,28 @@ public class GameStatistics extends AppCompatActivity {
         txtGesamt = findViewById(R.id.txtGesamt);
         txtTotalScore = findViewById(R.id.txtTotalScore);
 
+        questions[0] = txtFrage1;
+        questions[1] = txtFrage2;
+        questions[2] = txtFrage3;
+        questions[3] = txtFrage4;
+        questions[4] = txtFrage5;
+
+        score[0] = txtScore1;
+        score[1] = txtScore2;
+        score[2] = txtScore3;
+        score[3] = txtScore4;
+        score[4] = txtScore5;
+
+        Controller con = new Controller(getApplicationContext());
+        pointsPerRound = con.getPointsPerRound(gameId);
+
+        for (int i = 0; i<pointsPerRound.length;i++){
+            questions[i].setVisibility(View.VISIBLE);
+            score[i].setText(pointsPerRound[i]);
+            System.out.println(totalScore);
+            totalScore = totalScore + Integer.parseInt(pointsPerRound[i]);
+        }
+        txtTotalScore.setText(Integer.toString(totalScore));
 
     }
 }
