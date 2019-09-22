@@ -14,6 +14,8 @@ import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
 import java.io.ByteArrayInputStream;
 
 public class Controller {
@@ -105,16 +107,6 @@ public class Controller {
         } else {
             return false;
         }
-    }
-
-    public int[] getNextQuestion(int gameId) {
-        SQLiteOpenHelper sqLiteOpenHelper = new DBHelper(this.context);
-        SQLiteDatabase sqldb = sqLiteOpenHelper.getWritableDatabase();
-        Cursor cur = sqldb.rawQuery("SELECT * FROM Round WHERE Points = -1;", null);
-        int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
-        int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
-        cur.close();
-        return new int[] {isPic, qId};
     }
 
     public void endGame(int gameId) {
