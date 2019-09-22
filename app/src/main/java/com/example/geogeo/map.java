@@ -63,14 +63,14 @@ public class map extends Activity {
     Marker result;
     Marker mark;
 
-    Button submit;
-    ImageView mark;
     double lat;
     double lon;
     boolean isSet;
     int gameId;
+    //int questionId;
+    //int isPicQuestion;
+    //int [] NextQuestionInfo;
 
-    //Marker mio = new Marker(map);
 
     private void pointSelected(double lat, double lon){
         this.lat = lat;
@@ -98,13 +98,15 @@ public class map extends Activity {
 
         Intent mIntent = getIntent();
         gameId = mIntent.getIntExtra("gameId", 0);
+        //questionId = mIntent.getIntExtra("questionId", 0);
+        //isPicQuestion = mIntent.getIntExtra("isPicQuestion", 0);
 
         con = new Controller(getApplicationContext());
         map = (MapView) findViewById(R.id.map);
         image = findViewById(R.id.pic);
         submitb = (Button) findViewById(R.id.submit);
         closeb = findViewById(R.id.closebutton);
-        //question = (TextView) findViewById(R.id.question);
+        question = (TextView) findViewById(R.id.textv);
 
         mark = new Marker(map);
         result = new Marker(map);
@@ -135,7 +137,12 @@ public class map extends Activity {
         mapController.setCenter(startPoint);
 
         submitb.setVisibility(View.INVISIBLE);
-        con.showPic(image, 2);
+        //if(isPicQuestion == 1 ) {
+        //    con.showPic(image, questionId);
+        //}
+        //else {
+        //    con.showText(question,questionId);
+        //}
 
         MapEventsReceiver mReceive = new MapEventsReceiver() {
 
@@ -187,6 +194,8 @@ public class map extends Activity {
         }else{
             Intent intent = new Intent(this, map.class);
             intent.putExtra("gameId", gameId);
+            //intent.putExtra("questionId", NextQuestionInfo[0]);
+            //intent.putExtra("isPicQuestion", NextQuestionInfo[1]);
             startActivity(intent);
         }
     }
@@ -218,12 +227,13 @@ public class map extends Activity {
 
         mapController.animateTo(new GeoPoint(40.730610, -73.935242),4.0,3200L);
         submitb.setVisibility(View.INVISIBLE);
-/////////
-        if (isSet){
-            con.answerToRound(lat, lon, gameId);
-            startNextActivity();
-        }
-///////////
+        //con.answerToRound(lat, lon, gameId);
+        //NextQuestionInfo = con.getNextQuestionInfo(gameId);
+
+
+        //startNextActivity();
+
+
     }
     public void closeimg(View view){
         image.setVisibility(View.INVISIBLE);

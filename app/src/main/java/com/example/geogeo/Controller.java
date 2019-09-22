@@ -46,11 +46,11 @@ public class Controller {
 
     }
 
-    public void showText(String input, TextView text, int questionId) {
+    public void showText(TextView text, int questionId) {
         DatabaseHandler db;
         db = DatabaseHandler.getInstance(context);
         db.open();
-        input = db.getTextQuestion(questionId);
+        String input = db.getTextQuestion(questionId);
         text.setText(input);
         db.close();
 
@@ -123,9 +123,18 @@ public class Controller {
         return result;
 
     }
+    public int [] getNextQuestionInfo(int gameId){
+        db.open();
+        int[] QuestionInfo = db.getNextQuestion(gameId);
+        int questionId = QuestionInfo[1];
+        int isPicQuestion = QuestionInfo[0];
+        db.close();
+        int [] result = {questionId, isPicQuestion};
+        return result;
 
+    }
     // check stringConversion
-    public int answerToRound(double x, double y, int gameId) {
+    public int  answerToRound(double x, double y, int gameId) {
         db.open();
         int[] QuestionInfo = db.getNextQuestion(gameId);
         int questionId = QuestionInfo[1];
