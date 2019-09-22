@@ -20,8 +20,6 @@ public class DatabaseHandler {
 
     public DatabaseHandler(Context context) {
         this.openHelper = new SQLiteAssetHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
-        int[] nextQuestion = getNextQuestion(1);
-        System.out.println("Next Questions is: " + nextQuestion[1] + " and isPic: " + nextQuestion[0]);
     }
 
     public static SQLiteAssetHelper createSQLiteAssetHelper(Context context) {
