@@ -170,10 +170,13 @@ public class DatabaseHandler {
 
     public int[] getNextQuestion(int gameId) {
         open();
-        Cursor cur = db.rawQuery("SELECT * FROM Round WHERE Points = -1 AND GameId =" + gameId + " ;", null);
+        Cursor cur = db.rawQuery("SELECT IsPicQuestion, QuestionId FROM Round WHERE Points IS NULL AND GameId =" + gameId + " ;", null);
         cur.moveToFirst();
-        int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
-        int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
+        if (cur.getCount() == 0) {
+            return new int[] {0, 0};
+        }
+        int isPic = cur.getInt(0);
+        int qId = cur.getInt(1);
         cur.close();
         close();
         return new int[]{isPic, qId};
