@@ -29,12 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".map">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".map">
+
+
         </activity>
         <activity
             android:name=".homescreen"
@@ -46,12 +44,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".GameStatistics" />
-        <activity android:name=".MainActivity"></activity>
+
+        <activity android:name=".MainActivity" />
+
         <activity android:name=".DatabaseHandler" />
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

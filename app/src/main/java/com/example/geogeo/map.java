@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -31,7 +32,19 @@ public class map extends Activity {
     TextView question;
     Button submit;
     ImageView mark;
+    double lat;
+    double lon;
+    boolean isSet;
+    Controller con;
+    int gameId;
+
     //Marker mio = new Marker(map);
+
+    private void pointSelected(double lat, double lon){
+        this.lat = lat;
+        this.lon = lon;
+        this.isSet = true;
+    }
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +53,9 @@ public class map extends Activity {
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         setContentView(R.layout.activity_map);
+        con = new Controller(ctx);
+        Intent mIntent = getIntent();
+        gameId = mIntent.getIntExtra("gameId", 0);
 
         map = (MapView) findViewById(R.id.map);
 
@@ -50,14 +66,13 @@ public class map extends Activity {
 
         map.setMultiTouchControls(true); //2 Finger scroll
         IMapController mapController = map.getController();
-        mapController.setZoom(9.5);
+        mapController.setZoom(2.5);
 
 
         GeoPoint startPoint = new GeoPoint(48.8583, 2.2944); //startpoint
         mapController.setCenter(startPoint);
 
         submit = (Button) findViewById(R.id.submit);
-
 
         MapEventsReceiver mReceive = new MapEventsReceiver() {
 
@@ -71,11 +86,11 @@ public class map extends Activity {
                 double lon = p.getLongitude();
                 GeoPoint clicked = new GeoPoint(lat, lon);
 
-
                 mark.setPosition(clicked);
                 mark.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                 map.getOverlays().add(mark);
 
+                pointSelected(lat, lon);
 
                 return false;
             }
@@ -94,13 +109,28 @@ public class map extends Activity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (isSet){
+                    con.answerToRound(lat, lon, gameId);
+                    startNextActivity();
+                }
             }
         });
 
 
+
     }
 
+    private void startNextActivity(){
+        if (con.isGameOver(gameId)){
+            Intent intent = new Intent(this, GameStatistics.class);
+            intent.putExtra("gameId", gameId);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(this, map.class);
+            intent.putExtra("gameId", gameId);
+            startActivity(intent);
+        }
+    }
 
     public void onResume(){
         super.onResume();
