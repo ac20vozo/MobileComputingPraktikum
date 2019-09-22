@@ -331,4 +331,11 @@ public class DatabaseHandler {
         return false;
     }
 
+    public void countPointsOfRounds(int gameId) {
+        open();
+        Cursor c = db.rawQuery("SELECT SUM(Points) FROM Round WHERE GameId = " + gameId, null);
+        c.moveToFirst();
+        String result = c.getString(0);
+        db.execSQL("UPDATE Game SET Points = " + result + " WHERE Id = " + gameId);
+    }
 }

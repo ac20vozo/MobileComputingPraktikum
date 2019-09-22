@@ -113,6 +113,7 @@ public class Controller {
         // Because for now we have only one user
         db.open();
         int id = 1;
+        db.countPointsOfRounds(gameId);
         db.addGameToStatistics(id, gameId);
 
     }
