@@ -338,4 +338,15 @@ public class DatabaseHandler {
         String result = c.getString(0);
         db.execSQL("UPDATE Game SET Points = " + result + " WHERE Id = " + gameId);
     }
+
+    public String[] getPointsPerRound(int gameId) {
+        open();
+        Cursor c = db.rawQuery("SELECT Points FROM Round WHERE GameId = " + gameId, null);
+        String[] result = new String[c.getCount()];
+        for (int i = 0; i < c.getCount();i++){
+            result[i] = c.getString(0);
+            c.moveToNext();
+        }
+        return result;
+    }
 }

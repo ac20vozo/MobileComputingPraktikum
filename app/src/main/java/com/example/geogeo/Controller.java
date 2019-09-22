@@ -186,6 +186,10 @@ public class Controller {
         return db.getAnswerCords(answerId);
     }
 
+    public String[] getPointsPerRound(int gameId){
+        return db.getPointsPerRound(gameId);
+    }
+
 
 }
 

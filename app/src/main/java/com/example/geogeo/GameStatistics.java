@@ -2,11 +2,15 @@ package com.example.geogeo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class GameStatistics extends AppCompatActivity {
+
+    int gameId;
 
     TextView txtStatistics;
     TextView txtDist0;
@@ -35,6 +39,9 @@ public class GameStatistics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_statistics);
 
+        Intent mIntent = getIntent();
+        gameId = mIntent.getIntExtra("gameId", 0);
+
         txtStatistics= findViewById(R.id.txtStatistics);
         txtFrage0 = findViewById(R.id.txtFrage0);
         txtDist0 = findViewById(R.id.txtDist0);
@@ -58,5 +65,7 @@ public class GameStatistics extends AppCompatActivity {
         txtScore5 = findViewById(R.id.txtScore5);
         txtGesamt = findViewById(R.id.txtGesamt);
         txtTotalScore = findViewById(R.id.txtTotalScore);
+
+
     }
 }
