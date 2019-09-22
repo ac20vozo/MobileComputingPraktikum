@@ -228,15 +228,17 @@ public class map extends Activity {
 
         mapController.animateTo(new GeoPoint(40.730610, -73.935242),4.0,3200L);//New YOrk hardcoded
         submitb.setVisibility(View.INVISIBLE);
-        con.answerToRound(lat, lon, gameId);
-        NextQuestionInfo = con.getNextQuestionInfo(gameId);
+        if (!con.isGameOver(gameId)){
+            con.answerToRound(lat, lon, gameId);
+            NextQuestionInfo = con.getNextQuestionInfo(gameId);
+        }
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 startNextActivity();
             }
         }, 5000);
-        //startNextActivity();
+        startNextActivity();
 
 
     }

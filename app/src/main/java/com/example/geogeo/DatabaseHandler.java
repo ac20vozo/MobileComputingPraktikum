@@ -259,9 +259,9 @@ public class DatabaseHandler {
     // not tested yet
     public void updateRound(int gameId, int questionId, double x, double y, int points) {
         open();
-        db.rawQuery("UPDATE Round " +
+        db.execSQL("UPDATE Round " +
                 "SET AnswerX = " + x + ", AnswerY = " + y + ", Points = " + points +
-                " WHERE GameId = " + gameId + " AND questionId = " + questionId + ";", null);
+                " WHERE GameId = " + gameId + " AND questionId = " + questionId);
 
     }
 
