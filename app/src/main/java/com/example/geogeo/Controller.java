@@ -33,7 +33,7 @@ public class Controller {
 
         db.open();
         System.out.println("Random Pic Question: " + db.getRandomPicQuestion());
-        db.close();
+
     }
 
     public void showPic(ImageView image, int questionId) {
@@ -42,7 +42,7 @@ public class Controller {
         Bitmap b = BitmapFactory.decodeByteArray(bits, 0, bits.length);
         //image.setImageBitmap(Bitmap.createScaledBitmap(b, 150, 150, false));
         image.setImageBitmap(b);
-        db.close();
+
 
     }
 
@@ -52,7 +52,7 @@ public class Controller {
         db.open();
         String input = db.getTextQuestion(questionId);
         text.setText(input);
-        db.close();
+
 
     }
 
@@ -69,7 +69,7 @@ public class Controller {
         db.open();
         if (kind.equals("random")) {
             if (!db.checkAmount(amount, "pic") || !db.checkAmount(amount, "text")) {
-                db.close();
+
                 return 0;
             }
         }
@@ -114,12 +114,12 @@ public class Controller {
         db.open();
         int id = 1;
         db.addGameToStatistics(id, gameId);
-        db.close();
+
     }
     public String[] getStats(int userId){
         db.open();
         String[] result = db.getStats(userId);
-        db.close();
+
         return result;
 
     }
@@ -128,7 +128,7 @@ public class Controller {
         int[] QuestionInfo = db.getNextQuestion(gameId);
         int questionId = QuestionInfo[1];
         int isPicQuestion = QuestionInfo[0];
-        db.close();
+
         int [] result = {questionId, isPicQuestion};
         return result;
 
@@ -142,7 +142,7 @@ public class Controller {
         int points = answerQuestion(gameId, answerId, x, y);
         //untested part
         db.updateRound(gameId, QuestionInfo[1], x, y, points);
-        db.close();
+
         return points;
     }
 
@@ -151,7 +151,7 @@ public class Controller {
         db.open();
         Double[] Cords = new Double[2];
         Cords = db.getAnswerCords(answerId);
-        db.close();
+
         return coordDistance(Cords[0], Cords[1], xGuess, yGuess);
     }
 

@@ -169,7 +169,6 @@ public class DatabaseHandler {
     }
 
     public int[] getNextQuestion(int gameId) {
-        open();
         Cursor cur = db.rawQuery("SELECT IsPicQuestion, QuestionId FROM Round WHERE Points IS NULL AND GameId =" + gameId + " ;", null);
         cur.moveToFirst();
         if (cur.getCount() == 0) {
@@ -178,7 +177,6 @@ public class DatabaseHandler {
         int isPic = cur.getInt(0);
         int qId = cur.getInt(1);
         cur.close();
-        close();
         return new int[]{isPic, qId};
     }
 
@@ -258,7 +256,7 @@ public class DatabaseHandler {
         db.execSQL("UPDATE Statistics SET Games =" + Integer.toString(newGames) +
                 ", AverageScore =" + newAverage + ", TotalPoints =" + Integer.toString(newTotal) +
                 " WHERE Id =" + Integer.toString(userId));
-        db.close();
+
     }
 
     // not tested yet
@@ -267,7 +265,7 @@ public class DatabaseHandler {
         db.rawQuery("UPDATE Round " +
                 "SET AnswerX = " + x + ", AnswerY = " + y + ", Points = " + points +
                 " WHERE GameId = " + gameId + " AND questionId = " + questionId + ";", null);
-        db.close();
+
     }
 
     public String[] getStats(int userId) {

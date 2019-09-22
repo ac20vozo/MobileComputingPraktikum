@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
@@ -67,9 +68,9 @@ public class map extends Activity {
     double lon;
     boolean isSet;
     int gameId;
-    //int questionId;
-    //int isPicQuestion;
-    //int [] NextQuestionInfo;
+    int questionId;
+    int isPicQuestion;
+    int [] NextQuestionInfo;
 
 
     private void pointSelected(double lat, double lon){
@@ -98,8 +99,8 @@ public class map extends Activity {
 
         Intent mIntent = getIntent();
         gameId = mIntent.getIntExtra("gameId", 0);
-        //questionId = mIntent.getIntExtra("questionId", 0);
-        //isPicQuestion = mIntent.getIntExtra("isPicQuestion", 0);
+        questionId = mIntent.getIntExtra("questionId", 0);
+        isPicQuestion = mIntent.getIntExtra("isPicQuestion", 0);
 
         con = new Controller(getApplicationContext());
         map = (MapView) findViewById(R.id.map);
@@ -137,12 +138,12 @@ public class map extends Activity {
         mapController.setCenter(startPoint);
 
         submitb.setVisibility(View.INVISIBLE);
-        //if(isPicQuestion == 1 ) {
-        //    con.showPic(image, questionId);
-        //}
-        //else {
-        //    con.showText(question,questionId);
-        //}
+        if(isPicQuestion == 1 ) {
+            con.showPic(image, questionId);
+        }
+        else {
+            con.showText(question,questionId);
+        }
 
         MapEventsReceiver mReceive = new MapEventsReceiver() {
 
@@ -194,8 +195,8 @@ public class map extends Activity {
         }else{
             Intent intent = new Intent(this, map.class);
             intent.putExtra("gameId", gameId);
-            //intent.putExtra("questionId", NextQuestionInfo[0]);
-            //intent.putExtra("isPicQuestion", NextQuestionInfo[1]);
+            intent.putExtra("questionId", NextQuestionInfo[0]);
+            intent.putExtra("isPicQuestion", NextQuestionInfo[1]);
             startActivity(intent);
         }
     }
@@ -225,18 +226,23 @@ public class map extends Activity {
         map.invalidate();
 
 
-        mapController.animateTo(new GeoPoint(40.730610, -73.935242),4.0,3200L);
+        mapController.animateTo(new GeoPoint(40.730610, -73.935242),4.0,3200L);//New YOrk hardcoded
         submitb.setVisibility(View.INVISIBLE);
-        //con.answerToRound(lat, lon, gameId);
-        //NextQuestionInfo = con.getNextQuestionInfo(gameId);
+        con.answerToRound(lat, lon, gameId);
+        NextQuestionInfo = con.getNextQuestionInfo(gameId);
 
-
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                startNextActivity();
+            }
+        }, 5000);
         //startNextActivity();
 
 
     }
     public void closeimg(View view){
         image.setVisibility(View.INVISIBLE);
+        question.setVisibility(View.INVISIBLE);
         closeb.setVisibility(View.INVISIBLE);
     }
 
