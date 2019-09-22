@@ -181,6 +181,11 @@ public class Controller {
 
     }
 
+    public Double[] getAnswer(int isPicQuestion, int questionId){
+        int answerId = db.getAnswerId(isPicQuestion, questionId);
+        return db.getAnswerCords(answerId);
+    }
+
 
 }
 

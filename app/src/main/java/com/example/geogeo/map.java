@@ -211,11 +211,13 @@ public class map extends Activity {
         map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
     }
     public void submit(View view){
-        result.setPosition(new GeoPoint(40.730610, -73.935242));
+        Double answerX = con.getAnswer(isPicQuestion, questionId)[0];
+        Double answerY = con.getAnswer(isPicQuestion, questionId)[1];
+        result.setPosition(new GeoPoint(answerX, answerY));
         result.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
 
         List<GeoPoint> geoPoints = new ArrayList<>();
-        geoPoints.add(new GeoPoint(40.730610, -73.935242));//New York hardcoded
+        geoPoints.add(new GeoPoint(answerX, answerY));//New York hardcoded
         geoPoints.add(clicked);
 
         line.setPoints(geoPoints);
@@ -227,7 +229,7 @@ public class map extends Activity {
         map.invalidate();
 
 
-        mapController.animateTo(new GeoPoint(40.730610, -73.935242),4.0,3200L);//New YOrk hardcoded
+        mapController.animateTo(new GeoPoint(answerX, answerY),4.0,3200L);//New YOrk hardcoded
         submitb.setVisibility(View.INVISIBLE);
         if (!con.isGameOver(gameId)){
             con.answerToRound(lat, lon, gameId);
