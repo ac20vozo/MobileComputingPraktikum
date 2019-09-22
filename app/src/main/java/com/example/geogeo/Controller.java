@@ -68,15 +68,15 @@ public class Controller {
 
     // kind can be random, text or pic
     // TODO: make sure that the amount is less or equal to the amount of questions
-    public boolean createGame(int amount, String kind, String type) {
+    public int createGame(int amount, String kind, String type) {
         // blacklist ist Array von Array von ints (Mit 1. 0 oder 1 2. id von question)
         db.open();
         if (kind.equals("random")) {
             if (!db.checkAmount(amount, "pic") || !db.checkAmount(amount, "text")) {
-                return false;
+                return 0;
             }
         } else if (!db.checkAmount(amount, kind)) {
-            return false;
+            return 0;
         }
         int gameId = db.createGame(amount);
 
@@ -103,9 +103,9 @@ public class Controller {
             db.addRoundToGame(gameId, blacklist.get(i)[0], blacklist.get(i)[1]);
         }
         if (blacklist.size() == amount) {
-            return true;
+            return gameId;
         } else {
-            return false;
+            return 0;
         }
     }
 

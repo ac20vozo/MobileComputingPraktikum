@@ -186,9 +186,9 @@ public class DatabaseHandler {
 
     public boolean checkAmount(int amount, String type) {
         if (type.equals("pic")) {
-            return amount <= db.rawQuery("SELECT * FROM PicQuestions", null).getCount();
+            return amount <= db.rawQuery("SELECT * FROM PicQuestion", null).getCount();
         } else {
-            return amount <= db.rawQuery("SELECT * FROM TextQuestions", null).getCount();
+            return amount <= db.rawQuery("SELECT * FROM TextQuestion", null).getCount();
         }
     }
 
