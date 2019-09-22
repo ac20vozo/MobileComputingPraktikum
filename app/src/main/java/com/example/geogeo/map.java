@@ -191,6 +191,7 @@ public class map extends Activity {
         if (con.isGameOver(gameId)){
             Intent intent = new Intent(this, GameStatistics.class);
             intent.putExtra("gameId", gameId);
+            con.endGame(gameId);
             startActivity(intent);
         }else{
             Intent intent = new Intent(this, map.class);
@@ -238,7 +239,6 @@ public class map extends Activity {
                 startNextActivity();
             }
         }, 5000);
-        startNextActivity();
 
 
     }
