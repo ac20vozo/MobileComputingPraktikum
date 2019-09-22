@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -62,6 +63,20 @@ public class map extends Activity {
     Marker result;
     Marker mark;
 
+    Button submit;
+    ImageView mark;
+    double lat;
+    double lon;
+    boolean isSet;
+    int gameId;
+
+    //Marker mio = new Marker(map);
+
+    private void pointSelected(double lat, double lon){
+        this.lat = lat;
+        this.lon = lon;
+        this.isSet = true;
+    }
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +95,9 @@ public class map extends Activity {
 
 
         setContentView(R.layout.activity_map);
+
+        Intent mIntent = getIntent();
+        gameId = mIntent.getIntExtra("gameId", 0);
 
         con = new Controller(getApplicationContext());
         map = (MapView) findViewById(R.id.map);
@@ -119,7 +137,6 @@ public class map extends Activity {
         submitb.setVisibility(View.INVISIBLE);
         con.showPic(image, 2);
 
-
         MapEventsReceiver mReceive = new MapEventsReceiver() {
 
 
@@ -131,13 +148,13 @@ public class map extends Activity {
                 double lon = p.getLongitude();
                 clicked = p;
 
-
                 mark.setPosition(clicked);
                 mark.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                 map.getOverlays().add(mark);
                 map.invalidate();
                 submitb.setVisibility(View.VISIBLE);
 
+                pointSelected(lat, lon);
 
                 return false;
             }
@@ -159,8 +176,20 @@ public class map extends Activity {
 
 
 
+
     }
 
+    private void startNextActivity(){
+        if (con.isGameOver(gameId)){
+            Intent intent = new Intent(this, GameStatistics.class);
+            intent.putExtra("gameId", gameId);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(this, map.class);
+            intent.putExtra("gameId", gameId);
+            startActivity(intent);
+        }
+    }
 
     public void onResume(){
         super.onResume();
@@ -189,7 +218,12 @@ public class map extends Activity {
 
         mapController.animateTo(new GeoPoint(40.730610, -73.935242),4.0,3200L);
         submitb.setVisibility(View.INVISIBLE);
-
+/////////
+        if (isSet){
+            con.answerToRound(lat, lon, gameId);
+            startNextActivity();
+        }
+///////////
     }
     public void closeimg(View view){
         image.setVisibility(View.INVISIBLE);

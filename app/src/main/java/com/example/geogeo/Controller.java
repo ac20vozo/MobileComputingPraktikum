@@ -14,6 +14,8 @@ import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
 import java.io.ByteArrayInputStream;
 
 public class Controller {
@@ -56,21 +58,26 @@ public class Controller {
 
 
 
+    public boolean isGameOver(int gameId) {
+        return db.isGameOver(gameId);
+    }
+
     // kind can be random, text or pic
     // TODO: make sure that the amount is less or equal to the amount of questions
-    public boolean createGame(int amount, String kind, String type) {
+    public int createGame(int amount, String kind, String type) {
         // blacklist ist Array von Array von ints (Mit 1. 0 oder 1 2. id von question)
         db.open();
         if (kind.equals("random")) {
             if (!db.checkAmount(amount, "pic") || !db.checkAmount(amount, "text")) {
                 db.close();
-                return false;
+                return 0;
             }
         }
         else if (!db.checkAmount(amount, kind)) {
-            db.close();
-            return false;
+            return 0;
         }
+
+
         int gameId = db.createGame(amount);
 
         int id = 0;
@@ -96,23 +103,10 @@ public class Controller {
             db.addRoundToGame(gameId, blacklist.get(i)[0], blacklist.get(i)[1]);
         }
         if (blacklist.size() == amount) {
-            db.close();
-            return true;
+            return gameId;
+        } else {
+            return 0;
         }
-        else {
-            db.close();
-            return false;
-        }
-    }
-
-    public int[] getNextQuestion(int gameId) {
-        SQLiteOpenHelper sqLiteOpenHelper = new DBHelper(this.context);
-        SQLiteDatabase sqldb = sqLiteOpenHelper.getWritableDatabase();
-        Cursor cur = sqldb.rawQuery("SELECT * FROM Round WHERE Points = -1;", null);
-        int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
-        int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
-        cur.close();
-        return new int[] {isPic, qId};
     }
 
     public void endGame(int gameId) {
