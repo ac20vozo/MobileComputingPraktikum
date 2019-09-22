@@ -7,10 +7,18 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/im"
+        android:layout_width="match_parent"
+        android:layout_height="437dp" />
+
+    <Button
+        android:id="@+id/but"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-         />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="94dp"
+        android:onClick="testfun"
+        android:text="Click Here" />
 
 
 </RelativeLayout>
