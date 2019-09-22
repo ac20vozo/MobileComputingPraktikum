@@ -266,4 +266,13 @@ public class DatabaseHandler {
         return stats;
     }
 
+    public boolean isGameOver(int gameId){
+        Cursor c = db.rawQuery("SELECT AnswerX FROM Round " +
+                "WHERE GameId = " + gameId + " AND AnswerX IS NUll", null);
+        if(c.getCount() == 0){
+            return true;
+        }
+        return false;
+    }
+
 }

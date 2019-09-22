@@ -60,6 +60,10 @@ public class Controller {
         db.open();
     }
 
+    public boolean isGameOver(int gameId) {
+        return db.isGameOver(gameId);
+    }
+
     // kind can be random, text or pic
     // TODO: make sure that the amount is less or equal to the amount of questions
     public boolean createGame(int amount, String kind, String type) {
