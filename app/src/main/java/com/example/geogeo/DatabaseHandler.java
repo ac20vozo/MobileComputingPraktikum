@@ -5,16 +5,25 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class DatabaseHandler {
+    private static final String DATABASE_NAME = "db.db";
+    private static final int DATABASE_VERSION = 1;
+
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase db;
     private static DatabaseHandler instance;
 
     public DatabaseHandler(Context context) {
-        this.openHelper = new DBHelper(context);
+        this.openHelper = new SQLiteAssetHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public static SQLiteAssetHelper createSQLiteAssetHelper(Context context) {
+        return new SQLiteAssetHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     public static DatabaseHandler getInstance(Context context) {
@@ -46,7 +55,7 @@ public class DatabaseHandler {
         String sql = "SELECT * FROM PicQuestion WHERE ";
         for (Integer[] v : blacklist) {
             if (v[0] == 1) {
-                sql += "id <> AND " + v[1];
+                sql += "id <> " + v[1] + " AND" ;
             }
         }
         sql = sql.substring(0, sql.length() - 4);
@@ -78,7 +87,7 @@ public class DatabaseHandler {
         }
         for (Integer[] v : blacklist) {
             if (v[0] == 0) {
-                sql += "id <> AND " + v[1];
+                sql += "id <> " + v[1] + " AND" ;
             }
         }
         sql = sql.substring(0, sql.length() - 4);
@@ -116,8 +125,7 @@ public class DatabaseHandler {
     }
 
 
-
-    public String getAnswerName(int answerId) {
+    public String getAnswerAnswer(int answerId) {
         Cursor c = db.rawQuery("SELECT Answer FROM Answer WHERE Id =" + answerId, null);
         c.moveToFirst();
         String Answer = c.getString(0);
@@ -127,11 +135,15 @@ public class DatabaseHandler {
 
     public Double[] getAnswerCords(int answerId) {
         Double[] Cords = new Double[2];
-        Cursor c = db.rawQuery("SELECT Answer FROM Answer WHERE Id =" + answerId, null);
+        Cursor c = db.rawQuery("SELECT X FROM Answer WHERE Id =" + answerId, null);
         c.moveToFirst();
         Double x = c.getDouble(0);
-        Double y = c.getDouble(1);
         Cords[0] = x;
+        c.close();
+
+        c = db.rawQuery("SELECT Y FROM Answer WHERE Id =" + answerId, null);
+        c.moveToFirst();
+        Double y = c.getDouble(0);
         Cords[1] = y;
         c.close();
         return Cords;
@@ -152,12 +164,14 @@ public class DatabaseHandler {
         return AnswerId;
     }
 
-    // moved from Controller, not checked
     public int[] getNextQuestion(int gameId) {
+        open();
         Cursor cur = db.rawQuery("SELECT * FROM Round WHERE Points = -1 AND GameId =" + gameId + " ;", null);
+        cur.moveToFirst();
         int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
         int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
         cur.close();
+        close();
         return new int[]{isPic, qId};
     }
 
@@ -172,9 +186,9 @@ public class DatabaseHandler {
 
     public boolean checkAmount(int amount, String type) {
         if (type.equals("pic")) {
-            return amount <= db.rawQuery("SELECT * FROM PicQuestions", null).getCount();
+            return amount <= db.rawQuery("SELECT * FROM PicQuestion", null).getCount();
         } else {
-            return amount <= db.rawQuery("SELECT * FROM TextQuestions", null).getCount();
+            return amount <= db.rawQuery("SELECT * FROM TextQuestion", null).getCount();
         }
     }
 
@@ -240,17 +254,19 @@ public class DatabaseHandler {
                 " WHERE Id =" + Integer.toString(userId));
         db.close();
     }
+
     // not tested yet
-    public void updateRound(int gameId, int questionId, double x, double y, int points){
-        db.execSQL("UPDATE Round " +
+    public void updateRound(int gameId, int questionId, double x, double y, int points) {
+        open();
+        db.rawQuery("UPDATE Round " +
                 "SET AnswerX = " + x + ", AnswerY = " + y + ", Points = " + points +
-                " WHERE GameId =" + gameId + " AND questionId =" + questionId + ";");
+                " WHERE GameId = " + gameId + " AND questionId = " + questionId + ";", null);
         db.close();
     }
 
-    public String[] getStats(int userId){
+    public String[] getStats(int userId) {
         Cursor c = db.rawQuery("SELECT Games, AverageScore, TotalPoints FROM Statistics WHERE Id = " + userId, null);
-        if (c.getCount() == 0){
+        if (c.getCount() == 0) {
             db.execSQL("INSERT INTO Statistics (Games, AverageScore, TotalPoints) VALUES " +
                     "(0, 0, 0)");
             c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
@@ -259,6 +275,15 @@ public class DatabaseHandler {
         c.moveToFirst();
         String[] stats = {Integer.toString(c.getInt(0)), Integer.toString(c.getInt(1)), Integer.toString(c.getInt(2))};
         return stats;
+    }
+
+    public boolean isGameOver(int gameId){
+        Cursor c = db.rawQuery("SELECT AnswerX FROM Round " +
+                "WHERE GameId = " + gameId + " AND AnswerX IS NUll", null);
+        if(c.getCount() == 0){
+            return true;
+        }
+        return false;
     }
 
 }

@@ -14,6 +14,8 @@ import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
 import java.io.ByteArrayInputStream;
 
 public class Controller {
@@ -28,19 +30,18 @@ public class Controller {
     }
 
     public void bloßeintest02() {
-        DatabaseHandler db;
-        db = DatabaseHandler.getInstance(context);
+        //DatabaseHandler db;
+        //db = DatabaseHandler.getInstance(context);
         db.open();
         System.out.println("Random Pic Question: " + db.getRandomPicQuestion());
     }
 
-    public void showPic(byte[] bits, ImageView image, int questionId) {
-        DatabaseHandler db;
-        db = DatabaseHandler.getInstance(context);
+    public void showPic(ImageView image, int questionId) {
         db.open();
-        bits = db.getbytes(questionId);
+        byte [] bits = db.getbytes(questionId);
         Bitmap b = BitmapFactory.decodeByteArray(bits, 0, bits.length);
-        image.setImageBitmap(Bitmap.createScaledBitmap(b, 120, 120, false));
+        //image.setImageBitmap(Bitmap.createScaledBitmap(b, 150, 150, false));
+        image.setImageBitmap(b);
         db.close();
 
     }
@@ -61,17 +62,21 @@ public class Controller {
         db.open();
     }
 
+    public boolean isGameOver(int gameId) {
+        return db.isGameOver(gameId);
+    }
+
     // kind can be random, text or pic
     // TODO: make sure that the amount is less or equal to the amount of questions
-    public boolean createGame(int amount, String kind, String type) {
+    public int createGame(int amount, String kind, String type) {
         // blacklist ist Array von Array von ints (Mit 1. 0 oder 1 2. id von question)
         db.open();
         if (kind.equals("random")) {
             if (!db.checkAmount(amount, "pic") || !db.checkAmount(amount, "text")) {
-                return false;
+                return 0;
             }
         } else if (!db.checkAmount(amount, kind)) {
-            return false;
+            return 0;
         }
         int gameId = db.createGame(amount);
 
@@ -98,20 +103,10 @@ public class Controller {
             db.addRoundToGame(gameId, blacklist.get(i)[0], blacklist.get(i)[1]);
         }
         if (blacklist.size() == amount) {
-            return true;
+            return gameId;
         } else {
-            return false;
+            return 0;
         }
-    }
-
-    public int[] getNextQuestion(int gameId) {
-        SQLiteOpenHelper sqLiteOpenHelper = new DBHelper(this.context);
-        SQLiteDatabase sqldb = sqLiteOpenHelper.getWritableDatabase();
-        Cursor cur = sqldb.rawQuery("SELECT * FROM Round WHERE Points = -1;", null);
-        int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
-        int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
-        cur.close();
-        return new int[] {isPic, qId};
     }
 
     public void endGame(int gameId) {
