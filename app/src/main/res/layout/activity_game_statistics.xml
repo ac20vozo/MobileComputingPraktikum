@@ -9,7 +9,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_focus"/>
+        android:background="@drawable/background_focus">
+
+        <Button
+            android:id="@+id/back"
+            style="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Back" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/txtStatistics"

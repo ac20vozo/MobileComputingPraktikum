@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class GameStatistics extends AppCompatActivity {
@@ -37,6 +38,7 @@ public class GameStatistics extends AppCompatActivity {
     TextView txtScore5;
     TextView txtGesamt;
     TextView txtTotalScore;
+    Button back;
 
 
     @Override
@@ -70,6 +72,7 @@ public class GameStatistics extends AppCompatActivity {
         txtScore5 = findViewById(R.id.txtScore5);
         txtGesamt = findViewById(R.id.txtGesamt);
         txtTotalScore = findViewById(R.id.txtTotalScore);
+        back = findViewById(R.id.back);
 
         questions[0] = txtFrage1;
         questions[1] = txtFrage2;
@@ -94,5 +97,16 @@ public class GameStatistics extends AppCompatActivity {
         }
         txtTotalScore.setText(Integer.toString(totalScore));
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBack();
+            }
+        });
+
+    }
+    private void goBack(){
+        Intent intent = new Intent(this, Startseite.class);
+        startActivity(intent);
     }
 }
