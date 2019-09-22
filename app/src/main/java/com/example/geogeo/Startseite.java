@@ -20,6 +20,13 @@ public class Startseite extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_startseite);
 
         txtWillkommen = findViewById(R.id.txtWillkommen);
@@ -34,6 +41,12 @@ public class Startseite extends AppCompatActivity {
     public void spielenClick(View view){
         Intent spielenIntent = new Intent(this,homescreen.class);
         startActivity(spielenIntent);
+    }
+
+    //Bloß zum Testen kann am ende gelöscht werden
+    public void mainac(View view){
+        Intent mainInt = new Intent(this,MainActivity.class);
+        startActivity(mainInt);
     }
 
 

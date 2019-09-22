@@ -16,29 +16,40 @@
 
     </org.osmdroid.views.MapView>
 
-    <TextView
-
-        android:padding = "20dp"
-        android:id="@+id/question"
-        android:layout_width="match_parent"
-        android:layout_height="113dp"
-        android:background="#009688"
-
-        android:text="TextView"
-        android:textStyle="bold"
-        android:visibility="visible"
-        tools:visibility="visible" />
-
-
     <Button
         android:id="@+id/submit"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:padding = "10dp"
-        android:paddingBottom="20dp"
-        android:text="submit"
-        android:layout_gravity="bottom|right"
-        />
+        android:layout_width="245dp"
+        android:layout_height="104dp"
+        android:layout_gravity="bottom|center"
+        android:onClick="submit"
+        android:text="Submit" />
+
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/pic"
+            android:layout_width="match_parent"
+            android:layout_height="482dp"
+            android:layout_centerInParent="true" />
+
+        <Button
+            android:id="@+id/closebutton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="130dp"
+            android:onClick="closeimg"
+            android:paddingLeft="40dp"
+            android:text="X" />
+
+    </RelativeLayout>
+
+
 
 
 </FrameLayout>

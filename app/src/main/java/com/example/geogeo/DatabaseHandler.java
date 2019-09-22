@@ -17,6 +17,7 @@ public class DatabaseHandler {
         this.openHelper = new DBHelper(context);
     }
 
+
     public static DatabaseHandler getInstance(Context context) {
         if (instance == null) {
             instance = new DatabaseHandler(context);
@@ -25,6 +26,7 @@ public class DatabaseHandler {
     }
 
     public void open() {
+
         this.db = openHelper.getWritableDatabase();
     }
 
@@ -142,16 +144,18 @@ public class DatabaseHandler {
     }
 
     // returns answerId of given question
-    public int getAnswer(int isPicQuestion, int questionId) {
+    public int getAnswerId(int isPicQuestion, int questionId) {
         int AnswerId;
         if (isPicQuestion != 0) {
             Cursor c = db.rawQuery("SELECT AnswerId FROM PicQuestion WHERE ID =" + questionId, null);
             c.moveToFirst();
             AnswerId = c.getInt(0);
+            c.close();
         } else {
             Cursor c = db.rawQuery("SELECT AnswerId FROM TextQuestion WHERE ID =" + questionId, null);
             c.moveToFirst();
             AnswerId = c.getInt(0);
+            c.close();
         }
         return AnswerId;
     }
@@ -188,7 +192,6 @@ public class DatabaseHandler {
                 Integer.toString(isPicQuestion) + ", null, null, null)");
     }
 
-    // Not allowed to use dotts in PicPath
     public void addQuestion(int isPicQuestion, String PicPath, int categoryId, int answerId, String text,
                             String type) {
         if (isPicQuestion == 1) {

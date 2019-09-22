@@ -10,21 +10,22 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity {
     //DatabaseHandler db;
     ImageView image;
+    Controller con;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         image = findViewById(R.id.im);
+        con = new Controller(getApplicationContext());
 
         //db = DatabaseHandler.getInstance(getApplicationContext());
         //db.open();
-        //Controller con = new Controller(this);
-        //con.bloßeintest02();
+
     }
     public void testfun(View view){
-        Controller con = new Controller(this);
         con.showPic(image, 1);
+        con.test01();
 
     }
 }

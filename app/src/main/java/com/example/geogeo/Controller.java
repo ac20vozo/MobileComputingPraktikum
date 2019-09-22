@@ -24,14 +24,14 @@ public class Controller {
     public Controller(Context context) {
         this.context = context;
         db = DatabaseHandler.getInstance(context);
-        db.open();
+
     }
 
-    public void bloßeintest02() {
-        //DatabaseHandler db;
-        //db = DatabaseHandler.getInstance(context);
+    public void test01() {
+
         db.open();
         System.out.println("Random Pic Question: " + db.getRandomPicQuestion());
+        db.close();
     }
 
     public void showPic(ImageView image, int questionId) {
@@ -54,11 +54,7 @@ public class Controller {
 
     }
 
-    public void getitems() {
-        DatabaseHandler db;
-        db = DatabaseHandler.getInstance(context);
-        db.open();
-    }
+
 
     // kind can be random, text or pic
     // TODO: make sure that the amount is less or equal to the amount of questions
@@ -67,9 +63,12 @@ public class Controller {
         db.open();
         if (kind.equals("random")) {
             if (!db.checkAmount(amount, "pic") || !db.checkAmount(amount, "text")) {
+                db.close();
                 return false;
             }
-        } else if (!db.checkAmount(amount, kind)) {
+        }
+        else if (!db.checkAmount(amount, kind)) {
+            db.close();
             return false;
         }
         int gameId = db.createGame(amount);
@@ -97,8 +96,11 @@ public class Controller {
             db.addRoundToGame(gameId, blacklist.get(i)[0], blacklist.get(i)[1]);
         }
         if (blacklist.size() == amount) {
+            db.close();
             return true;
-        } else {
+        }
+        else {
+            db.close();
             return false;
         }
     }
@@ -115,29 +117,38 @@ public class Controller {
 
     public void endGame(int gameId) {
         // Because for now we have only one user
+        db.open();
         int id = 1;
         db.addGameToStatistics(id, gameId);
+        db.close();
     }
     public String[] getStats(int userId){
-        return db.getStats(userId);
+        db.open();
+        String[] result = db.getStats(userId);
+        db.close();
+        return result;
+
     }
 
     // check stringConversion
     public int answerToRound(double x, double y, int gameId) {
+        db.open();
         int[] QuestionInfo = db.getNextQuestion(gameId);
         int questionId = QuestionInfo[1];
-        int answerId = db.getAnswer(QuestionInfo[0], QuestionInfo[1]);
+        int answerId = db.getAnswerId(QuestionInfo[0], QuestionInfo[1]);
         int points = answerQuestion(gameId, answerId, x, y);
         //untested part
         db.updateRound(gameId, QuestionInfo[1], x, y, points);
+        db.close();
         return points;
     }
 
     // returns distance to of given answer to correct location
     public double checkDistanceToAnswer(int answerId, double xGuess, double yGuess) {
+        db.open();
         Double[] Cords = new Double[2];
         Cords = db.getAnswerCords(answerId);
-
+        db.close();
         return coordDistance(Cords[0], Cords[1], xGuess, yGuess);
     }
 
