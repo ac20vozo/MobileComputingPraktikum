@@ -24,7 +24,8 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
 
-        <activity android:name=".Startseite">
+        <activity android:name=".Startseite"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,17 +33,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".map">
+        <activity android:name=".map" android:screenOrientation="portrait">
 
 
         </activity>
-        <activity android:name=".homescreen" />
+        <activity android:name=".homescreen" android:screenOrientation="portrait"/>
 
-        <activity android:name=".GameStatistics" />
+        <activity android:name=".GameStatistics" android:screenOrientation="portrait" />
 
-        <activity android:name=".AboutUs" />
+        <activity android:name=".AboutUs" android:screenOrientation="portrait" />
 
-        <activity android:name=".DatabaseHandler" />
+        <activity android:name=".MainActivity" android:screenOrientation="portrait" />
+
+        <activity android:name=".DatabaseHandler" android:screenOrientation="portrait"/>
 
     </application>
 

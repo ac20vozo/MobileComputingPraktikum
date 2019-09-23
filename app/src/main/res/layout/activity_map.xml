@@ -21,6 +21,9 @@
         android:layout_width="245dp"
         android:layout_height="104dp"
         android:layout_gravity="bottom|center"
+        android:background="@drawable/runde_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:fontFamily="@font/amarante"
         android:onClick="submit"
         android:text="Submit" />
 
@@ -49,9 +52,12 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_marginTop="130dp"
+            android:background="@drawable/kreis_button"
+            android:fontFamily="@font/amarante"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:onClick="closeimg"
-            android:paddingLeft="40dp"
-            android:text="X" />
+            android:text="X"
+            android:textSize="24sp" />
 
     </RelativeLayout>
 
