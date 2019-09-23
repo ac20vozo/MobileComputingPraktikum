@@ -23,14 +23,14 @@
     <string name="options_submit">Submit</string>
     <string name="play_classicGame">Classic Game</string>
     <string name="stats_playedGames">Played Games:</string>
-    <string name="stats_average">Average distance to target:</string>
+    <string name="stats_average">Average distance \n to target:</string>
     <string name="stats_highscore">Points:</string>
     <string name="stats_playedGamesDisplay"></string>
     <string name="stats_averageDisplay"></string>
     <string name="stats_highscoreDisplay"></string>
     <string name="stats_title">Your Stats</string>
     <string name="play_title">Gamemodi</string>
-    <string name="options_title">Change Usernme</string>
+    <string name="options_title">Change Username</string>
     <string name="SummaryAboutUs">Hi Guys! \nThanks for playing the new GeoQuiz "GeoGeo!"! \nWe are a group of students at the Johannes Gutenberg University in Mainz/Germany.
     Due to a traineeship of the "Mobile Computing"-lecture we were commissioned to develop an application that is on the one hand fun to play and on the other hand capable of
     giving students some information about their environment. Therefore we decided to develop our GeoGeo! so that you and your friends can explore and enjoy the
