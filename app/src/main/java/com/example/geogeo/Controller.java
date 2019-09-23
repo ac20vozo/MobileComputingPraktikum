@@ -176,7 +176,7 @@ public class Controller {
         int points = 1;
         double distance = checkDistanceToAnswer(answerId, xGuess, yGuess);
         // add a more sensible point calculation here
-        points = (int) Math.ceil(points / distance);
+        points = Points(distance, 500, 250);
         return points;
 
     }
@@ -188,5 +188,21 @@ public class Controller {
 
     public String[] getPointsPerRound(int gameId) {
         return db.getPointsPerRound(gameId);
+    }
+
+
+    public int Points(double distance, int maxPoints, int cutOff){
+        if (nearPointFunction(distance, maxPoints) >= cutOff){
+            return nearPointFunction(distance, maxPoints);
+        }
+        else{
+            return farPointFunction(distance, cutOff);
+        }
+    }
+    public int nearPointFunction(double distance, int maxPoints){
+        return Math.min(maxPoints, (int) Math.ceil(maxPoints*(2/(distance/100))));
+    }
+    public int farPointFunction(double distance, int cutOff){
+        return Math.max(0, (int) Math.ceil(cutOff - Math.pow((distance/100),1.7)));
     }
 }
