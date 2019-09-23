@@ -45,52 +45,57 @@ public class DatabaseHandler {
         }
     }
 
-    public int getRandomPicQuestion() {
-        open();
-        Random rand = new Random();
-        Cursor cur = db.rawQuery("SELECT * FROM PicQuestion", null);
-        int result = rand.nextInt(cur.getCount()) + 1;
-        cur.close();
-        db.close();
-        return result;
-    }
+//    public int getRandomPicQuestion() {
+//        open();
+//        Random rand = new Random();
+//        Cursor cur = db.rawQuery("SELECT * FROM PicQuestion", null);
+//        int result = rand.nextInt(cur.getCount()) + 1;
+//        cur.close();
+//        db.close();
+//        return result;
+//    }
 
     public int getRandomPicQuestion(ArrayList<Integer[]> blacklist) {
         open();
-        String sql = "SELECT * FROM PicQuestion WHERE ";
+        String sql = "SELECT Id FROM PicQuestion WHERE ";
         for (Integer[] v : blacklist) {
             if (v[0] == 1) {
                 sql += "id <> " + v[1] + " AND";
             }
         }
         sql = sql.substring(0, sql.length() - 4);
-        System.out.println(sql);
         Random rand = new Random();
         Cursor cur = db.rawQuery(sql, null);
-        int result = rand.nextInt(cur.getCount()) + 1;
+        int[] qIds = new int[cur.getCount()];
+        for (int i = 0; i < cur.getCount(); i++) {
+            cur.moveToNext();
+            qIds[i] = cur.getInt(0);
+        }
         cur.close();
         db.close();
-        return result;
+        int result = rand.nextInt(qIds.length);
+        System.out.println("Pic Question Id is: " + qIds[result]);
+        return qIds[result];
     }
 
-    public int getRandomTextQuestion(String type) {
-        open();
-        Random rand = new Random();
-        Cursor cur;
-        if (type.equals("all")) {
-            cur = db.rawQuery("SELECT * FROM TextQuestion", null);
-        } else {
-            cur = db.rawQuery("SELECT * FROM TextQuestion WHERE Type = " + type, null);
-        }
-        int result = rand.nextInt(cur.getCount()) + 1;
-        cur.close();
-        db.close();
-        return result;
-    }
+//    public int getRandomTextQuestion(String type) {
+//        open();
+//        Random rand = new Random();
+//        Cursor cur;
+//        if (type.equals("all")) {
+//            cur = db.rawQuery("SELECT * FROM TextQuestion", null);
+//        } else {
+//            cur = db.rawQuery("SELECT * FROM TextQuestion WHERE Type = " + type, null);
+//        }
+//        int result = rand.nextInt(cur.getCount()) + 1;
+//        cur.close();
+//        db.close();
+//        return result;
+//    }
 
     public int getRandomTextQuestion(ArrayList<Integer[]> blacklist, String type) {
         open();
-        String sql = "SELECT * FROM TextQuestion WHERE ";
+        String sql = "SELECT Id FROM TextQuestion WHERE ";
         if (!type.equals("all")) {
             sql += "Type = " + type + " AND ";
         }
@@ -100,13 +105,18 @@ public class DatabaseHandler {
             }
         }
         sql = sql.substring(0, sql.length() - 4);
-        System.out.println(sql);
         Random rand = new Random();
         Cursor cur = db.rawQuery(sql, null);
-        int result = rand.nextInt(cur.getCount()) + 1;
+        int[] qIds = new int[cur.getCount()];
+        for (int i = 0; i < cur.getCount(); i++) {
+            cur.moveToNext();
+            qIds[i] = cur.getInt(0);
+        }
         cur.close();
         db.close();
-        return result;
+        int result = rand.nextInt(qIds.length);
+        System.out.println("Text Question Id is: " + qIds[result]);
+        return qIds[result];
     }
 
     // returns picture path of a question given the questionId
@@ -345,7 +355,7 @@ public class DatabaseHandler {
         Cursor c = db.rawQuery("SELECT Points FROM Round WHERE GameId = " + gameId, null);
         c.moveToFirst();
         String[] result = new String[c.getCount()];
-        for (int i = 0; i < c.getCount();i++){
+        for (int i = 0; i < c.getCount(); i++) {
             result[i] = c.getString(0);
             c.moveToNext();
         }
