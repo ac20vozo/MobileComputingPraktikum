@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.845" />
 
     <TextView
         android:id="@+id/txtAboutus"
@@ -33,5 +33,5 @@
         app:layout_constraintHorizontal_bias="0.195"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.526" />
 </androidx.constraintlayout.widget.ConstraintLayout>
