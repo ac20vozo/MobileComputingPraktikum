@@ -190,6 +190,7 @@ public class Controller {
         return db.getPointsPerRound(gameId);
     }
 
+
     public int Points(double distance, int maxPoints, int cutOff){
         if (nearPointFunction(distance, maxPoints) >= cutOff){
             return nearPointFunction(distance, maxPoints);
@@ -202,6 +203,6 @@ public class Controller {
         return Math.min(maxPoints, (int) Math.ceil(maxPoints*(2/(distance/100))));
     }
     public int farPointFunction(double distance, int cutOff){
-        return Math.max(cutOff, (int) Math.ceil(cutOff - Math.pow((distance/100),1.7)));
+        return Math.max(0, (int) Math.ceil(cutOff - Math.pow((distance/100),1.7)));
     }
 }
