@@ -33,13 +33,11 @@ public class Startseite extends AppCompatActivity {
 
     public void spielenClick(View view){
         Intent spielenIntent = new Intent(this,homescreen.class);
-        spielenIntent.putExtra("Play", 1);
         startActivity(spielenIntent);
     }
 
     public void optionClick(View view){
         Intent optionIntent = new Intent(this, homescreen.class);
-        optionIntent.putExtra("Options", 1);
         startActivity(optionIntent);
     }
 

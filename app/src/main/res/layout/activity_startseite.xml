@@ -52,7 +52,7 @@
         android:background="@drawable/runde_button"
         android:fontFamily="@font/amarante"
         android:onClick="optionClick"
-        android:text="@string/Options"
+        android:text="@string/AboutUs"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
