@@ -37,26 +37,19 @@ public class Startseite extends AppCompatActivity {
     }
 
 
-
-    public void spielenClick(View view){
-        Intent spielenIntent = new Intent(this,homescreen.class);
+    public void spielenClick(View view) {
+        Intent spielenIntent = new Intent(this, homescreen.class);
         startActivity(spielenIntent);
     }
 
 
-    public void aboutUsClick(View view){
+    public void aboutUsClick(View view) {
         Intent aboutUsIntent = new Intent(this, AboutUs.class);
         startActivity(aboutUsIntent);
     }
 
-    //Bloß zum Testen kann am ende gelöscht werden
-    public void mainac(View view){
-        Intent mainInt = new Intent(this,MainActivity.class);
-        startActivity(mainInt);
-    }
 
-
-    public void quitClick(View view){
+    public void quitClick(View view) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
