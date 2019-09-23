@@ -42,8 +42,6 @@
 
         <activity android:name=".AboutUs" />
 
-        <activity android:name=".MainActivity" />
-
         <activity android:name=".DatabaseHandler" />
 
     </application>
