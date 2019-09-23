@@ -32,18 +32,18 @@ public class Controller {
     public void test01() {
 
         db.open();
-        System.out.println("Random Pic Question: " + db.getRandomPicQuestion());
-
+        ArrayList<Integer[]> blacklist = new ArrayList<Integer[]>();
+        Integer[] q = {1, 1};
+        blacklist.add(q);
+        System.out.println("Random Pic Question: " + db.getRandomPicQuestion(blacklist));
     }
 
     public void showPic(ImageView image, int questionId) {
         db.open();
-        byte [] bits = db.getbytes(questionId);
+        byte[] bits = db.getbytes(questionId);
         Bitmap b = BitmapFactory.decodeByteArray(bits, 0, bits.length);
         //image.setImageBitmap(Bitmap.createScaledBitmap(b, 150, 150, false));
         image.setImageBitmap(b);
-
-
     }
 
     public void showText(TextView text, int questionId) {
@@ -55,7 +55,6 @@ public class Controller {
 
 
     }
-
 
 
     public boolean isGameOver(int gameId) {
@@ -72,8 +71,7 @@ public class Controller {
 
                 return 0;
             }
-        }
-        else if (!db.checkAmount(amount, kind)) {
+        } else if (!db.checkAmount(amount, kind)) {
             return 0;
         }
 
@@ -118,32 +116,34 @@ public class Controller {
 
     }
 
-    public String[] getStats(int userId){
+    public String[] getStats(int userId) {
         db.open();
         String[] result = db.getStats(userId);
 
         return result;
 
     }
-    public int [] getNextQuestionInfo(int gameId){
+
+    public int[] getNextQuestionInfo(int gameId) {
         db.open();
         int[] QuestionInfo = db.getNextQuestion(gameId);
         int questionId = QuestionInfo[1];
         int isPicQuestion = QuestionInfo[0];
 
-        int [] result = {questionId, isPicQuestion};
+        int[] result = {questionId, isPicQuestion};
         return result;
 
     }
+
     // check stringConversion
-    public int  answerToRound(double x, double y, int gameId) {
+    public int answerToRound(double x, double y, int gameId) {
         db.open();
         int[] QuestionInfo = db.getNextQuestion(gameId);
         int questionId = QuestionInfo[1];
         int answerId = db.getAnswerId(QuestionInfo[0], QuestionInfo[1]);
         int points = answerQuestion(gameId, answerId, x, y);
         //untested part
-        db.updateRound(gameId, QuestionInfo[1], x, y, points);
+        db.updateRound(gameId, questionId, QuestionInfo[0], x, y, points);
 
         return points;
     }
@@ -181,15 +181,12 @@ public class Controller {
 
     }
 
-    public Double[] getAnswer(int isPicQuestion, int questionId){
+    public Double[] getAnswer(int isPicQuestion, int questionId) {
         int answerId = db.getAnswerId(isPicQuestion, questionId);
         return db.getAnswerCords(answerId);
     }
 
-    public String[] getPointsPerRound(int gameId){
+    public String[] getPointsPerRound(int gameId) {
         return db.getPointsPerRound(gameId);
     }
-
-
 }
-
