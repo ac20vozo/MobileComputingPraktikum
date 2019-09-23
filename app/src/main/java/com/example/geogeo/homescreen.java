@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-public class homescreen extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class homescreen extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private FrameLayout frameLayout;
 
@@ -38,37 +40,30 @@ public class homescreen extends AppCompatActivity implements BottomNavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem Item) {
         Fragment fragment = null;
-        switch (Item.getItemId()){
+        switch (Item.getItemId()) {
             case R.id.navigation_home:
                 fragment = new frag_play();
                 break;
         }
-        switch (Item.getItemId()){
+        switch (Item.getItemId()) {
             case R.id.navigation_dashboard:
                 fragment = new frag_stats();
                 break;
         }
-        switch (Item.getItemId()){
+        switch (Item.getItemId()) {
             case R.id.navigation_notifications:
                 fragment = new frag_options();
                 break;
         }
         return loadFragment(fragment);
     }
+
     private boolean loadFragment(Fragment fragment) {
-        if (fragment != null){
+        if (fragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frag_container, fragment).commit();
             return true;
         }
 
         return false;
     }
-        /*@Override
-        public void onClick(View view) {
-            if (view.getId() == R.id.play_classicGame){
-            Intent startClassicGame = new Intent(this, MainActivity.class);
-            startActivity(startClassicGame);
-            }
-
-        }*/
 }
