@@ -296,11 +296,12 @@ public class DatabaseHandler {
     }
 
     // not tested yet
-    public void updateRound(int gameId, int questionId, double x, double y, int points) {
+    public void updateRound(int gameId, int questionId, int isPicQuestion, double x, double y, int points) {
         open();
         db.execSQL("UPDATE Round " +
                 "SET AnswerX = " + x + ", AnswerY = " + y + ", Points = " + points +
-                " WHERE GameId = " + gameId + " AND questionId = " + questionId);
+                " WHERE GameId = " + gameId + " AND questionId = " + questionId + " And " +
+                "IsPicQuestion = " + isPicQuestion);
         db.close();
     }
 
