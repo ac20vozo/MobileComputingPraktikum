@@ -14,6 +14,8 @@ import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
+
 import java.io.ByteArrayInputStream;
 
 public class Controller {
@@ -24,54 +26,56 @@ public class Controller {
     public Controller(Context context) {
         this.context = context;
         db = DatabaseHandler.getInstance(context);
-        db.open();
+
     }
 
-    public void bloßeintest02() {
-        //DatabaseHandler db;
-        //db = DatabaseHandler.getInstance(context);
+    public void test01() {
+
         db.open();
-        System.out.println("Random Pic Question: " + db.getRandomPicQuestion());
+        ArrayList<Integer[]> blacklist = new ArrayList<Integer[]>();
+        Integer[] q = {1, 1};
+        blacklist.add(q);
+        System.out.println("Random Pic Question: " + db.getRandomPicQuestion(blacklist));
     }
 
     public void showPic(ImageView image, int questionId) {
         db.open();
-        byte [] bits = db.getbytes(questionId);
+        byte[] bits = db.getbytes(questionId);
         Bitmap b = BitmapFactory.decodeByteArray(bits, 0, bits.length);
         //image.setImageBitmap(Bitmap.createScaledBitmap(b, 150, 150, false));
         image.setImageBitmap(b);
-        db.close();
-
     }
 
-    public void showText(String input, TextView text, int questionId) {
+    public void showText(TextView text, int questionId) {
         DatabaseHandler db;
         db = DatabaseHandler.getInstance(context);
         db.open();
-        input = db.getTextQuestion(questionId);
+        String input = db.getTextQuestion(questionId);
         text.setText(input);
-        db.close();
+
 
     }
 
-    public void getitems() {
-        DatabaseHandler db;
-        db = DatabaseHandler.getInstance(context);
-        db.open();
+
+    public boolean isGameOver(int gameId) {
+        return db.isGameOver(gameId);
     }
 
     // kind can be random, text or pic
     // TODO: make sure that the amount is less or equal to the amount of questions
-    public boolean createGame(int amount, String kind, String type) {
+    public int createGame(int amount, String kind, String type) {
         // blacklist ist Array von Array von ints (Mit 1. 0 oder 1 2. id von question)
         db.open();
         if (kind.equals("random")) {
             if (!db.checkAmount(amount, "pic") || !db.checkAmount(amount, "text")) {
-                return false;
+
+                return 0;
             }
         } else if (!db.checkAmount(amount, kind)) {
-            return false;
+            return 0;
         }
+
+
         int gameId = db.createGame(amount);
 
         int id = 0;
@@ -97,44 +101,56 @@ public class Controller {
             db.addRoundToGame(gameId, blacklist.get(i)[0], blacklist.get(i)[1]);
         }
         if (blacklist.size() == amount) {
-            return true;
+            return gameId;
         } else {
-            return false;
+            return 0;
         }
-    }
-
-    public int[] getNextQuestion(int gameId) {
-        SQLiteOpenHelper sqLiteOpenHelper = new DBHelper(this.context);
-        SQLiteDatabase sqldb = sqLiteOpenHelper.getWritableDatabase();
-        Cursor cur = sqldb.rawQuery("SELECT * FROM Round WHERE Points = -1;", null);
-        int isPic = cur.getInt(cur.getColumnIndex("IsPicQuestion"));
-        int qId = cur.getInt(cur.getColumnIndex("QuestionId"));
-        cur.close();
-        return new int[] {isPic, qId};
     }
 
     public void endGame(int gameId) {
         // Because for now we have only one user
+        db.open();
         int id = 1;
+        db.countPointsOfRounds(gameId);
         db.addGameToStatistics(id, gameId);
+
     }
-    public String[] getStats(int userId){
-        return db.getStats(userId);
+
+    public String[] getStats(int userId) {
+        db.open();
+        String[] result = db.getStats(userId);
+
+        return result;
+
+    }
+
+    public int[] getNextQuestionInfo(int gameId) {
+        db.open();
+        int[] QuestionInfo = db.getNextQuestion(gameId);
+        int questionId = QuestionInfo[1];
+        int isPicQuestion = QuestionInfo[0];
+
+        int[] result = {questionId, isPicQuestion};
+        return result;
+
     }
 
     // check stringConversion
     public int answerToRound(double x, double y, int gameId) {
+        db.open();
         int[] QuestionInfo = db.getNextQuestion(gameId);
         int questionId = QuestionInfo[1];
-        int answerId = db.getAnswer(QuestionInfo[0], QuestionInfo[1]);
+        int answerId = db.getAnswerId(QuestionInfo[0], QuestionInfo[1]);
         int points = answerQuestion(gameId, answerId, x, y);
         //untested part
-        db.updateRound(gameId, QuestionInfo[1], x, y, points);
+        db.updateRound(gameId, questionId, QuestionInfo[0], x, y, points);
+
         return points;
     }
 
     // returns distance to of given answer to correct location
     public double checkDistanceToAnswer(int answerId, double xGuess, double yGuess) {
+        db.open();
         Double[] Cords = new Double[2];
         Cords = db.getAnswerCords(answerId);
 
@@ -160,11 +176,32 @@ public class Controller {
         int points = 1;
         double distance = checkDistanceToAnswer(answerId, xGuess, yGuess);
         // add a more sensible point calculation here
-        points = (int) Math.ceil(points / distance);
+        points = Points(distance, 500, 250);
         return points;
 
     }
 
+    public Double[] getAnswer(int isPicQuestion, int questionId) {
+        int answerId = db.getAnswerId(isPicQuestion, questionId);
+        return db.getAnswerCords(answerId);
+    }
 
+    public String[] getPointsPerRound(int gameId) {
+        return db.getPointsPerRound(gameId);
+    }
+
+    public int Points(double distance, int maxPoints, int cutOff){
+        if (nearPointFunction(distance, maxPoints) >= cutOff){
+            return nearPointFunction(distance, maxPoints);
+        }
+        else{
+            return farPointFunction(distance, cutOff);
+        }
+    }
+    public int nearPointFunction(double distance, int maxPoints){
+        return Math.min(maxPoints, (int) Math.ceil(maxPoints*(2/(distance/100))));
+    }
+    public int farPointFunction(double distance, int cutOff){
+        return Math.max(cutOff, (int) Math.ceil(cutOff - Math.pow((distance/100),1.7)));
+    }
 }
-

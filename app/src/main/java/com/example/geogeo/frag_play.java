@@ -14,6 +14,8 @@ import android.view.Window;
 
 public class frag_play extends Fragment {
     protected Button play_classicGame;
+    int gameId;
+    int amount = 2;
 
 
     @Nullable
@@ -24,13 +26,27 @@ public class frag_play extends Fragment {
         return inflater.inflate(R.layout.frag_play, null);
     }
     public void onViewCreated(View view, Bundle savedInstanceState){
+        final Controller con = new Controller(getActivity());
         Button play_classicGame = (Button) view.findViewById(R.id.play_classicGame);
         play_classicGame.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                Intent intent = new Intent(getActivity(), map.class);
-                startActivity(intent);
+                gameId = con.createGame(amount, "random", "all");
+                int [] NextQuestionInfo = con.getNextQuestionInfo(gameId);
+                if (gameId != 0){
+                    if (NextQuestionInfo[1] == -1) {
+                        if (con.isGameOver(gameId)) {
+                            con.endGame(gameId);
+                        }
+                    } else {
+                        Intent intent = new Intent(getActivity(), map.class);
+                        intent.putExtra("gameId", gameId);
+                        intent.putExtra("questionId", NextQuestionInfo[0]);
+                        intent.putExtra("isPicQuestion", NextQuestionInfo[1]);
+                        startActivity(intent);
+                    }
+                }
 
             }
 
