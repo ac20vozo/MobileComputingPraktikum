@@ -36,15 +36,8 @@
 
 
         </activity>
-        <activity
-            android:name=".homescreen"
-            android:label="@string/title_activity_homescreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".homescreen" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".GameStatistics" />
 
         <activity android:name=".AboutUs" />
