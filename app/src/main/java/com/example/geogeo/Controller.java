@@ -143,7 +143,7 @@ public class Controller {
         int answerId = db.getAnswerId(QuestionInfo[0], QuestionInfo[1]);
         int points = answerQuestion(gameId, answerId, x, y);
         //untested part
-        db.updateRound(gameId, QuestionInfo[1], x, y, points);
+        db.updateRound(gameId, questionId, QuestionInfo[0], x, y, points);
 
         return points;
     }

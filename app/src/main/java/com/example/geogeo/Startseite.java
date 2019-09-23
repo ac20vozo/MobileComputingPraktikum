@@ -43,6 +43,7 @@ public class Startseite extends AppCompatActivity {
         startActivity(spielenIntent);
     }
 
+
     public void aboutUsClick(View view){
         Intent aboutUsIntent = new Intent(this, AboutUs.class);
         startActivity(aboutUsIntent);

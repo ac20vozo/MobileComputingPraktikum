@@ -47,11 +47,11 @@
         </activity>
         <activity android:name=".GameStatistics" />
 
+        <activity android:name=".AboutUs" />
+
         <activity android:name=".MainActivity" />
 
         <activity android:name=".DatabaseHandler" />
-
-        <activity android:name=".AboutUs" />
 
     </application>
 
