@@ -2,16 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="onScreenClick"
     tools:context=".GameStatistics">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_statistics" />
+        android:background="@drawable/background_focus">
+
+        <Button
+            android:id="@+id/back"
+            style="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Back" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/txtStatistics"
@@ -78,7 +85,8 @@
                 android:singleLine="false"
                 android:text="@string/Distance"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/txtScore0"
@@ -102,7 +110,8 @@
                 android:layout_weight="1"
                 android:text="@string/Question1"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/txtDist1"
@@ -131,7 +140,8 @@
                 android:layout_weight="1"
                 android:text="@string/Question2"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/txtDist2"
@@ -160,7 +170,8 @@
                 android:layout_weight="1"
                 android:text="@string/Question3"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/txtDist3"
@@ -189,7 +200,8 @@
                 android:layout_weight="1"
                 android:text="@string/Question4"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/txtDist4"
@@ -218,7 +230,8 @@
                 android:layout_weight="1"
                 android:text="@string/Question5"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/txtDist5"

@@ -6,9 +6,16 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class GameStatistics extends AppCompatActivity {
+
+    int gameId;
+    View[] questions = new View[5];
+    TextView[] score = new TextView[5];
+    String[] pointsPerRound;
+    int totalScore = 0;
 
     TextView txtStatistics;
     TextView txtDist0;
@@ -31,11 +38,16 @@ public class GameStatistics extends AppCompatActivity {
     TextView txtScore5;
     TextView txtGesamt;
     TextView txtTotalScore;
+    Button back;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_statistics);
+
+        Intent mIntent = getIntent();
+        gameId = mIntent.getIntExtra("gameId", 0);
 
         txtStatistics= findViewById(R.id.txtStatistics);
         txtFrage0 = findViewById(R.id.txtFrage0);
@@ -60,10 +72,41 @@ public class GameStatistics extends AppCompatActivity {
         txtScore5 = findViewById(R.id.txtScore5);
         txtGesamt = findViewById(R.id.txtGesamt);
         txtTotalScore = findViewById(R.id.txtTotalScore);
-    }
+        back = findViewById(R.id.back);
 
-    public void onScreenClick(View view){
-        Intent screenIntent = new Intent(this, homescreen.class);
-        startActivity(screenIntent);
+        questions[0] = txtFrage1;
+        questions[1] = txtFrage2;
+        questions[2] = txtFrage3;
+        questions[3] = txtFrage4;
+        questions[4] = txtFrage5;
+
+        score[0] = txtScore1;
+        score[1] = txtScore2;
+        score[2] = txtScore3;
+        score[3] = txtScore4;
+        score[4] = txtScore5;
+
+        Controller con = new Controller(getApplicationContext());
+        pointsPerRound = con.getPointsPerRound(gameId);
+
+        for (int i = 0; i<pointsPerRound.length;i++){
+            questions[i].setVisibility(View.VISIBLE);
+            score[i].setText(pointsPerRound[i]);
+            System.out.println(totalScore);
+            totalScore = totalScore + Integer.parseInt(pointsPerRound[i]);
+        }
+        txtTotalScore.setText(Integer.toString(totalScore));
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBack();
+            }
+        });
+
+    }
+    private void goBack(){
+        Intent intent = new Intent(this, Startseite.class);
+        startActivity(intent);
     }
 }
