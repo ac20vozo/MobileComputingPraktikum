@@ -213,11 +213,11 @@ public class map extends Activity {
     public void submit(View view){
         Double answerX = con.getAnswer(isPicQuestion, questionId)[0];
         Double answerY = con.getAnswer(isPicQuestion, questionId)[1];
-        result.setPosition(new GeoPoint(answerY, answerX));
+        result.setPosition(new GeoPoint(answerX, answerY));
         result.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
 
         List<GeoPoint> geoPoints = new ArrayList<>();
-        geoPoints.add(new GeoPoint(answerY, answerX));//New York hardcoded
+        geoPoints.add(new GeoPoint(answerX, answerY));//New York hardcoded
         geoPoints.add(clicked);
 
         line.setPoints(geoPoints);
@@ -229,10 +229,10 @@ public class map extends Activity {
         map.invalidate();
 
 
-        mapController.animateTo(new GeoPoint(answerY, answerX),4.0,3200L);//New YOrk hardcoded
+        mapController.animateTo(new GeoPoint(answerX, answerY),4.0,3200L);//New YOrk hardcoded
         submitb.setVisibility(View.INVISIBLE);
         if (!con.isGameOver(gameId)){
-            con.answerToRound(lon, lat, gameId);
+            con.answerToRound(lat, lon, gameId);
             NextQuestionInfo = con.getNextQuestionInfo(gameId);
         }
 
