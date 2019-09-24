@@ -138,10 +138,13 @@ public class map extends Activity {
         mapController.setCenter(startPoint);
 
         submitb.setVisibility(View.INVISIBLE);
+
         if(isPicQuestion == 1 ) {
+            question.setVisibility(View.INVISIBLE);
             con.showPic(image, questionId);
         }
         else {
+            image.setVisibility(View.INVISIBLE);
             con.showText(question,questionId);
         }
 
@@ -158,6 +161,7 @@ public class map extends Activity {
 
                 mark.setPosition(clicked);
                 mark.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                mark.setIcon(getResources().getDrawable(R.drawable.oldmarker));
                 map.getOverlays().add(mark);
                 map.invalidate();
                 submitb.setVisibility(View.VISIBLE);
@@ -215,6 +219,7 @@ public class map extends Activity {
         Double answerY = con.getAnswer(isPicQuestion, questionId)[1];
         result.setPosition(new GeoPoint(answerX, answerY));
         result.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        result.setIcon(getResources().getDrawable(R.drawable.newmarker));
 
         List<GeoPoint> geoPoints = new ArrayList<>();
         geoPoints.add(new GeoPoint(answerX, answerY));//New York hardcoded

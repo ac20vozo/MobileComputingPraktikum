@@ -29,6 +29,13 @@ public class Controller {
 
     }
 
+    public int getQuestionCount() {
+
+        db.open();
+        return db.getQuestionCount();
+
+    }
+
     public void test01() {
 
         db.open();

@@ -60,7 +60,7 @@ public class DatabaseHandler {
         String sql = "SELECT Id FROM PicQuestion WHERE ";
         for (Integer[] v : blacklist) {
             if (v[0] == 1) {
-                sql += "id <> " + v[1] + " AND";
+                sql += " id <> " + v[1] + " AND";
             }
         }
         sql = sql.substring(0, sql.length() - 4);
@@ -101,7 +101,7 @@ public class DatabaseHandler {
         }
         for (Integer[] v : blacklist) {
             if (v[0] == 0) {
-                sql += "id <> " + v[1] + " AND";
+                sql += " id <> " + v[1] + " AND";
             }
         }
         sql = sql.substring(0, sql.length() - 4);
@@ -128,6 +128,19 @@ public class DatabaseHandler {
         c.close();
         db.close();
         return result;
+    }
+
+    public int getQuestionCount(){
+        open();
+        int count = 0;
+        Cursor c = db.rawQuery("SELECT * FROM PicQuestion", null);
+        count += c.getCount();
+        c.close();
+        c = db.rawQuery("SELECT * FROM TextQuestion", null);
+        count += c.getCount();
+        c.close();
+        db.close();
+        return count;
     }
 
     public String getTextQuestion(int questionId) {

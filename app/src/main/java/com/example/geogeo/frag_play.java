@@ -10,12 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.view.Window;
+import android.widget.NumberPicker;
 
 
 public class frag_play extends Fragment {
     protected Button play_classicGame;
     int gameId;
-    int amount = 2;
+    int amount;
+    NumberPicker np;
 
 
     @Nullable
@@ -28,10 +30,15 @@ public class frag_play extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         final Controller con = new Controller(getActivity());
         Button play_classicGame = (Button) view.findViewById(R.id.play_classicGame);
+        np = view.findViewById(R.id.npp);
+        np.setMinValue(1);
+        np.setMaxValue(con.getQuestionCount());
+
         play_classicGame.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
+                amount = np.getValue();
                 gameId = con.createGame(amount, "random", "all");
                 int [] NextQuestionInfo = con.getNextQuestionInfo(gameId);
                 if (gameId != 0){
