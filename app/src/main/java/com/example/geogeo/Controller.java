@@ -200,9 +200,12 @@ public class Controller {
         }
     }
     public int nearPointFunction(double distance, int maxPoints){
-        return Math.min(maxPoints, (int) Math.ceil(maxPoints*(2/(distance/100))));
+        double dividend = 2; // decrease to steepen the drop
+        return Math.min(maxPoints, (int) Math.ceil(maxPoints*(dividend/(distance/100))));
     }
     public int farPointFunction(double distance, int cutOff){
-        return Math.max(0, (int) Math.ceil(cutOff - Math.pow((distance/100),1.7)));
+
+        double exponent = 1.65; // increase to steepen the drop
+        return Math.max(0, (int) Math.ceil(cutOff - Math.pow((distance/100),exponent)));
     }
 }
