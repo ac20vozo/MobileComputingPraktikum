@@ -232,7 +232,7 @@ public class map extends Activity {
         mapController.animateTo(new GeoPoint(answerY, answerX),4.0,3200L);//New YOrk hardcoded
         submitb.setVisibility(View.INVISIBLE);
         if (!con.isGameOver(gameId)){
-            con.answerToRound(lat, lon, gameId);
+            con.answerToRound(lon, lat, gameId);
             NextQuestionInfo = con.getNextQuestionInfo(gameId);
         }
 
