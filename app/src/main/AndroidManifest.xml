@@ -33,17 +33,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".map" android:screenOrientation="portrait">
+        <activity android:name=".map" android:screenOrientation="portrait"/>
 
 
-        </activity>
+
         <activity android:name=".homescreen" android:screenOrientation="portrait"/>
 
         <activity android:name=".GameStatistics" android:screenOrientation="portrait" />
 
         <activity android:name=".AboutUs" android:screenOrientation="portrait" />
 
-        <activity android:name=".MainActivity" android:screenOrientation="portrait" />
+        <activity android:name=".TestPics" />
 
         <activity android:name=".DatabaseHandler" android:screenOrientation="portrait"/>
 

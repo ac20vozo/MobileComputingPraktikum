@@ -16,6 +16,7 @@ public class Startseite extends AppCompatActivity {
     Button btnSpielen;
     Button btnOption;
     Button btnBeenden;
+    Button test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class Startseite extends AppCompatActivity {
         btnSpielen = findViewById(R.id.btnSpielen);
         btnOption = findViewById(R.id.btnOption);
         btnBeenden = findViewById(R.id.btnBeenden);
+        test = findViewById(R.id.testbutton);
     }
 
 
@@ -53,6 +55,11 @@ public class Startseite extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    public void testpicsact(View view){
+        Intent intent = new Intent(this, TestPics.class);
         startActivity(intent);
     }
 }
