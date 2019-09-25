@@ -51,6 +51,7 @@ public class map extends Activity {
     Button submitb;
     Button closeb;
     Button hintb;
+    TextView points;
 
     IMapController mapController;
 
@@ -72,6 +73,7 @@ public class map extends Activity {
     int questionId;
     int isPicQuestion;
     int [] NextQuestionInfo;
+    int pointsInt;
 
 
     private void pointSelected(double lat, double lon){
@@ -110,6 +112,11 @@ public class map extends Activity {
         closeb = findViewById(R.id.closebutton);
         hintb = findViewById(R.id.hint);
         question = (TextView) findViewById(R.id.textv);
+        points = findViewById(R.id.PointsView);
+        System.out.println("hierrrrr" + con.getPoints(gameId));
+        System.out.println("hierrrrr" + gameId);
+        pointsInt = Integer.valueOf(con.getPoints(gameId));
+        points.setText("Points: " + pointsInt);
 
 
         mark = new Marker(map);
@@ -236,7 +243,7 @@ public class map extends Activity {
         result.setIcon(getResources().getDrawable(R.drawable.newmarker));
 
         List<GeoPoint> geoPoints = new ArrayList<>();
-        geoPoints.add(new GeoPoint(answerX, answerY));//New York hardcoded
+        geoPoints.add(new GeoPoint(answerX, answerY));
         geoPoints.add(clicked);
 
         line.setPoints(geoPoints);
@@ -252,6 +259,7 @@ public class map extends Activity {
         submitb.setVisibility(View.INVISIBLE);
         if (!con.isGameOver(gameId)){
             con.answerToRound(lat, lon, gameId);
+            points.setText("Points: " + pointsInt + " + " + (con.getPoints(gameId) - pointsInt));
             NextQuestionInfo = con.getNextQuestionInfo(gameId);
         }
 

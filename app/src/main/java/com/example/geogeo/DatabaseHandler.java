@@ -355,6 +355,18 @@ public class DatabaseHandler {
         return false;
     }
 
+    public int getPoints(int gameId){
+        open();
+        Cursor c = db.rawQuery("SELECT SUM(Points) FROM ROUND WHERE GameId = " + gameId, null);
+        c.moveToFirst();
+        if (! (c.getCount() == 0)){
+            db.close();
+            return c.getInt(0);
+        }
+        db.close();
+        return 0;
+    }
+
     public void countPointsOfRounds(int gameId) {
         open();
         Cursor c = db.rawQuery("SELECT SUM(Points) FROM Round WHERE GameId = " + gameId, null);
