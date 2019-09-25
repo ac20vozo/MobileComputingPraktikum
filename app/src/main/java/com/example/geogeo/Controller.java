@@ -215,4 +215,8 @@ public class Controller {
         double exponent = 1.65; // increase to steepen the drop
         return Math.max(0, (int) Math.ceil(cutOff - Math.pow((distance/100),exponent)));
     }
+
+    public int getPoints(int gameId){
+        return db.getPoints(gameId);
+    }
 }

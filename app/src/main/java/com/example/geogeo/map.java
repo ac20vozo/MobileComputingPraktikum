@@ -50,6 +50,9 @@ public class map extends Activity {
     TextView question;
     Button submitb;
     Button closeb;
+    Button hintb;
+    TextView points;
+    Button continb;
 
     IMapController mapController;
 
@@ -71,12 +74,12 @@ public class map extends Activity {
     int questionId;
     int isPicQuestion;
     int [] NextQuestionInfo;
+    int pointsInt;
 
 
     private void pointSelected(double lat, double lon){
         this.lat = lat;
         this.lon = lon;
-        this.isSet = true;
     }
 
     @Override public void onCreate(Bundle savedInstanceState) {
@@ -102,12 +105,24 @@ public class map extends Activity {
         questionId = mIntent.getIntExtra("questionId", 0);
         isPicQuestion = mIntent.getIntExtra("isPicQuestion", 0);
 
-        con = new Controller(getApplicationContext());
-        map = (MapView) findViewById(R.id.map);
-        image = findViewById(R.id.pic);
-        submitb = (Button) findViewById(R.id.submit);
+        isSet = true;
+        con = new Controller(ctx);
+        map = findViewById(R.id.map);
+
+        submitb = findViewById(R.id.submit);
         closeb = findViewById(R.id.closebutton);
-        question = (TextView) findViewById(R.id.textv);
+        hintb = findViewById(R.id.hint);
+        continb= findViewById(R.id.cont);
+
+        question = findViewById(R.id.textv);
+        image = findViewById(R.id.pic);
+
+        points = findViewById(R.id.PointsView);
+        System.out.println("hierrrrr" + con.getPoints(gameId));
+        System.out.println("hierrrrr" + gameId);
+        pointsInt = Integer.valueOf(con.getPoints(gameId));
+        points.setText("Points: " + pointsInt);
+
 
         mark = new Marker(map);
         result = new Marker(map);
@@ -117,14 +132,13 @@ public class map extends Activity {
 
         OnlineTileSourceBase sta= new XYTileSource("StamenMap", 1, 17, 256, ".jpg",
                 new String[]{
-
                         "http://c.tile.stamen.com/watercolor/"
                 },
                 "Stamen");
         map.setTileSource(sta);
 
 
-        map.setScrollableAreaLimitDouble(new BoundingBox(85, 180, -85, -180));
+        map.setScrollableAreaLimitLatitude(85, -85, 0);
         map.setMaxZoomLevel(maxzoom);
         map.setMinZoomLevel(minzoom);
         map.setMultiTouchControls(true);
@@ -138,6 +152,8 @@ public class map extends Activity {
         mapController.setCenter(startPoint);
 
         submitb.setVisibility(View.INVISIBLE);
+        hintb.setVisibility(View.INVISIBLE);
+        continb.setVisibility(View.INVISIBLE);
 
         if(isPicQuestion == 1 ) {
             question.setVisibility(View.INVISIBLE);
@@ -154,21 +170,28 @@ public class map extends Activity {
             @Override
             public boolean singleTapConfirmedHelper(GeoPoint p) {
                 //Toast.makeText(getBaseContext(), p.getLatitude() + " - " + p.getLongitude(), Toast.LENGTH_LONG).show();
+                if (isSet){
+                    double lat = p.getLatitude();
+                    double lon = p.getLongitude();
 
-                double lat = p.getLatitude();
-                double lon = p.getLongitude();
-                clicked = p;
+                    clicked = p;
 
-                mark.setPosition(clicked);
-                mark.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                mark.setIcon(getResources().getDrawable(R.drawable.oldmarker));
-                map.getOverlays().add(mark);
-                map.invalidate();
-                submitb.setVisibility(View.VISIBLE);
+                    mark.setPosition(clicked);
+                    mark.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                    mark.setIcon(getResources().getDrawable(R.drawable.oldmarker));
+                    map.getOverlays().add(mark);
 
-                pointSelected(lat, lon);
+                    map.invalidate();
 
-                return false;
+                    submitb.setVisibility(View.VISIBLE);
+
+                    pointSelected(lat, lon);
+                    return true;
+                }
+                else {
+
+                    return false;
+                }
             }
 
 
@@ -189,6 +212,11 @@ public class map extends Activity {
 
 
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, homescreen.class);
+        startActivity(intent);
     }
 
     private void startNextActivity(){
@@ -215,6 +243,7 @@ public class map extends Activity {
         map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
     }
     public void submit(View view){
+        this.isSet = false;
         Double answerX = con.getAnswer(isPicQuestion, questionId)[0];
         Double answerY = con.getAnswer(isPicQuestion, questionId)[1];
         result.setPosition(new GeoPoint(answerX, answerY));
@@ -222,7 +251,7 @@ public class map extends Activity {
         result.setIcon(getResources().getDrawable(R.drawable.newmarker));
 
         List<GeoPoint> geoPoints = new ArrayList<>();
-        geoPoints.add(new GeoPoint(answerX, answerY));//New York hardcoded
+        geoPoints.add(new GeoPoint(answerX, answerY));
         geoPoints.add(clicked);
 
         line.setPoints(geoPoints);
@@ -234,18 +263,19 @@ public class map extends Activity {
         map.invalidate();
 
 
-        mapController.animateTo(new GeoPoint(answerX, answerY),4.0,3200L);//New YOrk hardcoded
+        mapController.animateTo(new GeoPoint(answerX, answerY),4.0,2000L);//New YOrk hardcoded
         submitb.setVisibility(View.INVISIBLE);
         if (!con.isGameOver(gameId)){
             con.answerToRound(lat, lon, gameId);
+            points.setText("Points: " + pointsInt + " + " + (con.getPoints(gameId) - pointsInt));
             NextQuestionInfo = con.getNextQuestionInfo(gameId);
         }
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                startNextActivity();
+                continb.setVisibility(View.VISIBLE);
             }
-        }, 5000);
+        }, 3000);
 
 
     }
@@ -253,6 +283,22 @@ public class map extends Activity {
         image.setVisibility(View.INVISIBLE);
         question.setVisibility(View.INVISIBLE);
         closeb.setVisibility(View.INVISIBLE);
+        hintb.setVisibility(View.VISIBLE);
+    }
+    public void hint(View view){
+        hintb.setVisibility(View.INVISIBLE);
+        if(isPicQuestion==1) {
+            image.setVisibility(View.VISIBLE);
+        }
+        else {
+            question.setVisibility(View.VISIBLE);
+        }
+        closeb.setVisibility(View.VISIBLE);
+
+    }
+    public void contin(View view){
+        startNextActivity();
+
     }
 
 

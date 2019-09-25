@@ -15,6 +15,7 @@ import android.widget.NumberPicker;
 
 public class frag_play extends Fragment {
     protected Button play_classicGame;
+    protected Button play_CustomGame;
     int gameId;
     int amount;
     NumberPicker np;
@@ -29,36 +30,48 @@ public class frag_play extends Fragment {
     }
     public void onViewCreated(View view, Bundle savedInstanceState){
         final Controller con = new Controller(getActivity());
-        Button play_classicGame = (Button) view.findViewById(R.id.play_classicGame);
+        play_classicGame = (Button) view.findViewById(R.id.play_classicGame);
+        play_CustomGame = view.findViewById(R.id.play_CustomGame);
         np = view.findViewById(R.id.npp);
         np.setMinValue(1);
         np.setMaxValue(con.getQuestionCount());
+
 
         play_classicGame.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                amount = np.getValue();
-                gameId = con.createGame(amount, "random", "all");
-                int [] NextQuestionInfo = con.getNextQuestionInfo(gameId);
-                if (gameId != 0){
-                    if (NextQuestionInfo[1] == -1) {
-                        if (con.isGameOver(gameId)) {
-                            con.endGame(gameId);
-                        }
-                    } else {
-                        Intent intent = new Intent(getActivity(), map.class);
-                        intent.putExtra("gameId", gameId);
-                        intent.putExtra("questionId", NextQuestionInfo[0]);
-                        intent.putExtra("isPicQuestion", NextQuestionInfo[1]);
-                        startActivity(intent);
-                    }
-                }
-
+                initializeGame(con,"all", "random");
             }
 
         });
-    }
 
+        play_CustomGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent customIntent = new Intent(frag_play.this.getActivity(), CustomGame.class);
+                startActivity(customIntent);
+            }
+        });
+
+    }
+    public void initializeGame(Controller con,String type, String kind){
+        amount = np.getValue();
+        gameId = con.createGame(amount, kind, type);
+        int [] NextQuestionInfo = con.getNextQuestionInfo(gameId);
+        if (gameId != 0){
+            if (NextQuestionInfo[1] == -1) {
+                if (con.isGameOver(gameId)) {
+                    con.endGame(gameId);
+                }
+            } else {
+                Intent intent = new Intent(getActivity(), map.class);
+                intent.putExtra("gameId", gameId);
+                intent.putExtra("questionId", NextQuestionInfo[0]);
+                intent.putExtra("isPicQuestion", NextQuestionInfo[1]);
+                startActivity(intent);
+            }
+        }
+    }
 
 }

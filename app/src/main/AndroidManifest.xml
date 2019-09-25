@@ -21,8 +21,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
+        <activity android:name=".CustomGame"></activity>
+        <activity
+            android:name=".Startseite"
         <activity android:name=".SignupActivity"></activity>
         <activity android:name=".LoginActivity" />
         <activity

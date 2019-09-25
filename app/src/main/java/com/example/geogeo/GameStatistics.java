@@ -88,6 +88,9 @@ public class GameStatistics extends AppCompatActivity {
         pointsPerRound = con.getPointsPerRound(gameId);
 
         for (int i = 0; i<pointsPerRound.length;i++){
+            if (i == 5){
+                break;
+            }
             questions[i].setVisibility(View.VISIBLE);
             score[i].setText(pointsPerRound[i]);
             System.out.println(totalScore);
@@ -98,6 +101,13 @@ public class GameStatistics extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, homescreen.class);
+        startActivity(intent);
+    }
+
     public void goBack(View view){
         Intent intent = new Intent(this, Startseite.class);
         startActivity(intent);
