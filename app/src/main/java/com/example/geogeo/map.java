@@ -76,7 +76,6 @@ public class map extends Activity {
     private void pointSelected(double lat, double lon){
         this.lat = lat;
         this.lon = lon;
-        this.isSet = true;
     }
 
     @Override public void onCreate(Bundle savedInstanceState) {
@@ -102,6 +101,7 @@ public class map extends Activity {
         questionId = mIntent.getIntExtra("questionId", 0);
         isPicQuestion = mIntent.getIntExtra("isPicQuestion", 0);
 
+        isSet = true;
         con = new Controller(getApplicationContext());
         map = (MapView) findViewById(R.id.map);
         image = findViewById(R.id.pic);
@@ -154,21 +154,25 @@ public class map extends Activity {
             @Override
             public boolean singleTapConfirmedHelper(GeoPoint p) {
                 //Toast.makeText(getBaseContext(), p.getLatitude() + " - " + p.getLongitude(), Toast.LENGTH_LONG).show();
+                if (isSet){
+                    double lat = p.getLatitude();
+                    double lon = p.getLongitude();
+                    clicked = p;
 
-                double lat = p.getLatitude();
-                double lon = p.getLongitude();
-                clicked = p;
+                    mark.setPosition(clicked);
+                    mark.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                    mark.setIcon(getResources().getDrawable(R.drawable.oldmarker));
+                    map.getOverlays().add(mark);
+                    map.invalidate();
+                    submitb.setVisibility(View.VISIBLE);
 
-                mark.setPosition(clicked);
-                mark.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                mark.setIcon(getResources().getDrawable(R.drawable.oldmarker));
-                map.getOverlays().add(mark);
-                map.invalidate();
-                submitb.setVisibility(View.VISIBLE);
+                    pointSelected(lat, lon);
+                    return true;
+                }
+                else {
 
-                pointSelected(lat, lon);
-
-                return false;
+                    return false;
+                }
             }
 
 
@@ -215,6 +219,7 @@ public class map extends Activity {
         map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
     }
     public void submit(View view){
+        this.isSet = false;
         Double answerX = con.getAnswer(isPicQuestion, questionId)[0];
         Double answerY = con.getAnswer(isPicQuestion, questionId)[1];
         result.setPosition(new GeoPoint(answerX, answerY));
@@ -234,7 +239,7 @@ public class map extends Activity {
         map.invalidate();
 
 
-        mapController.animateTo(new GeoPoint(answerX, answerY),4.0,3200L);//New YOrk hardcoded
+        mapController.animateTo(new GeoPoint(answerX, answerY),4.0,2000L);//New YOrk hardcoded
         submitb.setVisibility(View.INVISIBLE);
         if (!con.isGameOver(gameId)){
             con.answerToRound(lat, lon, gameId);
@@ -245,7 +250,7 @@ public class map extends Activity {
             public void run() {
                 startNextActivity();
             }
-        }, 5000);
+        }, 3000);
 
 
     }
