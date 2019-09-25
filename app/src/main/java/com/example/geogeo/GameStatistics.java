@@ -88,6 +88,9 @@ public class GameStatistics extends AppCompatActivity {
         pointsPerRound = con.getPointsPerRound(gameId);
 
         for (int i = 0; i<pointsPerRound.length;i++){
+            if (i == 5){
+                break;
+            }
             questions[i].setVisibility(View.VISIBLE);
             score[i].setText(pointsPerRound[i]);
             System.out.println(totalScore);
