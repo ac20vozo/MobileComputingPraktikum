@@ -35,6 +35,13 @@
     Due to a traineeship of the "Mobile Computing"-lecture we were commissioned to develop an application that is on the one hand fun to play and on the other hand capable of
     giving students some information about their environment. Therefore we decided to develop our GeoGeo! so that you and your friends can explore and enjoy the
     world by playing our quiz. \nHave Fun!</string>
+    <string name="sign_in">Sign In</string>
+    <string name="not_registered_sing_up">Not registered? Sign Up here</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="sign_in_here">Already have an account? Sign in here</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="logout">Logout</string>
 
 
 </resources>
