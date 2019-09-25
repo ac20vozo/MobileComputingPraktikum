@@ -22,6 +22,15 @@
     <string name="options_input">New username:</string>
     <string name="options_submit">Submit</string>
     <string name="play_classicGame">Classic Game</string>
+    <string name="play_customGame">Custom Game</string>
+    <string name="SelectOne">Please select one:</string>
+    <string name="Select">Please select:</string>
+    <string name="Africa">Africa</string>
+    <string name="Europe">Europe</string>
+    <string name="NorthAmerica">North America</string>
+    <string name="SouthAmerica">South America</string>
+    <string name="Asia">Asia</string>
+    <string name="Oceania">Oceania</string>
     <string name="stats_playedGames">Played Games:</string>
     <string name="stats_average">Average distance \n to target:</string>
     <string name="stats_highscore">Points:</string>
