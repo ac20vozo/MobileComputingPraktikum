@@ -101,6 +101,13 @@ public class GameStatistics extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, homescreen.class);
+        startActivity(intent);
+    }
+
     public void goBack(View view){
         Intent intent = new Intent(this, Startseite.class);
         startActivity(intent);
