@@ -50,6 +50,7 @@ public class map extends Activity {
     TextView question;
     Button submitb;
     Button closeb;
+    Button hintb;
 
     IMapController mapController;
 
@@ -107,7 +108,9 @@ public class map extends Activity {
         image = findViewById(R.id.pic);
         submitb = (Button) findViewById(R.id.submit);
         closeb = findViewById(R.id.closebutton);
+        hintb = findViewById(R.id.hint);
         question = (TextView) findViewById(R.id.textv);
+
 
         mark = new Marker(map);
         result = new Marker(map);
@@ -138,6 +141,7 @@ public class map extends Activity {
         mapController.setCenter(startPoint);
 
         submitb.setVisibility(View.INVISIBLE);
+        hintb.setVisibility(View.INVISIBLE);
 
         if(isPicQuestion == 1 ) {
             question.setVisibility(View.INVISIBLE);
@@ -193,6 +197,11 @@ public class map extends Activity {
 
 
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, homescreen.class);
+        startActivity(intent);
     }
 
     private void startNextActivity(){
@@ -258,6 +267,18 @@ public class map extends Activity {
         image.setVisibility(View.INVISIBLE);
         question.setVisibility(View.INVISIBLE);
         closeb.setVisibility(View.INVISIBLE);
+        hintb.setVisibility(View.VISIBLE);
+    }
+    public void hint(View view){
+        hintb.setVisibility(View.INVISIBLE);
+        if(isPicQuestion==1) {
+            image.setVisibility(View.VISIBLE);
+        }
+        else {
+            question.setVisibility(View.VISIBLE);
+        }
+        closeb.setVisibility(View.VISIBLE);
+
     }
 
 
