@@ -78,10 +78,11 @@
             android:layout_height="wrap_content"
             android:text="Hint"
             android:fontFamily="@font/amarante"
+            android:background="@color/colorPrimaryDark"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:onClick="Question"
-            android:textSize="14sp"/>
+            android:onClick="hint"
+            android:textSize="15sp"/>
 
     </RelativeLayout>
 
