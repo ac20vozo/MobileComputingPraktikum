@@ -34,31 +34,33 @@ public class frag_play extends Fragment {
         np.setMinValue(1);
         np.setMaxValue(con.getQuestionCount());
 
+
         play_classicGame.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                amount = np.getValue();
-                gameId = con.createGame(amount, "random", "all");
-                int [] NextQuestionInfo = con.getNextQuestionInfo(gameId);
-                if (gameId != 0){
-                    if (NextQuestionInfo[1] == -1) {
-                        if (con.isGameOver(gameId)) {
-                            con.endGame(gameId);
-                        }
-                    } else {
-                        Intent intent = new Intent(getActivity(), map.class);
-                        intent.putExtra("gameId", gameId);
-                        intent.putExtra("questionId", NextQuestionInfo[0]);
-                        intent.putExtra("isPicQuestion", NextQuestionInfo[1]);
-                        startActivity(intent);
-                    }
-                }
-
+                initializeGame(con,"all", "random");
             }
 
         });
     }
-
+    public void initializeGame(Controller con,String type, String kind){
+        amount = np.getValue();
+        gameId = con.createGame(amount, kind, type);
+        int [] NextQuestionInfo = con.getNextQuestionInfo(gameId);
+        if (gameId != 0){
+            if (NextQuestionInfo[1] == -1) {
+                if (con.isGameOver(gameId)) {
+                    con.endGame(gameId);
+                }
+            } else {
+                Intent intent = new Intent(getActivity(), map.class);
+                intent.putExtra("gameId", gameId);
+                intent.putExtra("questionId", NextQuestionInfo[0]);
+                intent.putExtra("isPicQuestion", NextQuestionInfo[1]);
+                startActivity(intent);
+            }
+        }
+    }
 
 }

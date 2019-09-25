@@ -124,7 +124,7 @@ public class map extends Activity {
         map.setTileSource(sta);
 
 
-        map.setScrollableAreaLimitDouble(new BoundingBox(85, 180, -85, -180));
+        map.setScrollableAreaLimitLatitude(85, -85, 0);
         map.setMaxZoomLevel(maxzoom);
         map.setMinZoomLevel(minzoom);
         map.setMultiTouchControls(true);
