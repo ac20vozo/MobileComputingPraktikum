@@ -30,8 +30,8 @@ public class SignupActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         emailId = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        signupBtn = findViewById(R.id.button2);
-        loginTV = findViewById(R.id.textView);
+        signupBtn = findViewById(R.id.signup_button);
+        loginTV = findViewById(R.id.login_text);
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

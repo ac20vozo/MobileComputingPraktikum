@@ -43,6 +43,7 @@ public class Startseite extends AppCompatActivity {
         btnOption = findViewById(R.id.btnOption);
         btnBeenden = findViewById(R.id.btnBeenden);
 
+        logoutBtn = findViewById(R.id.logout_button);
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +54,7 @@ public class Startseite extends AppCompatActivity {
         });
 
         // TODO: delete when done testing the pics
-        test = findViewById(R.id.testbutton);
+//        test = findViewById(R.id.testbutton);
     }
 
 
