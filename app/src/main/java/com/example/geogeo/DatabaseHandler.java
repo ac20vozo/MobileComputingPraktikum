@@ -10,6 +10,8 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static java.lang.Math.min;
+
 public class DatabaseHandler {
     private static final String DATABASE_NAME = "db.db";
     private static final int DATABASE_VERSION = 1;
@@ -132,15 +134,15 @@ public class DatabaseHandler {
 
     public int getQuestionCount(){
         open();
-        int count = 0;
         Cursor c = db.rawQuery("SELECT * FROM PicQuestion", null);
-        count += c.getCount();
+        int count1 = c.getCount();
         c.close();
         c = db.rawQuery("SELECT * FROM TextQuestion", null);
-        count += c.getCount();
+        int count2 = c.getCount();
         c.close();
         db.close();
-        return count;
+
+        return min(count1,count2);
     }
 
     public String getTextQuestion(int questionId) {
