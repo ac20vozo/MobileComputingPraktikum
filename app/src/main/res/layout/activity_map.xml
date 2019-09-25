@@ -27,10 +27,31 @@
         android:onClick="submit"
         android:text="Submit" />
 
+    <Button
+        android:id="@+id/cont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/runde_button2"
+        android:fontFamily="@font/amarante"
+        android:onClick="contin"
+        android:text="Continue"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+
     <RelativeLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/PointsView"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="30sp" />
 
         <ImageView
             android:id="@+id/pic"
@@ -70,12 +91,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hint"
-            android:fontFamily="@font/amarante"
-            android:background="@color/colorPrimaryDark"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:onClick="hint"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:background="@drawable/runde_button"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:fontFamily="@font/amarante"/>
 
     </RelativeLayout>
 

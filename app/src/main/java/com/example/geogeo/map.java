@@ -51,6 +51,8 @@ public class map extends Activity {
     Button submitb;
     Button closeb;
     Button hintb;
+    TextView points;
+    Button continb;
 
     IMapController mapController;
 
@@ -72,6 +74,7 @@ public class map extends Activity {
     int questionId;
     int isPicQuestion;
     int [] NextQuestionInfo;
+    int pointsInt;
 
 
     private void pointSelected(double lat, double lon){
@@ -103,13 +106,22 @@ public class map extends Activity {
         isPicQuestion = mIntent.getIntExtra("isPicQuestion", 0);
 
         isSet = true;
-        con = new Controller(getApplicationContext());
-        map = (MapView) findViewById(R.id.map);
-        image = findViewById(R.id.pic);
-        submitb = (Button) findViewById(R.id.submit);
+        con = new Controller(ctx);
+        map = findViewById(R.id.map);
+
+        submitb = findViewById(R.id.submit);
         closeb = findViewById(R.id.closebutton);
         hintb = findViewById(R.id.hint);
-        question = (TextView) findViewById(R.id.textv);
+        continb= findViewById(R.id.cont);
+
+        question = findViewById(R.id.textv);
+        image = findViewById(R.id.pic);
+
+        points = findViewById(R.id.PointsView);
+        System.out.println("hierrrrr" + con.getPoints(gameId));
+        System.out.println("hierrrrr" + gameId);
+        pointsInt = Integer.valueOf(con.getPoints(gameId));
+        points.setText("Points: " + pointsInt);
 
 
         mark = new Marker(map);
@@ -120,7 +132,6 @@ public class map extends Activity {
 
         OnlineTileSourceBase sta= new XYTileSource("StamenMap", 1, 17, 256, ".jpg",
                 new String[]{
-
                         "http://c.tile.stamen.com/watercolor/"
                 },
                 "Stamen");
@@ -142,6 +153,7 @@ public class map extends Activity {
 
         submitb.setVisibility(View.INVISIBLE);
         hintb.setVisibility(View.INVISIBLE);
+        continb.setVisibility(View.INVISIBLE);
 
         if(isPicQuestion == 1 ) {
             question.setVisibility(View.INVISIBLE);
@@ -161,13 +173,16 @@ public class map extends Activity {
                 if (isSet){
                     double lat = p.getLatitude();
                     double lon = p.getLongitude();
+
                     clicked = p;
 
                     mark.setPosition(clicked);
                     mark.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                     mark.setIcon(getResources().getDrawable(R.drawable.oldmarker));
                     map.getOverlays().add(mark);
+
                     map.invalidate();
+
                     submitb.setVisibility(View.VISIBLE);
 
                     pointSelected(lat, lon);
@@ -236,7 +251,7 @@ public class map extends Activity {
         result.setIcon(getResources().getDrawable(R.drawable.newmarker));
 
         List<GeoPoint> geoPoints = new ArrayList<>();
-        geoPoints.add(new GeoPoint(answerX, answerY));//New York hardcoded
+        geoPoints.add(new GeoPoint(answerX, answerY));
         geoPoints.add(clicked);
 
         line.setPoints(geoPoints);
@@ -252,12 +267,13 @@ public class map extends Activity {
         submitb.setVisibility(View.INVISIBLE);
         if (!con.isGameOver(gameId)){
             con.answerToRound(lat, lon, gameId);
+            points.setText("Points: " + pointsInt + " + " + (con.getPoints(gameId) - pointsInt));
             NextQuestionInfo = con.getNextQuestionInfo(gameId);
         }
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                startNextActivity();
+                continb.setVisibility(View.VISIBLE);
             }
         }, 3000);
 
@@ -278,6 +294,10 @@ public class map extends Activity {
             question.setVisibility(View.VISIBLE);
         }
         closeb.setVisibility(View.VISIBLE);
+
+    }
+    public void contin(View view){
+        startNextActivity();
 
     }
 
