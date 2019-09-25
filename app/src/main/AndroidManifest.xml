@@ -23,6 +23,9 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
 
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity android:name=".CustomGame" />
 
         <activity android:name=".SignupActivity" />
