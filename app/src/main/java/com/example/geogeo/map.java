@@ -121,7 +121,7 @@ public class map extends Activity {
         System.out.println("hierrrrr" + con.getPoints(gameId));
         System.out.println("hierrrrr" + gameId);
         pointsInt = Integer.valueOf(con.getPoints(gameId));
-        points.setText("Points: " + pointsInt);
+        points.setText(" Points: " + pointsInt+"\n Answer: ");
 
 
         mark = new Marker(map);
