@@ -116,7 +116,7 @@ public class frag_play extends Fragment {
         {
             public void onClick(View v)
             {
-                initializeGame(con,"all", "random");
+                initializeGame(con,"all", "random", "all");
             }
 
         });
@@ -168,9 +168,9 @@ public class frag_play extends Fragment {
         });
 
     }
-    public void initializeGame(Controller con,String type, String kind){
+    public void initializeGame(Controller con,String type, String kind, String continent){
         amount = np.getValue();
-        gameId = con.createGame(amount, kind, type);
+        gameId = con.createGame(amount, kind, type, continent);
         int [] NextQuestionInfo = con.getNextQuestionInfo(gameId);
         if (gameId != 0){
             if (NextQuestionInfo[1] == -1) {
