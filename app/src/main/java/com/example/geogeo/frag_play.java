@@ -125,42 +125,42 @@ public class frag_play extends Fragment {
             @Override
             public void onClick(View view) {
                 if( selectKind==0){
-                    if (selectCont==0){initializeGame(con, "all", "Text", "Asia");
+                    if (selectCont==0){initializeGame(con, "all", "text", "Asia");
 
                     }
-                    else if(selectCont==1){initializeGame(con, "all", "Text", "Africa");
+                    else if(selectCont==1){initializeGame(con, "all", "text", "Africa");
 
                     }
-                    else if(selectCont==2){initializeGame(con, "all", "Text", "Europe");
+                    else if(selectCont==2){initializeGame(con, "all", "text", "Europe");
 
                     }
-                    else if(selectCont==3){initializeGame(con, "all", "Text", "North-Amerika");
+                    else if(selectCont==3){initializeGame(con, "all", "text", "North-Amerika");
 
                     }
-                    else if(selectCont==4){initializeGame(con, "all", "Text", "South-Amerika");
+                    else if(selectCont==4){initializeGame(con, "all", "text", "South-Amerika");
 
                     }
-                    else if(selectCont==5){initializeGame(con, "all", "Text", "Oceania");
+                    else if(selectCont==5){initializeGame(con, "all", "text", "Oceania");
 
                     }
                 }
                 else if(selectKind==1){
-                    if(selectCont==0){initializeGame(con, "all", "Pic", "Asia");
+                    if(selectCont==0){initializeGame(con, "all", "pic", "Asia");
 
                     }
-                    else if(selectCont==1){initializeGame(con, "all", "Pic", "Africa");
+                    else if(selectCont==1){initializeGame(con, "all", "pic", "Africa");
 
                     }
-                    else if(selectCont==2){initializeGame(con, "all", "Pic", "Europe");
+                    else if(selectCont==2){initializeGame(con, "all", "pic", "Europe");
 
                     }
-                    else if(selectCont==3){initializeGame(con, "all", "Pic", "North-America");
+                    else if(selectCont==3){initializeGame(con, "all", "pic", "North-America");
 
                     }
-                    else if(selectCont==4){initializeGame(con, "all", "Pic", "South-Amerika");
+                    else if(selectCont==4){initializeGame(con, "all", "pic", "South-Amerika");
 
                     }
-                    else if(selectCont==5){initializeGame(con, "all", "Pic", "Oceania");
+                    else if(selectCont==5){initializeGame(con, "all", "pic", "Oceania");
 
                     }
                 }

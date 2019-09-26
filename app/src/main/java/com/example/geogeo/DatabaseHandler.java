@@ -69,16 +69,16 @@ public class DatabaseHandler {
 
         // continent check, joining with category
         if (!continent.equals("all")){
-            table = "TextQuestion INNER JOIN Category WHERE TextQuestion.CategoryId = Category.Id";
+            table = "PicQuestion INNER JOIN Category ON PicQuestion.CategoryId = Category.Id";
         }
 
 
 
-        String sql = "SELECT Id FROM " + table + " WHERE ";
+        String sql = "SELECT PicQuestion.Id FROM " + table + " WHERE ";
 
         // only added if continent is chosen
         if(!continent.equals("all")) {
-            sql += "Continent = "  + continent + " AND ";
+            sql += "Continent = '"  + continent + "' AND ";
         }
         for (Integer[] v : blacklist) {
             if (v[0] == 1) {
@@ -127,15 +127,15 @@ public class DatabaseHandler {
 
         // continent check, joining with category
         if (!continent.equals("all")){
-            table = "TextQuestion INNER JOIN Category WHERE TextQuestion.CategoryId = Category.Id";
+            table = "TextQuestion INNER JOIN Category ON TextQuestion.CategoryId = Category.Id";
         }
-        String sql = "SELECT Id FROM " + table + " WHERE ";
+        String sql = "SELECT TextQuestion.Id FROM " + table + " WHERE ";
         if (!type.equals("all")) {
-            sql += "Type = " + type + " AND ";
+            sql += "Type = '" + type + "' AND ";
         }
         // only added if continent is chosen
         if(!continent.equals("all")) {
-           sql += "Continent = "  + continent + " AND ";
+           sql += "Continent = '"  + continent + "' AND ";
         }
         for (Integer[] v : blacklist) {
             if (v[0] == 0) {
