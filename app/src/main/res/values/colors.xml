@@ -5,4 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="horizontalLine">#000000</color>
     <color name="btnBlue">#03C4F4</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#008000</color>
 </resources>

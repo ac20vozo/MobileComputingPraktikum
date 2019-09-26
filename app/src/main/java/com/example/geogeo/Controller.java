@@ -29,17 +29,13 @@ public class Controller {
 
     }
 
-    public void test01() {
+    public int getQuestionCount() {
 
-        db.open();
-        ArrayList<Integer[]> blacklist = new ArrayList<Integer[]>();
-        Integer[] q = {1, 1};
-        blacklist.add(q);
-        System.out.println("Random Pic Question: " + db.getRandomPicQuestion(blacklist));
+        return db.getQuestionCount();
+
     }
 
     public void showPic(ImageView image, int questionId) {
-        db.open();
         byte[] bits = db.getbytes(questionId);
         Bitmap b = BitmapFactory.decodeByteArray(bits, 0, bits.length);
         //image.setImageBitmap(Bitmap.createScaledBitmap(b, 150, 150, false));
@@ -47,9 +43,7 @@ public class Controller {
     }
 
     public void showText(TextView text, int questionId) {
-        DatabaseHandler db;
-        db = DatabaseHandler.getInstance(context);
-        db.open();
+
         String input = db.getTextQuestion(questionId);
         text.setText(input);
 
@@ -63,9 +57,8 @@ public class Controller {
 
     // kind can be random, text or pic
     // TODO: make sure that the amount is less or equal to the amount of questions
-    public int createGame(int amount, String kind, String type) {
+    public int createGame(int amount, String kind, String type, String continent) {
         // blacklist ist Array von Array von ints (Mit 1. 0 oder 1 2. id von question)
-        db.open();
         if (kind.equals("random")) {
             if (!db.checkAmount(amount, "pic") || !db.checkAmount(amount, "text")) {
 
@@ -91,11 +84,11 @@ public class Controller {
                 }
             }
             if (kind == "pic" || randomChosen == "pic") {
-                id = db.getRandomPicQuestion(blacklist);
+                id = db.getRandomPicQuestion(blacklist, continent); // continent selection
                 blacklist.add(new Integer[]{1, id});
             }
             if (kind == "text" || randomChosen == "text") {
-                id = db.getRandomTextQuestion(blacklist, type);
+                id = db.getRandomTextQuestion(blacklist, type, continent); // continent selection
                 blacklist.add(new Integer[]{0, id});
             }
             db.addRoundToGame(gameId, blacklist.get(i)[0], blacklist.get(i)[1]);
@@ -109,7 +102,6 @@ public class Controller {
 
     public void endGame(int gameId) {
         // Because for now we have only one user
-        db.open();
         int id = 1;
         db.countPointsOfRounds(gameId);
         db.addGameToStatistics(id, gameId);
@@ -117,7 +109,7 @@ public class Controller {
     }
 
     public String[] getStats(int userId) {
-        db.open();
+
         String[] result = db.getStats(userId);
 
         return result;
@@ -125,7 +117,7 @@ public class Controller {
     }
 
     public int[] getNextQuestionInfo(int gameId) {
-        db.open();
+
         int[] QuestionInfo = db.getNextQuestion(gameId);
         int questionId = QuestionInfo[1];
         int isPicQuestion = QuestionInfo[0];
@@ -137,7 +129,7 @@ public class Controller {
 
     // check stringConversion
     public int answerToRound(double x, double y, int gameId) {
-        db.open();
+
         int[] QuestionInfo = db.getNextQuestion(gameId);
         int questionId = QuestionInfo[1];
         int answerId = db.getAnswerId(QuestionInfo[0], QuestionInfo[1]);
@@ -150,7 +142,7 @@ public class Controller {
 
     // returns distance to of given answer to correct location
     public double checkDistanceToAnswer(int answerId, double xGuess, double yGuess) {
-        db.open();
+
         Double[] Cords = new Double[2];
         Cords = db.getAnswerCords(answerId);
 
@@ -185,6 +177,10 @@ public class Controller {
         int answerId = db.getAnswerId(isPicQuestion, questionId);
         return db.getAnswerCords(answerId);
     }
+    public String getAnswerAnswer(int isPicQuestion, int questionId){
+        int answerId = db.getAnswerId(isPicQuestion, questionId);
+        return db.getAnswerAnswer(answerId);
+    }
 
     public String[] getPointsPerRound(int gameId) {
         return db.getPointsPerRound(gameId);
@@ -200,9 +196,20 @@ public class Controller {
         }
     }
     public int nearPointFunction(double distance, int maxPoints){
-        return Math.min(maxPoints, (int) Math.ceil(maxPoints*(2/(distance/100))));
+        double dividend = 2; // decrease to steepen the drop
+        return Math.min(maxPoints, (int) Math.ceil(maxPoints*(dividend/(distance/100))));
     }
     public int farPointFunction(double distance, int cutOff){
-        return Math.max(0, (int) Math.ceil(cutOff - Math.pow((distance/100),1.7)));
+
+        double exponent = 1.65; // increase to steepen the drop
+        return Math.max(0, (int) Math.ceil(cutOff - Math.pow((distance/100),exponent)));
+    }
+
+    public int getPoints(int gameId){
+        return db.getPoints(gameId);
+    }
+
+    public boolean checkAmount(int amount, String kind, String continent) {
+        return db.checkAmount(amount, kind, continent);
     }
 }

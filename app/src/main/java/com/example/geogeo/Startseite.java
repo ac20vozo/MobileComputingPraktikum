@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Startseite extends AppCompatActivity {
 
     TextView txtWillkommen;
@@ -16,6 +19,16 @@ public class Startseite extends AppCompatActivity {
     Button btnSpielen;
     Button btnOption;
     Button btnBeenden;
+    Button test;
+
+    Button logoutBtn;
+    FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+
+    @Override
+    public void onBackPressed(){
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +47,19 @@ public class Startseite extends AppCompatActivity {
         btnSpielen = findViewById(R.id.btnSpielen);
         btnOption = findViewById(R.id.btnOption);
         btnBeenden = findViewById(R.id.btnBeenden);
+
+        logoutBtn = findViewById(R.id.logout_button);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(Startseite.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // TODO: delete when done testing the pics
+//        test = findViewById(R.id.testbutton);
     }
 
 
@@ -53,6 +79,12 @@ public class Startseite extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    // TODO: delete when done testing the pics
+    public void testpicsact(View view){
+        Intent intent = new Intent(this, TestPics.class);
         startActivity(intent);
     }
 }

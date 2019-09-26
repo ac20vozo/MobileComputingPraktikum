@@ -17,6 +17,7 @@ public class frag_stats extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Connect Layout with View Object
         View view = inflater.inflate(R.layout.frag_stats, container, false);
         super.onCreate(savedInstanceState);
 
@@ -24,6 +25,7 @@ public class frag_stats extends Fragment {
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        // Initializations
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
         Controller c = new Controller(getActivity());
