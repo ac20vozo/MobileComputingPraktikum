@@ -63,7 +63,6 @@
                 android:gravity="left"
                 android:includeFontPadding="true"
                 android:paddingLeft="20dp"
-                android:text="@string/stats_username"
                 android:textSize="18sp" />
 
         </TableRow>

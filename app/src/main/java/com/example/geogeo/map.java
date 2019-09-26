@@ -121,7 +121,7 @@ public class map extends Activity {
         System.out.println("hierrrrr" + con.getPoints(gameId));
         System.out.println("hierrrrr" + gameId);
         pointsInt = Integer.valueOf(con.getPoints(gameId));
-        points.setText(" Points: " + pointsInt+"\n Answer: ");
+        points.setText(" Points: " + pointsInt);
 
 
         mark = new Marker(map);
@@ -267,7 +267,7 @@ public class map extends Activity {
         submitb.setVisibility(View.INVISIBLE);
         if (!con.isGameOver(gameId)){
             con.answerToRound(lat, lon, gameId);
-            points.setText("Points: " + pointsInt + " + " + (con.getPoints(gameId) - pointsInt)  +"\nAnswer: " + con.getAnswerAnswer(isPicQuestion, questionId));
+            points.setText("Points: " + pointsInt + " + " + (con.getPoints(gameId) - pointsInt)  +"\n" + con.getAnswerAnswer(isPicQuestion, questionId));
             NextQuestionInfo = con.getNextQuestionInfo(gameId);
         }
 
