@@ -5,6 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Spinner
+        android:id="@+id/spinContinent"
+        android:layout_width="123dp"
+        android:layout_height="26dp"
+        app:layout_constraintBottom_toTopOf="@+id/npp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.77"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/play_CustomGame"
+        app:layout_constraintVertical_bias="0.206" />
+
     <Button
         android:id="@+id/play_classicGame"
         android:layout_width="191dp"
@@ -18,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/play_title"
-        app:layout_constraintVertical_bias="0.167" />
+        app:layout_constraintVertical_bias="0.096" />
 
     <TextView
         android:id="@+id/play_title"
@@ -44,7 +55,7 @@
         app:layout_constraintHorizontal_bias="0.733"
         app:layout_constraintStart_toStartOf="@id/play_title"
         app:layout_constraintTop_toBottomOf="@+id/play_CustomGame"
-        app:layout_constraintVertical_bias="0.664" />
+        app:layout_constraintVertical_bias="0.644" />
 
     <Button
         android:id="@+id/play_CustomGame"
@@ -61,31 +72,15 @@
         app:layout_constraintTop_toBottomOf="@+id/play_classicGame"
         app:layout_constraintVertical_bias="0.083" />
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+    <Spinner
+        android:id="@+id/spinKind"
+        android:layout_width="123dp"
+        android:layout_height="26dp"
         app:layout_constraintBottom_toTopOf="@+id/npp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.253"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/play_CustomGame">
-
-        <RadioButton
-            android:id="@+id/radioPic"
-            style="@style/Widget.AppCompat.CompoundButton.RadioButton"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/amarante"
-            android:text="@string/justPics" />
-
-        <RadioButton
-            android:id="@+id/radioText"
-            style="@style/Widget.AppCompat.CompoundButton.RadioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/amarante"
-            android:text="@string/justText" />
-    </RadioGroup>
+        app:layout_constraintTop_toBottomOf="@+id/play_CustomGame"
+        app:layout_constraintVertical_bias="0.195" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
