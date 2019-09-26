@@ -177,6 +177,10 @@ public class Controller {
         int answerId = db.getAnswerId(isPicQuestion, questionId);
         return db.getAnswerCords(answerId);
     }
+    public String getAnswerAnswer(int isPicQuestion, int questionId){
+        int answerId = db.getAnswerId(isPicQuestion, questionId);
+        return db.getAnswerAnswer(answerId);
+    }
 
     public String[] getPointsPerRound(int gameId) {
         return db.getPointsPerRound(gameId);
