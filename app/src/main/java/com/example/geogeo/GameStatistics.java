@@ -2,17 +2,13 @@ package com.example.geogeo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
-
 import android.content.Intent;
 import android.graphics.Color;
-
 import android.graphics.Typeface;
-
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -82,6 +78,7 @@ public class GameStatistics extends AppCompatActivity {
             points.setTypeface(Typeface.DEFAULT_BOLD);
             Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.architects_daughter);
             points.setTypeface(typeface);
+            points.setGravity(Gravity.CENTER);
             linearLayout.addView(points);
 
         }

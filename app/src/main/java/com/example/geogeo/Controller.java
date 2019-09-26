@@ -1,22 +1,13 @@
 package com.example.geogeo;
 
 import android.content.Context;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
-
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
-
-import java.io.ByteArrayInputStream;
 
 public class Controller {
     private Context context;
