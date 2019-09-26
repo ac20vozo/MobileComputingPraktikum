@@ -239,10 +239,10 @@ public class DatabaseHandler {
         return Integer.valueOf(id);
     }
 
-    public boolean checkAmount(int amount, String type) {
+    public boolean checkAmount(int amount, String kind) {
         open();
         boolean result;
-        if (type.equals("pic")) {
+        if (kind.equals("pic")) {
             result = amount <= db.rawQuery("SELECT * FROM PicQuestion", null).getCount();
         } else {
             result = amount <= db.rawQuery("SELECT * FROM TextQuestion", null).getCount();
