@@ -208,4 +208,8 @@ public class Controller {
     public int getPoints(int gameId){
         return db.getPoints(gameId);
     }
+
+    public boolean checkAmount(int amount, String kind, String continent) {
+        return db.checkAmount(amount, kind, continent);
+    }
 }

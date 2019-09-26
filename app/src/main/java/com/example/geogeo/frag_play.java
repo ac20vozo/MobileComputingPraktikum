@@ -15,6 +15,7 @@ import android.view.Window;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 public class frag_play extends Fragment {
@@ -124,43 +125,103 @@ public class frag_play extends Fragment {
         play_CustomGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                amount = np.getValue();
                 if( selectKind==0){
-                    if (selectCont==0){initializeGame(con, "all", "text", "Asia");
+                    if (selectCont==0){
+                        if (!con.checkAmount(amount, "text", "Asia")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "text", "Asia");
+                        }
+                    }
+                    else if(selectCont==1){
+                        if (!con.checkAmount(amount, "text", "Africa")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "text", "Africa");
+                        }
 
                     }
-                    else if(selectCont==1){initializeGame(con, "all", "text", "Africa");
+                    else if(selectCont==2){
+                        if (!con.checkAmount(amount, "text", "Europe")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "text", "Europe");
+                        }
 
                     }
-                    else if(selectCont==2){initializeGame(con, "all", "text", "Europe");
+                    else if(selectCont==3){
+                        if (!con.checkAmount(amount, "text", "North-Amerika")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "text", "North-Amerika");
+                        }
 
                     }
-                    else if(selectCont==3){initializeGame(con, "all", "text", "North-Amerika");
+                    else if(selectCont==4){
+                        if (!con.checkAmount(amount, "text", "South-Amerika")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "text", "South-Amerika");
+                        }
 
                     }
-                    else if(selectCont==4){initializeGame(con, "all", "text", "South-Amerika");
-
-                    }
-                    else if(selectCont==5){initializeGame(con, "all", "text", "Oceania");
+                    else if(selectCont==5){
+                        if (!con.checkAmount(amount, "text", "Oceania")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "text", "Oceania");
+                        }
 
                     }
                 }
                 else if(selectKind==1){
-                    if(selectCont==0){initializeGame(con, "all", "pic", "Asia");
+                    if(selectCont==0){
+                        if (!con.checkAmount(amount, "pic", "Asia")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "pic", "Asia");
+                        }
 
                     }
-                    else if(selectCont==1){initializeGame(con, "all", "pic", "Africa");
+                    else if(selectCont==1){
+                        if (!con.checkAmount(amount, "pic", "Africa")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "pic", "Africa");
+                        }
 
                     }
-                    else if(selectCont==2){initializeGame(con, "all", "pic", "Europe");
+                    else if(selectCont==2){
+                        if (!con.checkAmount(amount, "pic", "Europe")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "pic", "Europe");
+                        }
 
                     }
-                    else if(selectCont==3){initializeGame(con, "all", "pic", "North-America");
+                    else if(selectCont==3){
+                        if (!con.checkAmount(amount, "pic", "North-Amerika")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "pic", "North-America");
+                        }
 
                     }
-                    else if(selectCont==4){initializeGame(con, "all", "pic", "South-Amerika");
+                    else if(selectCont==4){
+                        if (!con.checkAmount(amount, "pic", "South-Amerika")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "pic", "South-Amerika");
+                        }
 
                     }
-                    else if(selectCont==5){initializeGame(con, "all", "pic", "Oceania");
+                    else if(selectCont==5){
+                        if (!con.checkAmount(amount, "pic", "Oceania")){
+                            Toast.makeText(getActivity(), "There are not enough questions in the database", Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "pic", "Oceania");
+                        }
 
                     }
                 }

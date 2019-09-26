@@ -82,7 +82,7 @@ public class DatabaseHandler {
         }
         for (Integer[] v : blacklist) {
             if (v[0] == 1) {
-                sql += " id <> " + v[1] + " AND";
+                sql += " PicQuestion.Id <> " + v[1] + " AND";
             }
         }
         sql = sql.substring(0, sql.length() - 4);
@@ -139,7 +139,7 @@ public class DatabaseHandler {
         }
         for (Integer[] v : blacklist) {
             if (v[0] == 0) {
-                sql += " id <> " + v[1] + " AND";
+                sql += " TextQuestion.Id <> '" + v[1] + "' AND";
             }
         }
         sql = sql.substring(0, sql.length() - 4);
@@ -450,5 +450,23 @@ public class DatabaseHandler {
         }
 
         return result;
+    }
+
+    public boolean checkAmount(int amount, String kind, String continent) {
+        if (kind.equals("text")){
+            Cursor c = db.rawQuery("SELECT TextQuestion.Id FROM TextQuestion INNER JOIN Category " +
+                    "ON TextQuestion.CategoryId = Category.Id WHERE Continent = '" + continent + "'", null);
+            if (c.getCount() < amount){
+                return false;
+            }
+        }
+        if (kind.equals("pic")){
+            Cursor c = db.rawQuery("SELECT PicQuestion.Id FROM PicQuestion INNER JOIN Category " +
+                    "ON PicQuestion.CategoryId = Category.Id WHERE Continent = '" + continent + "'", null);
+            if (c.getCount() < amount){
+                return false;
+            }
+        }
+        return true;
     }
 }
