@@ -22,6 +22,8 @@
     <string name="options_input">New username:</string>
     <string name="options_submit">Submit</string>
     <string name="play_classicGame">Classic Game</string>
+    <string name="play_justPics">Picture Game</string>
+    <string name="play_justText">Question Game</string>
     <string name="stats_playedGames">Played Games:</string>
     <string name="stats_average">Average distance \n to target:</string>
     <string name="stats_highscore">Points:</string>
