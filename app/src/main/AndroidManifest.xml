@@ -21,31 +21,47 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
 
-        <activity android:name=".Startseite"
-            android:screenOrientation="portrait">
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".CustomGame" />
+
+        <activity android:name=".SignupActivity" />
+
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".map" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Startseite"
+            android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".map"
+            android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".homescreen"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".homescreen" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".GameStatistics"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".GameStatistics" android:screenOrientation="portrait" />
-
-        <activity android:name=".AboutUs" android:screenOrientation="portrait" />
+        <activity
+            android:name=".AboutUs"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".TestPics" />
 
-        <activity android:name=".DatabaseHandler" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DatabaseHandler"
+            android:screenOrientation="portrait" />
 
     </application>
 

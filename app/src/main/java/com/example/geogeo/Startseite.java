@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Startseite extends AppCompatActivity {
 
     TextView txtWillkommen;
@@ -17,6 +20,10 @@ public class Startseite extends AppCompatActivity {
     Button btnOption;
     Button btnBeenden;
     Button test;
+
+    Button logoutBtn;
+    FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +42,19 @@ public class Startseite extends AppCompatActivity {
         btnSpielen = findViewById(R.id.btnSpielen);
         btnOption = findViewById(R.id.btnOption);
         btnBeenden = findViewById(R.id.btnBeenden);
-        test = findViewById(R.id.testbutton);
+
+        logoutBtn = findViewById(R.id.logout_button);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(Startseite.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // TODO: delete when done testing the pics
+//        test = findViewById(R.id.testbutton);
     }
 
 
@@ -58,6 +77,7 @@ public class Startseite extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // TODO: delete when done testing the pics
     public void testpicsact(View view){
         Intent intent = new Intent(this, TestPics.class);
         startActivity(intent);

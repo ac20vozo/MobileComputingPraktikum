@@ -22,8 +22,17 @@
     <string name="options_input">New username:</string>
     <string name="options_submit">Submit</string>
     <string name="play_classicGame">Classic Game</string>
-    <string name="play_justPics">Picture Game</string>
-    <string name="play_justText">Question Game</string>
+    <string name="play_customGame">Custom Game</string>
+    <string name="justPics">Just pictures</string>
+    <string name="justText">Just text questions</string>
+    <string name="SelectOne">Please select one:</string>
+    <string name="Select">Please select:</string>
+    <string name="Africa">Africa</string>
+    <string name="Europe">Europe</string>
+    <string name="NorthAmerica">North America</string>
+    <string name="SouthAmerica">South America</string>
+    <string name="Asia">Asia</string>
+    <string name="Oceania">Oceania</string>
     <string name="stats_playedGames">Played Games:</string>
     <string name="stats_average">Average distance \n to target:</string>
     <string name="stats_highscore">Points:</string>
@@ -37,6 +46,14 @@
     Due to a traineeship of the "Mobile Computing"-lecture we were commissioned to develop an application that is on the one hand fun to play and on the other hand capable of
     giving students some information about their environment. Therefore we decided to develop our GeoGeo! so that you and your friends can explore and enjoy the
     world by playing our quiz. \nHave Fun!</string>
+    <string name="sign_in">Sign In</string>
+    <string name="not_registered_sing_up">Not registered? Sign Up here</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="sign_in_here">Already have an account? Sign in here</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="logout">Logout</string>
 
+    <integer name="google_play_services_version">12451000</integer>
 
 </resources>
