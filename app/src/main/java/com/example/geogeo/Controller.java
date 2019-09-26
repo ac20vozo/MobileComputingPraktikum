@@ -35,7 +35,7 @@ public class Controller {
         return db.getQuestionCount();
 
     }
-
+    // delete?
     public void test01() {
 
         db.open();
@@ -70,7 +70,7 @@ public class Controller {
 
     // kind can be random, text or pic
     // TODO: make sure that the amount is less or equal to the amount of questions
-    public int createGame(int amount, String kind, String type) {
+    public int createGame(int amount, String kind, String type, String continent) {
         // blacklist ist Array von Array von ints (Mit 1. 0 oder 1 2. id von question)
         db.open();
         if (kind.equals("random")) {
@@ -98,11 +98,11 @@ public class Controller {
                 }
             }
             if (kind == "pic" || randomChosen == "pic") {
-                id = db.getRandomPicQuestion(blacklist, "all"); // future continent selection here
+                id = db.getRandomPicQuestion(blacklist, continent); // continent selection
                 blacklist.add(new Integer[]{1, id});
             }
             if (kind == "text" || randomChosen == "text") {
-                id = db.getRandomTextQuestion(blacklist, type, "all"); // future continent selection here
+                id = db.getRandomTextQuestion(blacklist, type, continent); // continent selection
                 blacklist.add(new Integer[]{0, id});
             }
             db.addRoundToGame(gameId, blacklist.get(i)[0], blacklist.get(i)[1]);

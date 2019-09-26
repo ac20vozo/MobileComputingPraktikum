@@ -56,7 +56,12 @@ public class DatabaseHandler {
 //        db.close();
 //        return result;
 //    }
-
+    /**
+     * Returns the id for a random picture question
+     * @param  blacklist  a list of PictureIds that have already been chosen
+     * @param  continent parameter to limit questions to a specific continent
+     * @return      id of selected picture question
+     */
     public int getRandomPicQuestion(ArrayList<Integer[]> blacklist, String continent) {
         open();
         String table = "PicQuestion";
@@ -108,7 +113,13 @@ public class DatabaseHandler {
 //        db.close();
 //        return result;
 //    }
-
+    /**
+     * Returns the id for a random text question
+     * @param  blacklist  a list of PictureIds that have already been chosen
+     * @param type parameter to limit questions to a specific text type (choose event or riddle)
+     * @param  continent parameter to limit questions to a specific continent
+     * @return      id of selected picture question
+     */
     public int getRandomTextQuestion(ArrayList<Integer[]> blacklist, String type, String continent ) {
         open();
         String table = "TextQuestion";
@@ -156,6 +167,7 @@ public class DatabaseHandler {
         return result;
     }
 
+    // function to check for the minimum amount of type questions
     public int getQuestionCount(){
         open();
         Cursor c = db.rawQuery("SELECT * FROM PicQuestion", null);
@@ -168,7 +180,11 @@ public class DatabaseHandler {
 
         return min(count1,count2);
     }
-
+    /**
+     * Returns the text form of the given questionId
+     * @param  questionId
+     * @return the String of the Textquestion with the provided Id
+     */
     public String getTextQuestion(int questionId) {
         open();
         Cursor c = db.rawQuery("SELECT Text FROM TextQuestion WHERE Id =" + questionId, null);
@@ -178,7 +194,11 @@ public class DatabaseHandler {
         db.close();
         return result;
     }
-
+    /**
+     * Returns the type of a text question
+     * @param  questionId
+     * @return type of the text question (event or riddle)
+     */
     public String getTextType(int questionId) {
         open();
         Cursor c = db.rawQuery("SELECT Type FROM TextQuestion WHERE Id =" + questionId, null);
@@ -189,7 +209,7 @@ public class DatabaseHandler {
         return Type;
     }
 
-
+    // delete??
     public String getAnswerAnswer(int answerId) {
         open();
         Cursor c = db.rawQuery("SELECT Answer FROM Answer WHERE Id =" + answerId, null);
@@ -199,7 +219,11 @@ public class DatabaseHandler {
         db.close();
         return Answer;
     }
-
+    /**
+     * Returns the coordinates of a certain answer
+     * @param  answerId
+     * @return List of 2 doubles in coordinate form
+     */
     public Double[] getAnswerCords(int answerId) {
         open();
         Double[] Cords = new Double[2];
@@ -218,16 +242,22 @@ public class DatabaseHandler {
         return Cords;
     }
 
-    // returns answerId of given question
+    /**
+     * Returns the AnswerId of a given question
+     * @param  isPicQuestion int (interpreted as boolean) to determine if its a Picture or a Textquestion
+     * @param questionId
+     * @return AnswerId
+     */
     public int getAnswerId(int isPicQuestion, int questionId) {
         open();
         int AnswerId;
+        // check PicQuestions
         if (isPicQuestion != 0) {
             Cursor c = db.rawQuery("SELECT AnswerId FROM PicQuestion WHERE ID =" + questionId, null);
             c.moveToFirst();
             AnswerId = c.getInt(0);
             c.close();
-        } else {
+        } else { // check TextQuestion
             Cursor c = db.rawQuery("SELECT AnswerId FROM TextQuestion WHERE ID =" + questionId, null);
             c.moveToFirst();
             AnswerId = c.getInt(0);
@@ -236,7 +266,12 @@ public class DatabaseHandler {
         db.close();
         return AnswerId;
     }
-
+    /**
+     * Returns Information of the next question in a given game ( based on unanswered rounds)
+     * @param  gameId
+     * @return tuple of Integers, first is 0 if it is a Textquestion, 0 if PictureQuestion,
+     *                            second is the Id of the question
+     */
     public int[] getNextQuestion(int gameId) {
         open();
         Cursor cur = db.rawQuery("SELECT IsPicQuestion, QuestionId FROM Round WHERE Points IS NULL AND GameId =" + gameId + " ;", null);
@@ -251,7 +286,11 @@ public class DatabaseHandler {
         db.close();
         return new int[]{isPic, qId};
     }
-
+    /**
+     * creates a game anda determined number of rounds within the database
+     * @param  amount number of rounds for the game
+     * @return returns the id of the new game
+     */
     public int createGame(int amount) {
         open();
         db.execSQL("INSERT INTO Game (Amount, Points) VALUES (" + Integer.valueOf(amount) + ", 0)");
@@ -274,7 +313,12 @@ public class DatabaseHandler {
         db.close();
         return result;
     }
-
+    /**
+     * adds an unanswered round to a game ( only called during create game)
+     * @param  gameId
+     * @param isPicQuestion boolean to determine if its a Picture or a Textquestion
+     * @param questionId
+     */
     public void addRoundToGame(int gameId, int isPicQuestion, int questionId) {
         open();
         db.execSQL("INSERT INTO Round (GameId, QuestionId, isPicQuestion, Points, AnswerX, AnswerY) " +
@@ -283,6 +327,7 @@ public class DatabaseHandler {
         db.close();
     }
 
+    // delete?
     public void addQuestion(int isPicQuestion, String PicPath, int categoryId, int answerId, String text,
                             String type) {
         open();
@@ -296,7 +341,7 @@ public class DatabaseHandler {
         }
         db.close();
     }
-
+    // delete?
     public int addAnswer(String Answer, float x, float y) {
         open();
         db.execSQL("INSERT INTO Answer (Answer, X, Y) VALUES ('" + Answer + "', " + Float.toString(x) +
@@ -308,14 +353,18 @@ public class DatabaseHandler {
         db.close();
         return Integer.valueOf(id);
     }
-
+    //delete?
     public void addCategory(String country, String continent) {
         open();
         db.execSQL("INSERT INTO Category (Country, Continent) VALUES ('" +
                 country + "', '" + continent + "')");
         db.close();
     }
-
+    /**
+     * updates the local database with the information of the finished game
+     * @param  userId
+     * @param gameId
+     */
     public void addGameToStatistics(int userId, int gameId) {
         open();
         Cursor c = db.rawQuery("SELECT Games, AverageScore, TotalPoints  FROM Statistics" +
@@ -344,7 +393,15 @@ public class DatabaseHandler {
 
     }
 
-    // not tested yet
+    /**
+     * updates a round in the database with the player answer and the achieved points
+     * @param  gameId
+     * @param questionId
+     * @param isPicQuestion boolean to determine if its a Picture or a Textquestion
+     * @param x coordinate of answer
+     * @param y coordinate of answer
+     * @param points amount of achieved points
+     */
     public void updateRound(int gameId, int questionId, int isPicQuestion, double x, double y, int points) {
         open();
         db.execSQL("UPDATE Round " +
@@ -368,7 +425,11 @@ public class DatabaseHandler {
         db.close();
         return stats;
     }
-
+    /**
+     * checks if any rounds are left unanswered
+     * @param  gameId
+     * @return boolean whether or not the game is finished
+     */
     public boolean isGameOver(int gameId) {
         open();
         Cursor c = db.rawQuery("SELECT AnswerX FROM Round " +
@@ -381,6 +442,7 @@ public class DatabaseHandler {
         return false;
     }
 
+    // check this one?
     public int getPoints(int gameId){
         open();
         Cursor c = db.rawQuery("SELECT SUM(Points) FROM ROUND WHERE GameId = " + gameId, null);
@@ -392,7 +454,10 @@ public class DatabaseHandler {
         db.close();
         return 0;
     }
-
+    /**
+     * Updates the Game table with the sum of the achieved points in all rounds of the game
+     * @param  gameId
+     */
     public void countPointsOfRounds(int gameId) {
         open();
         Cursor c = db.rawQuery("SELECT SUM(Points) FROM Round WHERE GameId = " + gameId, null);
@@ -401,7 +466,11 @@ public class DatabaseHandler {
         db.execSQL("UPDATE Game SET Points = " + result + " WHERE Id = " + gameId);
         db.close();
     }
-
+    /**
+     * Iterates through the rounds of a given game to determine the points per round
+     * @param  gameId
+     * @return a list of Strings containing the points per round
+     */
     public String[] getPointsPerRound(int gameId) {
         open();
         Cursor c = db.rawQuery("SELECT Points FROM Round WHERE GameId = " + gameId, null);
