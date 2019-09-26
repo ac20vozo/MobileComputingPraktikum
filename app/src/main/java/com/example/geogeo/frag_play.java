@@ -11,11 +11,14 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.view.Window;
 import android.widget.NumberPicker;
+import android.widget.RadioButton;
 
 
 public class frag_play extends Fragment {
     protected Button play_classicGame;
     protected Button play_CustomGame;
+    protected RadioButton radioPic;
+    protected RadioButton radioText;
     int gameId;
     int amount;
     NumberPicker np;
@@ -32,6 +35,8 @@ public class frag_play extends Fragment {
         final Controller con = new Controller(getActivity());
         play_classicGame = (Button) view.findViewById(R.id.play_classicGame);
         play_CustomGame = view.findViewById(R.id.play_CustomGame);
+        radioPic = view.findViewById(R.id.radioPic);
+        radioText = view.findViewById(R.id.radioText);
         np = view.findViewById(R.id.npp);
         np.setMinValue(1);
         np.setMaxValue(con.getQuestionCount());
@@ -49,8 +54,12 @@ public class frag_play extends Fragment {
         play_CustomGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent customIntent = new Intent(frag_play.this.getActivity(), CustomGame.class);
-                startActivity(customIntent);
+                if(radioPic.isChecked()){
+                    initializeGame(con, "all", "pic");
+                }
+                else if(radioText.isChecked()){
+                    initializeGame(con, "all", "text");
+                }
             }
         });
 

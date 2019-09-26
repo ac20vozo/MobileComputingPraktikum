@@ -23,6 +23,8 @@
     <string name="options_submit">Submit</string>
     <string name="play_classicGame">Classic Game</string>
     <string name="play_customGame">Custom Game</string>
+    <string name="justPics">Just pictures</string>
+    <string name="justText">Just text questions</string>
     <string name="SelectOne">Please select one:</string>
     <string name="Select">Please select:</string>
     <string name="Africa">Africa</string>

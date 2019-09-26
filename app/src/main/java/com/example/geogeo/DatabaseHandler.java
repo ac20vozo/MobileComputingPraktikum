@@ -57,9 +57,23 @@ public class DatabaseHandler {
 //        return result;
 //    }
 
-    public int getRandomPicQuestion(ArrayList<Integer[]> blacklist) {
+    public int getRandomPicQuestion(ArrayList<Integer[]> blacklist, String continent) {
         open();
-        String sql = "SELECT Id FROM PicQuestion WHERE ";
+        String table = "PicQuestion";
+
+        // continent check, joining with category
+        if (!continent.equals("all")){
+            table = "TextQuestion INNER JOIN Category WHERE TextQuestion.CategoryId = Category.Id";
+        }
+
+
+
+        String sql = "SELECT Id FROM " + table + " WHERE ";
+
+        // only added if continent is chosen
+        if(!continent.equals("all")) {
+            sql += "Continent = "  + continent + " AND ";
+        }
         for (Integer[] v : blacklist) {
             if (v[0] == 1) {
                 sql += " id <> " + v[1] + " AND";
@@ -95,11 +109,21 @@ public class DatabaseHandler {
 //        return result;
 //    }
 
-    public int getRandomTextQuestion(ArrayList<Integer[]> blacklist, String type) {
+    public int getRandomTextQuestion(ArrayList<Integer[]> blacklist, String type, String continent ) {
         open();
-        String sql = "SELECT Id FROM TextQuestion WHERE ";
+        String table = "TextQuestion";
+
+        // continent check, joining with category
+        if (!continent.equals("all")){
+            table = "TextQuestion INNER JOIN Category WHERE TextQuestion.CategoryId = Category.Id";
+        }
+        String sql = "SELECT Id FROM " + table + " WHERE ";
         if (!type.equals("all")) {
             sql += "Type = " + type + " AND ";
+        }
+        // only added if continent is chosen
+        if(!continent.equals("all")) {
+           sql += "Continent = "  + continent + " AND ";
         }
         for (Integer[] v : blacklist) {
             if (v[0] == 0) {
@@ -239,10 +263,10 @@ public class DatabaseHandler {
         return Integer.valueOf(id);
     }
 
-    public boolean checkAmount(int amount, String type) {
+    public boolean checkAmount(int amount, String kind) {
         open();
         boolean result;
-        if (type.equals("pic")) {
+        if (kind.equals("pic")) {
             result = amount <= db.rawQuery("SELECT * FROM PicQuestion", null).getCount();
         } else {
             result = amount <= db.rawQuery("SELECT * FROM TextQuestion", null).getCount();

@@ -37,29 +37,32 @@ public class CustomGame extends AppCompatActivity {
     public void playCustomClick(View view) {
 
         if (checkText.isChecked() && checkPhoto.isChecked()) {
-            if (checkAsia.isChecked()){}
-            else if (checkAfrica.isChecked()){}
-            else if (checkEurope.isChecked()){}
-            else if (checkNorthAmerica.isChecked()){}
-            else if (checkSouthAmerica.isChecked()){}
-            else if (checkOceania.isChecked()){}
-        }
-        else if (checkText.isChecked() && !checkPhoto.isChecked()){
-            if (checkAsia.isChecked()){}
-            else if (checkAfrica.isChecked()){}
-            else if (checkEurope.isChecked()){}
-            else if (checkNorthAmerica.isChecked()){}
-            else if (checkSouthAmerica.isChecked()){}
-            else if (checkOceania.isChecked()){}
-        }
-        else if (!checkText.isChecked() && checkPhoto.isChecked()){
-            if (checkAsia.isChecked()){}
-            else if (checkAfrica.isChecked()){}
-            else if (checkEurope.isChecked()){}
-            else if (checkNorthAmerica.isChecked()){}
-            else if (checkSouthAmerica.isChecked()){}
-            else if (checkOceania.isChecked()){}
+            if (checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && checkOceania.isChecked()) {
+            }
         }
 
+        else if (checkText.isChecked() && !checkPhoto.isChecked()) {
+            if (checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && checkOceania.isChecked()) {
+            }
+        }
+        else if (!checkText.isChecked() && checkPhoto.isChecked()) {
+            if (checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && checkSouthAmerica.isChecked() && !checkOceania.isChecked()) {
+            } else if (!checkAsia.isChecked() && !checkAfrica.isChecked() && !checkEurope.isChecked() && !checkNorthAmerica.isChecked() && !checkSouthAmerica.isChecked() && checkOceania.isChecked()) {
+            }
+        }
     }
 }
