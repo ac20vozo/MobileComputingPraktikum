@@ -42,7 +42,7 @@ public class Controller {
         ArrayList<Integer[]> blacklist = new ArrayList<Integer[]>();
         Integer[] q = {1, 1};
         blacklist.add(q);
-        System.out.println("Random Pic Question: " + db.getRandomPicQuestion(blacklist));
+        System.out.println("Random Pic Question: " + db.getRandomPicQuestion(blacklist, "all"));
     }
 
     public void showPic(ImageView image, int questionId) {
@@ -98,11 +98,11 @@ public class Controller {
                 }
             }
             if (kind == "pic" || randomChosen == "pic") {
-                id = db.getRandomPicQuestion(blacklist);
+                id = db.getRandomPicQuestion(blacklist, "all"); // future continent selection here
                 blacklist.add(new Integer[]{1, id});
             }
             if (kind == "text" || randomChosen == "text") {
-                id = db.getRandomTextQuestion(blacklist, type);
+                id = db.getRandomTextQuestion(blacklist, type, "all"); // future continent selection here
                 blacklist.add(new Integer[]{0, id});
             }
             db.addRoundToGame(gameId, blacklist.get(i)[0], blacklist.get(i)[1]);
