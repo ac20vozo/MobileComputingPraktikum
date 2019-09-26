@@ -26,8 +26,8 @@ public class frag_play extends Fragment {
     private static final String[] paths = {"Text question", "Pictures"};
     private Spinner spinContinent;
     private static final String[] paths2 = {"Asia", "Africa", "Europe", "North America", "South America", "Oceania"};
-    int selectKind;
-    int selectCont;
+    protected int selectKind;
+    protected int selectCont;
     int gameId;
     int amount;
     NumberPicker np;
@@ -125,42 +125,42 @@ public class frag_play extends Fragment {
             @Override
             public void onClick(View view) {
                 if( selectKind==0){
-                    if (selectCont==0){
+                    if (selectCont==0){initializeGame(con, "all", "Text", "Asia");
 
                     }
-                    else if(selectCont==1){
+                    else if(selectCont==1){initializeGame(con, "all", "Text", "Africa");
 
                     }
-                    else if(selectCont==2){
+                    else if(selectCont==2){initializeGame(con, "all", "Text", "Europe");
 
                     }
-                    else if(selectCont==3){
+                    else if(selectCont==3){initializeGame(con, "all", "Text", "North-Amerika");
 
                     }
-                    else if(selectCont==4){
+                    else if(selectCont==4){initializeGame(con, "all", "Text", "South-Amerika");
 
                     }
-                    else if(selectCont==5){
+                    else if(selectCont==5){initializeGame(con, "all", "Text", "Oceania");
 
                     }
                 }
                 else if(selectKind==1){
-                    if(selectCont==0){
+                    if(selectCont==0){initializeGame(con, "all", "Pic", "Asia");
 
                     }
-                    else if(selectCont==1){
+                    else if(selectCont==1){initializeGame(con, "all", "Pic", "Africa");
 
                     }
-                    else if(selectCont==2){
+                    else if(selectCont==2){initializeGame(con, "all", "Pic", "Europe");
 
                     }
-                    else if(selectCont==3){
+                    else if(selectCont==3){initializeGame(con, "all", "Pic", "North-America");
 
                     }
-                    else if(selectCont==4){
+                    else if(selectCont==4){initializeGame(con, "all", "Pic", "South-Amerika");
 
                     }
-                    else if(selectCont==5){
+                    else if(selectCont==5){initializeGame(con, "all", "Pic", "Oceania");
 
                     }
                 }
