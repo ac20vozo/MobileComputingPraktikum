@@ -65,27 +65,27 @@ public class DatabaseHandler {
      */
     public int getRandomPicQuestion(ArrayList<Integer[]> blacklist, String continent) {
 
-        String table = "PicQuestion";
+        String table = "PicQuestion INNER JOIN Category ON PicQuestion.CategoryId = Category.Id";
 
         // continent check, joining with category
-        if (!continent.equals("all")){
-            table = "PicQuestion INNER JOIN Category ON PicQuestion.CategoryId = Category.Id";
-        }
+        //if (!continent.equals("all")){
+        //    table = "PicQuestion INNER JOIN Category ON PicQuestion.CategoryId = Category.Id";
+        //}
 
 
 
-        String sql = "SELECT PicQuestion.Id FROM " + table + " WHERE ";
+        String sql = "SELECT PicQuestion.Id FROM " + table + " WHERE";
 
         // only added if continent is chosen
         if(!continent.equals("all")) {
-            sql += "Continent = '"  + continent + "' AND ";
+            sql += " Continent = '"  + continent + "' AND ";
         }
         for (Integer[] v : blacklist) {
             if (v[0] == 1) {
-                sql += " PicQuestion.Id <> " + v[1] + " AND";
+                sql += " PicQuestion.Id <> " + v[1] + " AND ";
             }
         }
-        sql = sql.substring(0, sql.length() - 4);
+        sql = sql.substring(0, sql.length() - 5);
         Random rand = new Random();
         Cursor cur = db.rawQuery(sql, null);
         int[] qIds = new int[cur.getCount()];
@@ -123,26 +123,26 @@ public class DatabaseHandler {
      */
     public int getRandomTextQuestion(ArrayList<Integer[]> blacklist, String type, String continent ) {
 
-        String table = "TextQuestion";
+        String table = "TextQuestion INNER JOIN Category ON TextQuestion.CategoryId = Category.Id";
 
         // continent check, joining with category
-        if (!continent.equals("all")){
-            table = "TextQuestion INNER JOIN Category ON TextQuestion.CategoryId = Category.Id";
-        }
-        String sql = "SELECT TextQuestion.Id FROM " + table + " WHERE ";
+        //if (!continent.equals("all")){
+        //    table = "TextQuestion INNER JOIN Category ON TextQuestion.CategoryId = Category.Id";
+        //}
+        String sql = "SELECT TextQuestion.Id FROM " + table + " WHERE";
         if (!type.equals("all")) {
-            sql += "Type = '" + type + "' AND ";
+            sql += " Type = '" + type + "' AND ";
         }
         // only added if continent is chosen
         if(!continent.equals("all")) {
-           sql += "Continent = '"  + continent + "' AND ";
+           sql += " Continent = '"  + continent + "' AND ";
         }
         for (Integer[] v : blacklist) {
             if (v[0] == 0) {
-                sql += " TextQuestion.Id <> '" + v[1] + "' AND";
+                sql += " TextQuestion.Id <> '" + v[1] + "' AND ";
             }
         }
-        sql = sql.substring(0, sql.length() - 4);
+        sql = sql.substring(0, sql.length() - 5);
         Random rand = new Random();
         Cursor cur = db.rawQuery(sql, null);
         int[] qIds = new int[cur.getCount()];
