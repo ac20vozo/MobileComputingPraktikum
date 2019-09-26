@@ -18,6 +18,7 @@ import android.widget.Spinner;
 
 
 public class frag_play extends Fragment {
+    // Initializations
     protected Button play_classicGame;
     protected Button play_CustomGame;
     protected RadioButton radioPic;
@@ -41,6 +42,7 @@ public class frag_play extends Fragment {
         return inflater.inflate(R.layout.frag_play, null);
     }
     public void onViewCreated(View view, Bundle savedInstanceState){
+        // Initializations of view Objects, Buttons, Clickmmenu, etc.
         final Controller con = new Controller(getActivity());
         play_classicGame = (Button) view.findViewById(R.id.play_classicGame);
         play_CustomGame = view.findViewById(R.id.play_CustomGame);
@@ -55,6 +57,7 @@ public class frag_play extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinKind.setAdapter(adapter);
         spinKind.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            // first input management of the clickmenu
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch(i){
@@ -80,6 +83,7 @@ public class frag_play extends Fragment {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinContinent.setAdapter(adapter2);
         spinContinent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            // Input management of the Clickmenu
             @Override
             public void onItemSelected(AdapterView<?> adapterView2, View view2, int i2, long l2) {
                 switch(i2){
