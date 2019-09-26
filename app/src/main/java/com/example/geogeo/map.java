@@ -267,7 +267,7 @@ public class map extends Activity {
         submitb.setVisibility(View.INVISIBLE);
         if (!con.isGameOver(gameId)){
             con.answerToRound(lat, lon, gameId);
-            points.setText("Points: " + pointsInt + " + " + (con.getPoints(gameId) - pointsInt));
+            points.setText("Points: " + pointsInt + " + " + (con.getPoints(gameId) - pointsInt)  +"\nAnswer: " + con.getAnswerAnswer(isPicQuestion, questionId));
             NextQuestionInfo = con.getNextQuestionInfo(gameId);
         }
 
