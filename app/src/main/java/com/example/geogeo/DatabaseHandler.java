@@ -4,12 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
-
 import java.util.ArrayList;
 import java.util.Random;
-
 import static java.lang.Math.min;
 
 public class DatabaseHandler {
@@ -210,7 +207,11 @@ public class DatabaseHandler {
         return Type;
     }
 
-    // delete??
+    /**
+     * Returns the written answer
+     * @param  answerId
+     * @return string of answer
+     */
     public String getAnswerAnswer(int answerId) {
 
         Cursor c = db.rawQuery("SELECT Answer FROM Answer WHERE Id =" + answerId, null);
@@ -410,7 +411,11 @@ public class DatabaseHandler {
         return false;
     }
 
-    // check this one?
+    /**
+     * Returns the total of points of a game
+     * @param  gameId
+     * @return integer value of points
+     */
     public int getPoints(int gameId){
 
         Cursor c = db.rawQuery("SELECT SUM(Points) FROM ROUND WHERE GameId = " + gameId, null);
@@ -465,6 +470,21 @@ public class DatabaseHandler {
                     "ON PicQuestion.CategoryId = Category.Id WHERE Continent = '" + continent + "'", null);
             if (c.getCount() < amount){
                 return false;
+            }
+        }
+        if (kind.equals("all")){
+            if (continent.equals("all")){
+                if (! (getQuestionCount() >= amount)){
+                    return false;
+                }
+            }else {
+                Cursor c = db.rawQuery("SELECT PicQuestion.Id FROM PicQuestion INNER JOIN Category " +
+                        "ON PicQuestion.CategoryId = Category.Id WHERE Continent = '" + continent + "'", null);
+                Cursor d = db.rawQuery("SELECT TextQuestion.Id FROM TextQuestion INNER JOIN Category " +
+                        "ON TextQuestion.CategoryId = Category.Id WHERE Continent = '" + continent + "'", null);
+                if (c.getCount() < amount || d.getCount() < amount) {
+                    return false;
+                }
             }
         }
         return true;

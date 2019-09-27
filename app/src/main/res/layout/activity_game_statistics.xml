@@ -5,27 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:onClick="goBack"
-    tools:context=".GameStatistics">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background_focus"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-    </LinearLayout>
+    tools:context=".GameStatistics"
+    android:background="@drawable/background_focus">
 
     <TextView
-        android:id="@+id/txtStatistics"
+        android:id="@+id/back"
         android:layout_width="258dp"
         android:layout_height="50dp"
-        android:fontFamily="@font/architects_daughter"
+        android:background="@drawable/kreis_button"
+        android:fontFamily="@font/amarante"
         android:gravity="center"
-        android:text="@string/YourResult"
-        android:textSize="30sp"
+        android:onClick="goBack"
+        android:text="@string/main_menu"
+        android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/StatisticTable"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,9 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="5dp"
         android:background="@color/horizontalLine"
-        app:layout_constraintBottom_toTopOf="@+id/StatisticTable"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtStatistics" />
+        app:layout_constraintTop_toBottomOf="@+id/back" />
 
     <View
         android:id="@+id/lineBottom"
@@ -46,8 +38,7 @@
         android:background="@color/horizontalLine"
         app:layout_constraintBottom_toTopOf="@+id/txtGesamt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StatisticTable" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <LinearLayout
@@ -81,7 +72,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.116"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StatisticTable"
         app:layout_constraintVertical_bias="0.714" />
 
     <TextView

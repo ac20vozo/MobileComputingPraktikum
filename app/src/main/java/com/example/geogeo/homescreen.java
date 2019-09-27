@@ -1,15 +1,12 @@
 package com.example.geogeo;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
-
 import android.view.View;
 import android.widget.FrameLayout;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import android.content.Intent;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -17,6 +14,8 @@ import androidx.fragment.app.Fragment;
 public class homescreen extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private FrameLayout frameLayout;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +32,17 @@ public class homescreen extends AppCompatActivity implements BottomNavigationVie
         navView.setOnNavigationItemSelectedListener(this);
         frameLayout = (FrameLayout) findViewById(R.id.frag_container);
         loadFragment(new frag_play());
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor = preferences.edit();
+
+        String name = preferences.getString("name", "");
+        if(name.equalsIgnoreCase(""))
+        {
+            name = "Player";
+            editor.putString("name",name);
+            editor.apply();
+        }
 
     }
 

@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.content.Intent;
-import android.view.Window;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -25,9 +24,9 @@ public class frag_play extends Fragment {
     protected RadioButton radioPic;
     protected RadioButton radioText;
     private Spinner spinKind;
-    private static final String[] paths = {"Text question", "Pictures"};
+    private static final String[] paths = {"Text question", "Pictures", "All"};
     private Spinner spinContinent;
-    private static final String[] paths2 = {"Asia", "Africa", "Europe", "North America", "South America", "Oceania"};
+    private static final String[] paths2 = {"Asia", "Africa", "Europe", "North America", "South America", "Oceania", "All"};
     protected int selectKind;
     protected int selectCont;
     int gameId;
@@ -50,12 +49,12 @@ public class frag_play extends Fragment {
         spinKind = view.findViewById(R.id.spinKind);
         spinContinent = view.findViewById(R.id.spinContinent);
         np = view.findViewById(R.id.npp);
-        np.setMinValue(1);
-        np.setMaxValue(con.getQuestionCount());
+        np.setMinValue(5);
+        np.setMaxValue(25);
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(frag_play.this.getActivity(),
-                android.R.layout.simple_spinner_item,paths);
+                R.layout.colored_checkedspinner_layout,paths);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.colored_spinner_layout);
         spinKind.setAdapter(adapter);
         spinKind.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             // first input management of the clickmenu
@@ -69,6 +68,8 @@ public class frag_play extends Fragment {
                     case 1:
                         selectKind = 1;
                         break;
+                    case 2:
+                        selectKind = 2;
                 }
             }
 
@@ -79,9 +80,9 @@ public class frag_play extends Fragment {
         });
 
         ArrayAdapter<String>adapter2 = new ArrayAdapter<String>(frag_play.this.getActivity(),
-                android.R.layout.simple_spinner_item,paths2);
+                R.layout.colored_checkedspinner_layout,paths2);
 
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter2.setDropDownViewResource(R.layout.colored_spinner_layout);
         spinContinent.setAdapter(adapter2);
         spinContinent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             // Input management of the Clickmenu
@@ -106,6 +107,9 @@ public class frag_play extends Fragment {
                         break;
                     case 5:
                         selectCont = 5;
+                        break;
+                    case 6:
+                        selectCont = 6;
                         break;
                 }
             }
@@ -179,6 +183,15 @@ public class frag_play extends Fragment {
                         }
 
                     }
+                    else if(selectCont==6){
+                        if (!con.checkAmount(amount, "text", "all")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "text", "all");
+                        }
+
+                    }
+
                 }
                 else if(selectKind==1){
                     if(selectCont==0){
@@ -226,6 +239,72 @@ public class frag_play extends Fragment {
                             Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                         }else{
                             initializeGame(con, "all", "pic", "Oceania");
+                        }
+
+                    }
+                    else if(selectCont==6){
+                        if (!con.checkAmount(amount, "pic", "all")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "pic", "all");
+                        }
+
+                    }
+                }
+                else if(selectKind==2){
+                    if(selectCont==0){
+                        if (!con.checkAmount(amount, "all", "Asia")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "Asia");
+                        }
+
+                    }
+                    else if(selectCont==1){
+                        if (!con.checkAmount(amount, "all", "Africa")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "Africa");
+                        }
+
+                    }
+                    else if(selectCont==2){
+                        if (!con.checkAmount(amount, "all", "Europe")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "Europe");
+                        }
+
+                    }
+                    else if(selectCont==3){
+                        if (!con.checkAmount(amount, "all", "North-Amerika")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "North-America");
+                        }
+
+                    }
+                    else if(selectCont==4){
+                        if (!con.checkAmount(amount, "all", "South-Amerika")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "South-Amerika");
+                        }
+
+                    }
+                    else if(selectCont==5){
+                        if (!con.checkAmount(amount, "all", "Oceania")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "Oceania");
+                        }
+
+                    }
+                    else if(selectCont==6){
+                        if (!con.checkAmount(amount, "all", "all")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "all");
                         }
 
                     }

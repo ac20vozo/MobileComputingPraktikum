@@ -1,11 +1,12 @@
 package com.example.geogeo;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,8 @@ public class frag_stats extends Fragment {
     TextView playedGames;
     TextView points;
     TextView averageScore;
+    SharedPreferences preferences;
+    TextView uname;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,6 +32,12 @@ public class frag_stats extends Fragment {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
         Controller c = new Controller(getActivity());
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        uname = view.findViewById(R.id.txtDist1);
+        String name = preferences.getString("name", "");
+        uname.setText(name);
+
         String[] stats = c.getStats(1);
         playedGames = (TextView) view.findViewById(R.id.profil_playedGamesDisplay);
         playedGames.setText(stats[0]);
