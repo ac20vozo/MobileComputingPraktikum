@@ -7,9 +7,10 @@
 
     <Spinner
         android:id="@+id/spinContinent"
-        android:background="@drawable/runde_button"
         android:layout_width="123dp"
         android:layout_height="26dp"
+        android:background="@drawable/runde_button"
+        android:paddingStart="20dp"
         app:layout_constraintBottom_toTopOf="@+id/npp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.77"
@@ -75,9 +76,10 @@
 
     <Spinner
         android:id="@+id/spinKind"
-        android:background="@drawable/runde_button"
         android:layout_width="123dp"
         android:layout_height="26dp"
+        android:background="@drawable/runde_button"
+        android:paddingStart="20dp"
         app:layout_constraintBottom_toTopOf="@+id/npp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.253"
