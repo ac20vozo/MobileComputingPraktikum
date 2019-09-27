@@ -207,7 +207,11 @@ public class DatabaseHandler {
         return Type;
     }
 
-    // delete??
+    /**
+     * Returns the written answer
+     * @param  answerId
+     * @return string of answer
+     */
     public String getAnswerAnswer(int answerId) {
 
         Cursor c = db.rawQuery("SELECT Answer FROM Answer WHERE Id =" + answerId, null);
@@ -407,7 +411,11 @@ public class DatabaseHandler {
         return false;
     }
 
-    // check this one?
+    /**
+     * Returns the total of points of a game
+     * @param  gameId
+     * @return integer value of points
+     */
     public int getPoints(int gameId){
 
         Cursor c = db.rawQuery("SELECT SUM(Points) FROM ROUND WHERE GameId = " + gameId, null);
