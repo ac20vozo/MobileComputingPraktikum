@@ -49,8 +49,8 @@ public class frag_play extends Fragment {
         spinKind = view.findViewById(R.id.spinKind);
         spinContinent = view.findViewById(R.id.spinContinent);
         np = view.findViewById(R.id.npp);
-        np.setMinValue(1);
-        np.setMaxValue(con.getQuestionCount());
+        np.setMinValue(5);
+        np.setMaxValue(25);
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(frag_play.this.getActivity(),
                 R.layout.colored_checkedspinner_layout,paths);
 
