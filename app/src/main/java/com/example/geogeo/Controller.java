@@ -25,14 +25,22 @@ public class Controller {
         return db.getQuestionCount();
 
     }
-
+    /**
+     * Displays the image of a given question
+     * @param  image the imageView where the picture is to be displayed
+     * @param questionId
+     */
     public void showPic(ImageView image, int questionId) {
         byte[] bits = db.getbytes(questionId);
         Bitmap b = BitmapFactory.decodeByteArray(bits, 0, bits.length);
         //image.setImageBitmap(Bitmap.createScaledBitmap(b, 150, 150, false));
         image.setImageBitmap(b);
     }
-
+    /**
+     * Displays the text of a given question
+     * @param  text the textView where the picture is to be displayed
+     * @param questionId
+     */
     public void showText(TextView text, int questionId) {
 
         String input = db.getTextQuestion(questionId);
@@ -46,8 +54,15 @@ public class Controller {
         return db.isGameOver(gameId);
     }
 
-    // kind can be random, text or pic
-    // TODO: make sure that the amount is less or equal to the amount of questions
+
+    /**
+     * creates a game with the given parameters and creates all the necessary DB entries
+     * @param  amount number of rounds
+     * @param kind random, text or pic question limiter
+     * @param type event or riddle (specifier for text questions) (all otherwise)
+     * @param continent specifies the continent for the game (all otherwise)
+     * @return returns the id of the game
+     */
     public int createGame(int amount, String kind, String type, String continent) {
         // blacklist ist Array von Array von ints (Mit 1. 0 oder 1 2. id von question)
         if (kind.equals("random")) {
@@ -106,7 +121,11 @@ public class Controller {
         return result;
 
     }
-
+    /**
+     * searches for the next question in a game
+     * @param  gameId
+     * @param result int tuple of  (questionId , isPicQuestion) (latter being 0 or 1)
+     */
     public int[] getNextQuestionInfo(int gameId) {
 
         int[] QuestionInfo = db.getNextQuestion(gameId);
@@ -118,7 +137,13 @@ public class Controller {
 
     }
 
-    // check stringConversion
+    /**
+     * answers the round with the given coordinates
+     * @param gameId
+     * @param x longitude of guess
+     * @param y latitude of guess
+     * @returns points for the guess
+     */
     public int answerToRound(double x, double y, int gameId) {
 
         int[] QuestionInfo = db.getNextQuestion(gameId);
@@ -130,8 +155,13 @@ public class Controller {
 
         return points;
     }
-
-    // returns distance to of given answer to correct location
+    /**
+     * checks distance from given answer to the correct location
+     * @param answerId
+     * @param xGuess longitude of the guess
+     * @param yGuess latitude of the guess
+     * @returns the coordDistance (double)
+     */
     public double checkDistanceToAnswer(int answerId, double xGuess, double yGuess) {
 
         Double[] Cords = new Double[2];
@@ -140,7 +170,13 @@ public class Controller {
         return coordDistance(Cords[0], Cords[1], xGuess, yGuess);
     }
 
-    // calculates distance between to coordinates in km
+    /**
+     * calculates the distance between two coordinates
+     * @param lon1 longitude of point 1
+     * @param lat1 latitude of point 1
+     * @param lon2 longitude of point 2
+     * @param lat2 latitude of point 2
+     */
     public double coordDistance(double lon1, double lat1, double lon2, double lat2) {
         double xDifference = degreeToRadians(lon1) - degreeToRadians(lon2);
         double yDifference = degreeToRadians(lat1) - degreeToRadians(lat2);
@@ -154,12 +190,18 @@ public class Controller {
     public double degreeToRadians(double degree) {
         return degree * Math.PI / 180;
     }
-
+    /**
+     * calculates the distance between two coordinates
+     * @param gameId
+     * @param answerId
+     * @param xGuess longitude of the guess
+     * @param yGuess latitude of the guess
+     */
     public int answerQuestion(int gameId, int answerId, double xGuess, double yGuess) {
         int points = 1;
         double distance = checkDistanceToAnswer(answerId, xGuess, yGuess);
         // add a more sensible point calculation here
-        points = Points(distance, 500, 250);
+        points = Points(distance);
         return points;
 
     }
@@ -177,24 +219,21 @@ public class Controller {
         return db.getPointsPerRound(gameId);
     }
 
-
-    public int Points(double distance, int maxPoints, int cutOff){
-        if (nearPointFunction(distance, maxPoints) >= cutOff){
-            return nearPointFunction(distance, maxPoints);
+    /**
+     * function to calculate the points awarded for a guess, 4.th degree function easy to adapt
+     * @param distance between the solution and the guess
+     * @return points
+     */
+    public int Points(double distance){
+        // limit right bound of the function
+        if (distance > 4000.0){
+            return 0;
         }
-        else{
-            return farPointFunction(distance, cutOff);
-        }
-    }
-    public int nearPointFunction(double distance, int maxPoints){
-        double dividend = 2; // decrease to steepen the drop
-        return Math.min(maxPoints, (int) Math.ceil(maxPoints*(dividend/(distance/100))));
-    }
-    public int farPointFunction(double distance, int cutOff){
+        return Math.min(500, Math.max(0, (int) Math.ceil(613.5694 - 0.6220731*distance + 0.0003569621*Math.pow(distance, 2) - 1.028715e-7*Math.pow(distance, 3)
+                + 1.072978e-11*Math.pow(distance, 4))));
 
-        double exponent = 1.65; // increase to steepen the drop
-        return Math.max(0, (int) Math.ceil(cutOff - Math.pow((distance/100),exponent)));
     }
+
 
     public int getPoints(int gameId){
         return db.getPoints(gameId);
