@@ -23,7 +23,8 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
 
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".CustomGame" />
@@ -39,12 +40,7 @@
 
         <activity
             android:name=".Startseite"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".map"
@@ -53,7 +49,6 @@
         <activity
             android:name=".homescreen"
             android:screenOrientation="portrait" />
-
 
 
         <activity
