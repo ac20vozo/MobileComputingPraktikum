@@ -159,7 +159,7 @@ public class Controller {
         int points = 1;
         double distance = checkDistanceToAnswer(answerId, xGuess, yGuess);
         // add a more sensible point calculation here
-        points = Points(distance, 500, 250);
+        points = Points(distance);
         return points;
 
     }
@@ -178,23 +178,13 @@ public class Controller {
     }
 
 
-    public int Points(double distance, int maxPoints, int cutOff){
-        if (nearPointFunction(distance, maxPoints) >= cutOff){
-            return nearPointFunction(distance, maxPoints);
-        }
-        else{
-            return farPointFunction(distance, cutOff);
-        }
-    }
-    public int nearPointFunction(double distance, int maxPoints){
-        double dividend = 2; // decrease to steepen the drop
-        return Math.min(maxPoints, (int) Math.ceil(maxPoints*(dividend/(distance/100))));
-    }
-    public int farPointFunction(double distance, int cutOff){
+    public int Points(double distance){
+        
+        return Math.min(500, Math.max(0, (int) Math.ceil(613.5694 - 0.6220731*distance + 0.0003569621*Math.pow(distance, 2) - 1.028715e-7*Math.pow(distance, 3)
+                + 1.072978e-11*Math.pow(distance, 4))));
 
-        double exponent = 1.65; // increase to steepen the drop
-        return Math.max(0, (int) Math.ceil(cutOff - Math.pow((distance/100),exponent)));
     }
+
 
     public int getPoints(int gameId){
         return db.getPoints(gameId);
