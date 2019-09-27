@@ -253,7 +253,7 @@ public class frag_play extends Fragment {
                 }
                 else if(selectKind==2){
                     if(selectCont==0){
-                        if (!con.checkAmount(amount, "random", "Asia")){
+                        if (!con.checkAmount(amount, "all", "Asia")){
                             Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                         }else{
                             initializeGame(con, "all", "random", "Asia");
@@ -261,7 +261,7 @@ public class frag_play extends Fragment {
 
                     }
                     else if(selectCont==1){
-                        if (!con.checkAmount(amount, "random", "Africa")){
+                        if (!con.checkAmount(amount, "all", "Africa")){
                             Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                         }else{
                             initializeGame(con, "all", "random", "Africa");
@@ -269,7 +269,7 @@ public class frag_play extends Fragment {
 
                     }
                     else if(selectCont==2){
-                        if (!con.checkAmount(amount, "random", "Europe")){
+                        if (!con.checkAmount(amount, "all", "Europe")){
                             Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                         }else{
                             initializeGame(con, "all", "random", "Europe");
@@ -277,7 +277,7 @@ public class frag_play extends Fragment {
 
                     }
                     else if(selectCont==3){
-                        if (!con.checkAmount(amount, "random", "North-Amerika")){
+                        if (!con.checkAmount(amount, "all", "North-Amerika")){
                             Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                         }else{
                             initializeGame(con, "all", "random", "North-America");
@@ -285,7 +285,7 @@ public class frag_play extends Fragment {
 
                     }
                     else if(selectCont==4){
-                        if (!con.checkAmount(amount, "random", "South-Amerika")){
+                        if (!con.checkAmount(amount, "all", "South-Amerika")){
                             Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                         }else{
                             initializeGame(con, "all", "random", "South-Amerika");
@@ -293,7 +293,7 @@ public class frag_play extends Fragment {
 
                     }
                     else if(selectCont==5){
-                        if (!con.checkAmount(amount, "random", "Oceania")){
+                        if (!con.checkAmount(amount, "all", "Oceania")){
                             Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                         }else{
                             initializeGame(con, "all", "random", "Oceania");
@@ -301,7 +301,7 @@ public class frag_play extends Fragment {
 
                     }
                     else if(selectCont==6){
-                        if (!con.checkAmount(amount, "random", "all")){
+                        if (!con.checkAmount(amount, "all", "all")){
                             Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                         }else{
                             initializeGame(con, "all", "random", "all");
