@@ -225,7 +225,10 @@ public class Controller {
      * @return points
      */
     public int Points(double distance){
-
+        // limit right bound of the function
+        if (distance > 4000.0){
+            return 0;
+        }
         return Math.min(500, Math.max(0, (int) Math.ceil(613.5694 - 0.6220731*distance + 0.0003569621*Math.pow(distance, 2) - 1.028715e-7*Math.pow(distance, 3)
                 + 1.072978e-11*Math.pow(distance, 4))));
 
