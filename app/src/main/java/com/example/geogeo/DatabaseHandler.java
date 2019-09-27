@@ -472,6 +472,21 @@ public class DatabaseHandler {
                 return false;
             }
         }
+        if (kind.equals("all")){
+            if (continent.equals("all")){
+                if (! (getQuestionCount() >= amount)){
+                    return false;
+                }
+            }else {
+                Cursor c = db.rawQuery("SELECT PicQuestion.Id FROM PicQuestion INNER JOIN Category " +
+                        "ON PicQuestion.CategoryId = Category.Id WHERE Continent = '" + continent + "'", null);
+                Cursor d = db.rawQuery("SELECT TextQuestion.Id FROM TextQuestion INNER JOIN Category " +
+                        "ON TextQuestion.CategoryId = Category.Id WHERE Continent = '" + continent + "'", null);
+                if (c.getCount() < amount || d.getCount() < amount) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 }
