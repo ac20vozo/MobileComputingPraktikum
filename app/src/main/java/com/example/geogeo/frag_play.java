@@ -24,9 +24,9 @@ public class frag_play extends Fragment {
     protected RadioButton radioPic;
     protected RadioButton radioText;
     private Spinner spinKind;
-    private static final String[] paths = {"Text question", "Pictures"};
+    private static final String[] paths = {"Text question", "Pictures", "All"};
     private Spinner spinContinent;
-    private static final String[] paths2 = {"Asia", "Africa", "Europe", "North America", "South America", "Oceania"};
+    private static final String[] paths2 = {"Asia", "Africa", "Europe", "North America", "South America", "Oceania", "All"};
     protected int selectKind;
     protected int selectCont;
     int gameId;
@@ -68,6 +68,8 @@ public class frag_play extends Fragment {
                     case 1:
                         selectKind = 1;
                         break;
+                    case 2:
+                        selectKind = 2;
                 }
             }
 
@@ -105,6 +107,9 @@ public class frag_play extends Fragment {
                         break;
                     case 5:
                         selectCont = 5;
+                        break;
+                    case 6:
+                        selectCont = 6;
                         break;
                 }
             }
@@ -178,6 +183,15 @@ public class frag_play extends Fragment {
                         }
 
                     }
+                    else if(selectCont==6){
+                        if (!con.checkAmount(amount, "text", "all")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "text", "all");
+                        }
+
+                    }
+
                 }
                 else if(selectKind==1){
                     if(selectCont==0){
@@ -225,6 +239,72 @@ public class frag_play extends Fragment {
                             Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                         }else{
                             initializeGame(con, "all", "pic", "Oceania");
+                        }
+
+                    }
+                    else if(selectCont==6){
+                        if (!con.checkAmount(amount, "pic", "all")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "pic", "all");
+                        }
+
+                    }
+                }
+                else if(selectKind==2){
+                    if(selectCont==0){
+                        if (!con.checkAmount(amount, "random", "Asia")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "Asia");
+                        }
+
+                    }
+                    else if(selectCont==1){
+                        if (!con.checkAmount(amount, "random", "Africa")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "Africa");
+                        }
+
+                    }
+                    else if(selectCont==2){
+                        if (!con.checkAmount(amount, "random", "Europe")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "Europe");
+                        }
+
+                    }
+                    else if(selectCont==3){
+                        if (!con.checkAmount(amount, "random", "North-Amerika")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "North-America");
+                        }
+
+                    }
+                    else if(selectCont==4){
+                        if (!con.checkAmount(amount, "random", "South-Amerika")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "South-Amerika");
+                        }
+
+                    }
+                    else if(selectCont==5){
+                        if (!con.checkAmount(amount, "random", "Oceania")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "Oceania");
+                        }
+
+                    }
+                    else if(selectCont==6){
+                        if (!con.checkAmount(amount, "random", "all")){
+                            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                        }else{
+                            initializeGame(con, "all", "random", "all");
                         }
 
                     }

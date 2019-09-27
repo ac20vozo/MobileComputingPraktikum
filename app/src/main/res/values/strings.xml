@@ -53,6 +53,7 @@
     <string name="sign_in_here">Already have an account? Sign in here</string>
     <string name="sign_up">Sign Up</string>
     <string name="logout">Logout</string>
+    <string name="main_menu">MAIN MENU</string>
 
     <integer name="google_play_services_version">12451000</integer>
 
