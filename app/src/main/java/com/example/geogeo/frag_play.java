@@ -52,9 +52,9 @@ public class frag_play extends Fragment {
         np.setMinValue(1);
         np.setMaxValue(con.getQuestionCount());
         ArrayAdapter<String>adapter = new ArrayAdapter<String>(frag_play.this.getActivity(),
-                android.R.layout.simple_spinner_item,paths);
+                R.layout.colored_checkedspinner_layout,paths);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.colored_spinner_layout);
         spinKind.setAdapter(adapter);
         spinKind.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             // first input management of the clickmenu
@@ -80,9 +80,9 @@ public class frag_play extends Fragment {
         });
 
         ArrayAdapter<String>adapter2 = new ArrayAdapter<String>(frag_play.this.getActivity(),
-                android.R.layout.simple_spinner_item,paths2);
+                R.layout.colored_checkedspinner_layout,paths2);
 
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter2.setDropDownViewResource(R.layout.colored_spinner_layout);
         spinContinent.setAdapter(adapter2);
         spinContinent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             // Input management of the Clickmenu
